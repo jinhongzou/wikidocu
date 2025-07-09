@@ -21,7 +21,7 @@ async def perform_analysis(researcher, file_paths, research_topic):
 async def main():
     model_name = os.getenv("MODEL_NAME", "Qwen/Qwen2.5-7B-Instruct")
     base_url = os.getenv("OPENAI_BASE_URL", "https://api.siliconflow.cn/v1")
-    api_key = os.getenv("OPENAI_API_KEY", "sk-xxxx")
+    api_key = os.getenv("OPENAI_API_KEY", "sk-ruascruyqmbeyiojufkeqkerqdczwprkbkdaalbdakihywfo")
 
     while True:
         # 初始化参数
