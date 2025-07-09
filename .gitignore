@@ -24,7 +24,7 @@ __shinycache__
 *.pid
 
 # Docs and user data
-docs/
+#docs/
 test_app.py
 setup.py
 
