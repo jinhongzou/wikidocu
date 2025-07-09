@@ -1,0 +1,44 @@
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.pyc~
+*.db
+*.sqlite3
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.env
+.env.bak
+.env.*
+.env.local
+.env.*.local
+.python-version
+
+# Shiny specific
+__shinycache__
+*.log
+*.pid
+
+# Docs and user data
+docs/
+test_app.py
+setup.py
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE config
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
