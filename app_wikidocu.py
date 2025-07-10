@@ -75,9 +75,9 @@ import os
 import asyncio
 from src.filecontentextract import FileContentExtract
 
-model_name = os.getenv("MODEL_NAME", "Qwen/Qwen2.5-7B-Instruct")
-base_url = os.getenv("OPENAI_BASE_URL", "https://api.siliconflow.cn/v1")
-api_key = os.getenv("OPENAI_API_KEY", "sk-xx")
+model_name = os.getenv("MODEL_NAME", "your-model-name")
+base_url = os.getenv("OPENAI_BASE_URL", "your-base-url")
+api_key = os.getenv("OPENAI_API_KEY", "your-api-key")
 
 
 def server(input, output,  session):
