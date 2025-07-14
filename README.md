@@ -7,7 +7,7 @@ WikiDocu is a document analysis tool built on **langchain**, designed to help us
 Unlike traditional **RAG (Retrieval-Augmented Generation)** systems, WikiDocu does not rely on vector databases or semantic search. Instead, it uses the contextual understanding capability of LLMs to directly analyze and extract relevant information from user-provided documents, generating structured answers around the input query.
 
 #### 😊 Example:  
-Suppose you have a project containing `.md` documentation files and multiple `.py` code files. Each file details different API interfaces, usage methods, and code examples. The `.md` files provide comprehensive explanations including function descriptions, parameter interpretations, and invocation examples, while the `.py` files contain the actual source code implementing these APIs, complete with comments for better understanding.
+Suppose you have a project containing `.md` documentation files and multiple `.py` code files. The `.md` files provide comprehensive explanations including function descriptions, parameter interpretations, and invocation examples, while the `.py` files contain the actual source code implementing these APIs, complete with comments for better understanding.
 
 💬 Now, you want to find out how to create a Pydantic model instance. Here are two different workflows:
 
