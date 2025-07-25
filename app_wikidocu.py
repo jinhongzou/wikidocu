@@ -1,172 +1,105 @@
-from shiny import App, ui, render, reactive, Session
+# server.py
+
+from shiny import App, ui, render, reactive
 import os
+import random
 import datetime
-import markdown  # 可选：用于前端渲染支持
-import shutil
+from langchain_core.messages import BaseMessage, HumanMessage
+import time  # 同步延迟使用
 
-from src.filecontentextract import FileContentExtract
 
-from frontend.utils import generate_full_report,clear_docs_folder,custom_box
+from src.graph import create_async_tools_graph
+from frontend.navset_builder import NavsetUIBuilder
+from frontend.config import navset_configs
+from frontend.utils import generate_full_report,custom_box
 
 SCAN_DIR = "./docs"
 
-# ========== UI ==========
-app_ui = ui.page_fluid(
-    ui.tags.style("""
-            .shiny-modal-backdrop {
-                display: none !important;
-            }"""
-    ),
-    ui.row(
-        ui.column(
-            6,
-            ui.card(
-                ui.card_header("WikiDocu"),
-                ui.output_ui("main_output"),  # 使用 output_ui 替代 output_markdown
-                style="height: 500px; overflow-y: auto;"
-            )
-        ),
-        ui.column(
-            6,
-            ui.card(
-                ui.card_header("检索结果"),
-                ui.output_ui("detail_output"),
-                style="height: 500px; overflow-y: auto;"
-            )
-        )
-    ),
-)
-'''
-    ui.row(
-        ui.column(
-            6,
-            ui.card(
-                ui.card_header("检索文件列表"),
-                #ui.input_text("input_file_paths", "请输入查询目录（默认当前目录）", value="D:/github_rep/gemini-fullstack-langgraph-quickstart/testfiles/README.md"),
-                ui.row(
-                    ui.column(12,
-                        ui.input_text("dir_path", "选中的目录路径", value="", width="100%"),
-                        ui.input_action_button("choose_dir", "加载文件", onclick="chooseDirectory()", class_="btn-primary")
-                    )
-                ),
-                style="height: 400px; overflow-y: auto;"
-            )
-        ),
-        ui.column(
-            6,
-            ui.card(
-                #ui.card_header("输入框"),
-                ui.card_header("日志"),
-                ui.column(12,
-                    #ui.input_text_area("custom_message", "请输入研究主题", value="怎么创建PydanticAgent实例", width="100%"),
-                    #ui.input_checkbox("deep_research", "启用深度研究", False),
-                    #ui.input_action_button("submit", "开始分析")
-                ),
-                style="height: 300px; overflow-y: auto;"
-            )
-        )
-    )
-'''
-
+builder = NavsetUIBuilder(navset_configs)
 
 # ========== Server Logic ==========
-from shiny import App, ui, render, reactive
-import os
-import asyncio
-from src.filecontentextract import FileContentExtract
-
 model_name = os.getenv("MODEL_NAME", "your-model-name")
+model_name_answer = os.getenv("MODEL_NAME_QWEN3", "your-model-name")
+
 base_url = os.getenv("OPENAI_BASE_URL", "your-base-url")
 api_key = os.getenv("OPENAI_API_KEY", "your-api-key")
 
+graph = create_async_tools_graph()
+config = {"configurable": {"thread_id": "1"}}
 
-def server(input, output,  session):
+def setup_server(input, output,  session):
+    g_value_main_output = reactive.Value("")
+    g_value_detail_output = reactive.Value("")
+    dynamic_ui_content = reactive.Value(ui.TagList())
+
+    m = ui.modal(
+        ui.markdown(f"""
+### 欢迎使用 **WikiDocu** —— 基于人工智能的多文档智能问答系统
+
+在这里，你可以：
+
+- 📚 **跨文档智能问答**：在多个文档之间建立关联，实现知识的跨文档检索与精准问答，支持复杂场景下的信息整合。
+- 🧩 **深度知识理解**：融合代码理解与技术文档生成能力，可深入解析结构化内容（如代码仓库），实现从代码到文档的自动推理与解释。
+- 🧠 **上下文感知交互**：支持基于上下文的多轮对话理解，智能定位相关内容，提升检索效率与准确性。
+- 🛠 **无需索引构建**：无需预处理构建向量库或索引，直接利用大模型理解内容，部署更轻量，响应更迅速。
+
+请将需要分析的文档放入目录 **`{SCAN_DIR}`**，然后输入你的问题，点击 **检索**，即可开启高效、智能的知识探索之旅。
+
+⚠️ 注：分析基于当前输入的数据文件和模型理解能力，仅供参考。
+"""),
+        title="欢迎使用 WikiDocu",
+        easy_close=False,
+        footer=None
+    )
+    # 显示模态框
+    ui.modal_show(m)
+    time.sleep(3)
+    ui.modal_remove()
+
     # 初始化 markdown 内容
-    g_value_main_output = reactive.Value("欢迎使用 WikiDocu！请在下方输入研究主题并选择文件路径以开始分析。")
-    g_value_detail_output=reactive.Value("")
-
-    async def perform_analysis(research_topic, file_paths):
-
-        researcher = FileContentExtract(
-            model=model_name,
-            api_key=api_key,
-            api_base=base_url,
-            name='ResearcherAgent'
-        )
-
-        all_results = await researcher.async_run(
-            file_paths=file_paths,
-            research_topic=research_topic
-        )
-
-        content = researcher.get_markdown_ref()
-        answer = researcher.final_answer(research_topic=research_topic, content=content)
-        return (answer, content)
-
-
-
     custom_box(input, output, session)
 
+    # 动态生成对话tab
     @output
     @render.ui
-    def main_output():
-        content = g_value_main_output.get()
-        #print("main_output当前内容长度:", len(content))  # 验证是否刷新
+    def dynamic_content():
 
-        return ui.HTML(f'<div style="font-size: 18px; background-color: #f0f0f0; padding: 10px;">{ui.markdown(content)}</div>')
+        main_content = g_value_main_output.get()
+        detail_content = g_value_detail_output.get()
+
+        if main_content == "":
+            return 
     
-    @output
-    @render.ui
-    def detail_output():
-        content = g_value_detail_output.get()
-        #print("detail_output当前内容长度:", len(content))  # 验证是否刷新
+        if detail_content.strip() == "":
+            detail_content='未检索到内容'
 
-        return ui.markdown(content)
+        navset_types = list(navset_configs.keys())
+        selected_type = random.choice(navset_types)
 
+        new_content = ui.TagList(
+            builder.create_navset_ui_from_context(selected_type,
+                                                  ui.markdown(main_content),
+                                                  ui.markdown(detail_content)
+                                                  ),
+        )
+        current_content = dynamic_ui_content.get()
+        current_content.append(new_content)
+        dynamic_ui_content.set(current_content)
 
-    @reactive.effect
-    @reactive.event(input.choose_dir)
-    def dir_list():
-        
-        target_dir = SCAN_DIR
-
-        # ✅ 先清空 docs 目录
-        """
-        if not clear_docs_folder(docs_path=target_dir):
-            return []
-        """
-
-        selected_dir = input.dir_path().strip()
-        if not selected_dir:
-            return []
-
-        os.makedirs(target_dir, exist_ok=True)
-
-        all_files = []
-
-        for root, _, files in os.walk(selected_dir):
-            rel_path = os.path.relpath(root, selected_dir)
-            dest_subdir = os.path.join(target_dir, rel_path)
-            os.makedirs(dest_subdir, exist_ok=True)
-
-            for f in files:
-                src_file = os.path.join(root, f)
-                dest_file = os.path.join(dest_subdir, f)
-
-                try:
-                    shutil.copy2(src_file, dest_file)  # 拷贝并保留元数据
-                    all_files.append(dest_file)
-                    print(f"✅ 已复制：{src_file} → {dest_file}")
-                except Exception as e:
-                    print(f"❌ 复制失败：{src_file}，错误：{str(e)}")
-
-        return all_files
-    
-
+        #return dynamic_ui_content.get()
+        return ui.div(
+                dynamic_ui_content.get(),
+                style="max-height: 800px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"
+            )
     @reactive.effect
     @reactive.event(input.custom_send)
     async def handle_custom_send_waiting_notion():
+
         research_topic = input.custom_message().strip()
+        ui.update_text_area(  
+            id="custom_message",  
+            value=""  # 设置为空字符串  
+        )
         if not research_topic:
             ui.notification_show("⚠️ 请先输入研究主题。", type="error", duration=10 ) # 显式设置为右上角
             return
@@ -175,11 +108,15 @@ def server(input, output,  session):
         ui.notification_show("⏳ 正在分析，请稍候...", type="message", duration=10 )
         ui.update_action_button("custom_send", disabled=True)
 
+
     @reactive.effect
     @reactive.event(input.custom_send)
     async def handle_custom_send():
-
         research_topic = input.custom_message().strip()
+        ui.update_text_area(  
+            id="custom_message",  
+            value=""  # 设置为空字符串  
+        )
         input_path = SCAN_DIR #input.input_file_paths().strip()
 
         if not research_topic:
@@ -192,18 +129,26 @@ def server(input, output,  session):
             file_paths = [os.path.abspath(input_path.replace('\\', os.sep).replace('/', os.sep))]
 
         try:
-            (answer, markdown_ref) = await perform_analysis(research_topic, file_paths)
+            response = await graph.ainvoke({"messages": [HumanMessage(content=research_topic)]
+                                            }, config)
 
-            # ✅ 修改输出内容：添加标题、时间戳、数据源等内容
+            if response.get("messages"):
+                answer_resp = response["messages"][-1].content
+
+            if response.get("web_research_result"):
+                retrieve_resp = response["web_research_result"][-1]
+            else:
+                retrieve_resp='未检索到内容'
+
             timestamp = datetime.datetime.now().strftime("%Y年%m月%d日 %H:%M:%S")
 
-            if not answer.strip():
+            if not answer_resp.strip():
                 full_report = "⚠️ 没有获取到有效的分析结果，请检查输入数据或稍后重试。"
             else:
-                full_report = generate_full_report(research_topic, answer, file_paths, timestamp)
+                full_report = generate_full_report(research_topic, answer_resp, file_paths, timestamp)
 
             g_value_main_output.set(full_report)
-            g_value_detail_output.set(markdown_ref)
+            g_value_detail_output.set(retrieve_resp)
 
         except Exception as e:
             ui.notification_show(f"❌ 分析过程中发生错误：{str(e)}", type="error", duration=10 )
@@ -214,6 +159,81 @@ def server(input, output,  session):
 
 
 # ========== 启动应用 ==========
-app = App(app_ui, server)
+from shiny import App, ui
+from app_wikidocu import setup_server
+
+app_ui = ui.page_fluid(
+    # 自定义 CSS 样式
+    ui.tags.style("""
+        .shiny-modal-backdrop {
+            display: none !important;
+        }
+        #dynamic_content {
+            overflow: visible !important;
+            min-height: auto;
+            height: auto !important;
+        }
+        .content-wrapper {
+            overflow-y: auto;  /* 允许垂直滚动 */
+        }
+    """),
+    
+    # 用 div 包裹 dynamic_content 并添加 id 用于 JS 操作
+    ui.div(
+        ui.output_ui("dynamic_content"),
+        class_="content-wrapper",
+        style = "width: 100%; overflow: hidden;"
+    ),
+    
+    # 页面底部自动滚动的 JavaScript 脚本
+    ui.tags.script("""
+        (function() {
+            const observer = new MutationObserver(function() {
+                const container = document.querySelector('.content-wrapper');
+                if (container) {
+                    container.scrollTop = container.scrollHeight;
+                }
+            });
+
+            const target = document.querySelector('.content-wrapper');
+            if (target) {
+                observer.observe(target, { childList: true, subtree: true });
+            }
+        })();
+    """)
+)
+app_ui2 = ui.page_fluid(
+    ui.tags.style("""
+        .shiny-modal-backdrop {
+            display: none !important;
+        }
+        #dynamic_content {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: unset !important;
+        }
+    """),
+    
+    ui.br(),
+    ui.markdown(f"""
+    ### 欢迎使用 **WikiDocu** —— 基于人工智能的多文档智能问答系统
+
+    在这里，你可以：
+
+    - 📚 **跨文档智能问答**：在多个文档之间建立关联，实现知识的跨文档检索与精准问答，支持复杂场景下的信息整合。
+    - 🧩 **深度知识理解**：融合代码理解与技术文档生成能力，可深入解析结构化内容（如代码仓库），实现从代码到文档的自动推理与解释。
+    - 🧠 **上下文感知交互**：支持基于上下文的多轮对话理解，智能定位相关内容，提升检索效率与准确性。
+    - 🛠 **无需索引构建**：无需预处理构建向量库或索引，直接利用大模型理解内容，部署更轻量，响应更迅速。
+
+    请将需要分析的文档放入目录 **`{SCAN_DIR}`**，然后输入你的问题，点击 **检索**，即可开启高效、智能的知识探索之旅。
+
+    """),
+    ui.br(),
+    ui.output_ui("dynamic_content"),
+)
+
+
+app = App(app_ui, setup_server)
+
 if __name__ == "__main__":
     app.run()

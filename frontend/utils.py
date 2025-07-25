@@ -7,45 +7,13 @@ def generate_full_report(research_topic, answer, file_paths, timestamp):
     生成完整的分析报告内容（Markdown 格式）
     """
     return f"""
-### 您的问题🤔 ：
-
-{research_topic}
+#### {research_topic}
 
 ---
-
-### 分析结果📊 ：
 
 {answer}
 
----
-
-***分析完成时间🕒：*** {timestamp}
-
-***数据来源路径📁：***
-{", ".join(file_paths)}
-
-> ⚠️ 注：以上分析基于当前输入的数据文件和模型理解能力，仅供参考。
-"""
-
-def clear_docs_folder(docs_path:str):
-    
-    if os.path.exists(docs_path):
-        # 如果存在，删除整个目录及其内容
-        try:
-            shutil.rmtree(docs_path)
-            print("✅ docs 目录已删除")
-        except Exception as e:
-            print(f"❌ 删除 docs 目录失败：{str(e)}")
-            return False
-
-    # 重新创建空的 docs 目录
-    try:
-        os.makedirs(docs_path)
-        print("✅ docs 目录已重新创建")
-        return True
-    except Exception as e:
-        print(f"❌ 创建 docs 目录失败：{str(e)}")
-        return False
+> 🕒***{timestamp}*** ⚠️ 注：以上分析基于当前输入的数据文件和模型理解能力，仅供参考。"""
 
 def custom_box(input, output, session):
     # 自定义样式（字符串）
@@ -66,7 +34,7 @@ def custom_box(input, output, session):
         ui.input_text_area("custom_message",
                            ui.HTML("<strong>你的问题🔍:</strong>"),
                            rows=2, width="100%", 
-                           value="怎么创建PydanticAgent实例",
+                           value="检索文件，并简单介绍这份文件内容",
                            ),
         ui.br(),
         ui.div(

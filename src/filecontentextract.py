@@ -14,12 +14,6 @@ from .models import FileMatchList, OverallState
 from .directorytreegenerator import DirectoryTreeGenerator
 from .prompts_zh import file_extract_instructions,final_answer_instructions
 
-
-import logging
-
-# 初始化 logger
-logger = logging.getLogger(__name__)
-
 class FileContentExtract:
     def __init__(
         self,
@@ -37,7 +31,9 @@ class FileContentExtract:
             openai_api_base=api_base,
         )
         self.name = name
+        self.config = {"configurable": {"thread_id": "chatbot_agent"}}
 
+        #graph.stream({"messages": [{"role": "user", "content": user_input}]}, config)
         # 构建 prompt 模板
         self.extract_prompt = ChatPromptTemplate.from_messages([
             ("system", file_extract_instructions),
@@ -47,6 +43,28 @@ class FileContentExtract:
         # 构建链式调用
         self.extract_chain = self.extract_prompt | self.llm.with_structured_output(FileMatchList, method="function_calling")
 
+    def content_extract(self, 
+                        file_content: str,
+                        research_topic: str ) -> FileMatchList:
+        """
+        执行分析并返回结构化结果
+        :param file_content: 文件内容，带行号格式如 '1: 内容'
+        :param research_topic: 研究主题
+        :return: 列表，每个元素包含 start_line, end_line, reasoning
+        """
+        result = self.extract_chain.invoke({
+            "research_topic": research_topic,
+            "file_content": file_content
+        })
+
+        matches = []
+        for item in result.args:
+            matches.append({
+                "start_line": item.start_line,
+                "end_line": item.end_line,
+                "reasoning": item.reasoning
+            })
+        return matches
 
     def final_answer(self,  research_topic: str, content: str) -> str:
         """
@@ -74,32 +92,9 @@ class FileContentExtract:
             "research_topic": research_topic,
             "content": content
         })
-        
-        print("[final_answer]执行完成.")
+
+        #print("Assistant:", result["messages"][-1].content)
         return result.content
-
-    def content_extract(self, 
-                        file_content: str,
-                        research_topic: str ) -> FileMatchList:
-        """
-        执行分析并返回结构化结果
-        :param file_content: 文件内容，带行号格式如 '1: 内容'
-        :param research_topic: 研究主题
-        :return: 列表，每个元素包含 start_line, end_line, reasoning
-        """
-        result = self.extract_chain.invoke({
-            "research_topic": research_topic,
-            "file_content": file_content
-        })
-
-        matches = []
-        for item in result.args:
-            matches.append({
-                "start_line": item.start_line,
-                "end_line": item.end_line,
-                "reasoning": item.reasoning
-            })
-        return matches
 
     def _filelist(self, path: str, include_hidden: bool = False, include_extensions: Optional[List[str]] = None) -> List[str]:
         """
@@ -154,14 +149,19 @@ class FileContentExtract:
     def _generate_markdown_ref(self, index, filename, start_line, end_line, reason, content):
         template = f"""<!-- 第 {index} 个引用开始 -->
 <blockquote>
-<small>来源【{index}】：<code>{filename}</code>，第 <strong>{start_line}</strong> 至 <strong>{end_line}</strong> 行</small><br>
+<hr>
+<strong>来源[{index}]：</strong> 
+<code>{filename}</code>，第 <strong>{start_line}</strong> 至 <strong>{end_line}</strong> 行<br>
 
-<em>匹配原因：{reason}</em>
+<strong>匹配原因：</strong>
+{reason}
 
 <strong>匹配内容：</strong>
+```text
 
 {content}
 
+```
 </blockquote>
 <!-- 第 {index} 个引用结束 -->"""
 
@@ -252,7 +252,7 @@ class FileContentExtract:
 
         # 收集相关文本内容
         web_research_result = [match["reasoning"] for match in response_matches]
-        print("[scanning]执行完成.")
+        print(f"Scanning 执行完成: {file_path} ")
 
         return {
             "sources_gathered": sources_gathered,
@@ -295,7 +295,7 @@ class FileContentExtract:
                     results.append(result)
             else:
                 print(f"\n 找不到文件或目录：{file_path}")
-        
+
         self.last_results = results
         return results
 
@@ -362,17 +362,18 @@ class FileContentExtract:
                         reasoning = source['reasoning']
                         relevant_content = source['relevant_content']
                         
-                        # 生成对应的 Markdown 引用块
-                        ref_block = self._generate_markdown_ref(
-                            index=len(references) + 1,  # 自动递增索引，避免依赖外部 loop 变量
-                            filename=file_path,
-                            start_line=start_line,
-                            end_line=end_line,
-                            reason=reasoning,
-                            content=relevant_content
-                        )
-                        
-                        references.append(ref_block)
+                        if source['relevant_content'] and source['relevant_content'].strip():
+                            # 生成对应的 Markdown 引用块
+                            ref_block = self._generate_markdown_ref(
+                                index=len(references) + 1,  # 自动递增索引，避免依赖外部 loop 变量
+                                filename=file_path,
+                                start_line=start_line,
+                                end_line=end_line,
+                                reason=reasoning,
+                                content=relevant_content
+                            )
+
+                            references.append(ref_block)
 
                     except KeyError as e:
                         print(f"缺少必要字段: {e}，source 数据：{source}")
