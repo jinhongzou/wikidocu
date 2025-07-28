@@ -16,12 +16,9 @@ WikiDocu 是一个基于 langchain 构建的文档分析工具，旨在帮助用
 
 <img src="./imgs/demo0.png" title="文档问答" alt="web端" width="90%">
 
-
 ##### 示例二：分析项目的文件代码，总结一份githbu项目的README文档
 
 <img src="./imgs/demo3-项目readme.png" title="文档问答" alt="web端" width="90%">
-
-
 
 >##### 💬 使用传统 RAG 系统的工作流程：
 1. **预处理阶段**：将所有文档转换为向量表示，并存储在向量数据库中。
