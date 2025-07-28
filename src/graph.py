@@ -164,8 +164,10 @@ async def final_answer(state: OverallState):
     #user_message = state["messages"][-1].content
     #context = state.get("web_research_result", "") 
     #research_topic = state.get("search_query", "")
-    if state.get("search_query"):
-        research_topic= state["search_query"][-1]
+    # if state.get("search_query"):
+    #     research_topic= state["search_query"][-1]
+
+    research_topic=state["messages"][-1].content
 
     if state.get("web_research_result"):
         context= state["web_research_result"][-1]
