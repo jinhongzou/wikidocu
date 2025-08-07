@@ -56,14 +56,20 @@ class FileContentExtract:
             "research_topic": research_topic,
             "file_content": file_content
         })
+        #print("result:", result)
+        if result is None:
+            # 可以记录日志、抛出异常，或返回空 matches
+            print("Warning: content_extract returned None")
+            matches = []
+        else:
+            matches = []
+            for item in result.args:
+                matches.append({
+                    "start_line": item.start_line,
+                    "end_line": item.end_line,
+                    "reasoning": item.reasoning
+                })
 
-        matches = []
-        for item in result.args:
-            matches.append({
-                "start_line": item.start_line,
-                "end_line": item.end_line,
-                "reasoning": item.reasoning
-            })
         return matches
 
     def final_answer(self,  research_topic: str, content: str) -> str:

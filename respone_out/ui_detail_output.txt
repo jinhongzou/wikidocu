@@ -1,9 +1,36 @@
 ---
 ### 第 [1] 轮检索
 ### [输入问题]:
-检索文件，并简单介绍这份文件内容
+这个项目做什么的
 ### [增强检索]:
-问题:检索文件，并简单介绍这份文件内容。 关键点：文件名称和类型, 文件主要内容概述, 文件结构和组织方式, 文件创建和更新历史, 文件相关背景信息
+问题:这个项目做什么的。 关键点：项目目标与功能概述, 项目主要用途与应用场景, 项目核心模块与实现功能, 项目技术栈与依赖项说明, 项目近期更新与功能变更记录
+
+### Scanning the files: 
+.\docs....
+---
+### 第 [1] 轮检索
+### [输入问题]:
+这个项目做什么的
+### [增强检索]:
+问题:这个项目做什么的。 关键点：项目名称 功能介绍, 项目目标与应用场景, 项目核心技术与实现方式, 项目开发背景与解决的问题, 项目使用的技术栈和依赖项
+
+### Scanning the files: 
+.\docs....
+---
+### 第 [1] 轮检索
+### [输入问题]:
+这个项目做什么的
+### [增强检索]:
+问题:这个项目做什么的。 关键点：项目的主要功能与用途, 项目解决的核心问题, 项目的应用领域或场景, 项目的技术特点或创新点, 项目的用户群体或受益方
+
+### Scanning the files: 
+.\docs....
+---
+### 第 [1] 轮检索
+### [输入问题]:
+这个项目做什么的
+### [增强检索]:
+问题:这个项目做什么的。 关键点：项目名称 功能介绍, 项目目标与应用场景, 项目核心技术与实现方式, 项目解决的主要问题, 项目开发背景与意义
 
 ### Scanning the files: 
 .\docs....
@@ -12,69 +39,14 @@
 <blockquote>
 <hr>
 <strong>来源[1]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\app.py</code>，第 <strong>1</strong> 至 <strong>17</strong> 行<br>
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\app_wikidocu.py</code>，第 <strong>22</strong> 至 <strong>42</strong> 行<br>
 
 <strong>匹配原因：</strong>
-文件名称和类型: app.py, 文件主要内容概述: 该文件定义了一个Shiny应用程序，包括UI和服务器设置，以及运行应用程序的入口点。文件结构和组织方式: 文件按照模块化的方式组织，包括导入、UI定义、服务器设置和运行应用程序的代码块。文件创建和更新历史: 未提供具体的历史信息。文件相关背景信息: 该文件是用于动态创建多个ui.navset_card示例的应用程序的一部分。
+这部分描述了应用的用户界面，包括主输出区域和检索结果区域，体现了项目功能介绍和应用场景。
 
 <strong>匹配内容：</strong>
 ```text
 
-# app.py
-
-from shiny import App, ui
-from app_wikidocu import setup_server
-
-
-app_ui = ui.page_fluid(
-    ui.h1("动态创建多个 ui.navset_card 示例"),
-    ui.hr(),
-    ui.input_action_button("add_more", "添加更多组件"),
-    ui.output_ui("dynamic_content"),
-)
-
-app = App(app_ui, setup_server)
-
-if __name__ == "__main__":
-    app.run()
-
-```
-</blockquote>
-<!-- 第 1 个引用结束 -->
-
-<!-- 第 2 个引用开始 -->
-<blockquote>
-<hr>
-<strong>来源[2]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\app_wikidocu.py</code>，第 <strong>1</strong> 至 <strong>189</strong> 行<br>
-
-<strong>匹配原因：</strong>
-包含文件的主要内容概述，结构和组织方式，创建和更新历史，相关背景信息
-
-<strong>匹配内容：</strong>
-```text
-
-from shiny import App, ui, render, reactive
-import os
-import datetime
-
-
-from frontend.utils import generate_full_report,custom_box
-from global_vars import ui_detail_output_handler, ui_main_outputt_handler, UI_DETAIL_OUTPUT_PATH,UI_MAIN_OUTPUTT_PATH
-
-SCAN_DIR = "./docs"
-
-ui_detail_output_handler.clear_file()
-ui_main_outputt_handler.clear_file()
-ui_main_outputt_handler.write_content("欢迎使用 **WikiDocu**！请在下方输入您的问题, 点击 **检索** 以开始分析。")
-
-# ========== UI ==========
-app_ui = ui.page_fluid(
-    ui.tags.style("""
-            .shiny-modal-backdrop {
-                display: none !important;
-            }"""
-    ),
     ui.row(
         ui.column(
             6,
@@ -96,37 +68,22 @@ app_ui = ui.page_fluid(
         )
     ),
 )
-'''
-    ui.row(
-        ui.column(
-            6,
-            ui.card(
-                ui.card_header("检索文件列表"),
-                #ui.input_text("input_file_paths", "请输入查询目录（默认当前目录）", value="D:/github_rep/gemini-fullstack-langgraph-quickstart/testfiles/README.md"),
-                ui.row(
-                    ui.column(12,
-                        ui.input_text("dir_path", "选中的目录路径", value="", width="100%"),
-                        ui.input_action_button("choose_dir", "加载文件", onclick="chooseDirectory()", class_="btn-primary")
-                    )
-                ),
-                style="height: 400px; overflow-y: auto;"
-            )
-        ),
-        ui.column(
-            6,
-            ui.card(
-                #ui.card_header("输入框"),
-                ui.card_header("日志"),
-                ui.column(12,
-                    #ui.input_text_area("custom_message", "请输入研究主题", value="怎么创建PydanticAgent实例", width="100%"),
-                    #ui.input_checkbox("deep_research", "启用深度研究", False),
-                    #ui.input_action_button("submit", "开始分析")
-                ),
-                style="height: 300px; overflow-y: auto;"
-            )
-        )
-    )
-'''
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\app_wikidocu.py</code>，第 <strong>75</strong> 至 <strong>193</strong> 行<br>
+
+<strong>匹配原因：</strong>
+这部分包含了服务器逻辑，如处理用户输入、调用模型进行分析和生成报告等，体现了项目的核心技术与实现方式以及解决的主要问题。
+
+<strong>匹配内容：</strong>
+```text
 
 # ========== Server Logic ==========
 from shiny import App, ui, render, reactive
@@ -134,8 +91,8 @@ import os
 import asyncio
 from src.filecontentextract import FileContentExtract
 
-model_name = os.getenv("MODEL_NAME", "your-model-name")
-model_name_answer = os.getenv("MODEL_NAME_QWEN3", "your-model-name")
+model_name = os.getenv("OPENAI_MODEL", "your-model-name")
+model_name_answer = os.getenv("OPENAI_MODEL", "your-model-name")
 
 base_url = os.getenv("OPENAI_BASE_URL", "your-base-url")
 api_key = os.getenv("OPENAI_API_KEY", "your-api-key")
@@ -243,6 +200,10 @@ def server(input, output,  session):
         except Exception as e:
             ui.notification_show(f"❌ 分析过程中发生错误：{str(e)}", type="error", duration=10 )
             g_value_main_output.set("⚠️ 分析过程中发生错误，请重试。")
+        finally:
+            # 无论成功与否，都启用按钮
+            ui.update_action_button("custom_send", disabled=False)
+
 
 ```
 </blockquote>
@@ -252,10 +213,239 @@ def server(input, output,  session):
 <blockquote>
 <hr>
 <strong>来源[3]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\components.py</code>，第 <strong>1</strong> 至 <strong>17</strong> 行<br>
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\app_wikidocu.py</code>，第 <strong>196</strong> 至 <strong>198</strong> 行<br>
 
 <strong>匹配原因：</strong>
-文件名称和类型: components.py, 文件主要内容概述: 包含了几个用于Shiny应用的函数，如left_panel, right_panel和layout_6_6, 文件结构和组织方式: 按照函数定义的方式组织, 文件创建和更新历史: 无明确创建和更新历史信息, 文件相关背景信息: 该文件是Shiny应用的一部分，用于构建应用的布局
+这部分展示了如何启动应用，是项目运行的关键部分，体现了项目的开发背景与意义。
+
+<strong>匹配内容：</strong>
+```text
+
+app = App(app_ui, server)
+if __name__ == "__main__":
+    app.run()
+
+```
+</blockquote>
+<!-- 第 3 个引用结束 -->
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析文档结构与核心内容, 文档摘要生成方法与工具, 提取文档关键信息的步骤, 文档内容总结技巧与模板, 多类型文档（如PDF、Word）解析与分析方式
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [2] 轮检索
+### [输入问题]:
+这个项目主要做什么用
+### [增强检索]:
+问题:这个项目主要做什么用。 关键点：项目的主要功能与用途, 项目的目标与应用场景, 项目解决的核心问题, 项目的用户群体或使用对象, 项目的技术栈或实现方式
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\app.py</code>，第 <strong>8</strong> 至 <strong>8</strong> 行<br>
+
+<strong>匹配原因：</strong>
+描述了应用的主要功能，即动态创建多个 ui.navset_card 的示例
+
+<strong>匹配内容：</strong>
+```text
+
+    ui.h1("动态创建多个 ui.navset_card 示例"),
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\app.py</code>，第 <strong>10</strong> 至 <strong>11</strong> 行<br>
+
+<strong>匹配原因：</strong>
+描述了应用的具体用途，包括添加更多组件和输出动态内容
+
+<strong>匹配内容：</strong>
+```text
+
+    ui.input_action_button("add_more", "添加更多组件"),
+    ui.output_ui("dynamic_content"),
+
+```
+</blockquote>
+<!-- 第 2 个引用结束 -->
+
+<!-- 第 3 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[3]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\test_app2.py</code>，第 <strong>22</strong> 至 <strong>22</strong> 行<br>
+
+<strong>匹配原因：</strong>
+描述了函数 create_navset_ui 的用途，即动态创建 navset 组件的 UI，这与项目的主要功能与用途相关。
+
+<strong>匹配内容：</strong>
+```text
+
+    """动态创建 navset 组件的 UI"""
+
+```
+</blockquote>
+<!-- 第 3 个引用结束 -->
+
+<!-- 第 4 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[4]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\test_app2.py</code>，第 <strong>63</strong> 至 <strong>70</strong> 行<br>
+
+<strong>匹配原因：</strong>
+定义了应用程序的用户界面（UI），包括标题、按钮和输出区域，这与项目的目标与应用场景相关。
+
+<strong>匹配内容：</strong>
+```text
+
+app_ui = ui.page_fluid(
+    ui.h1("动态创建多个 ui.navset_card 示例"),
+    ui.hr(),
+    ui.input_action_button("add_more", "添加更多组件"),
+    ui.output_ui("dynamic_content"),
+    #ui.h3("当前选中的值:"),
+    #ui.output_code("selected_values")
+)
+
+```
+</blockquote>
+<!-- 第 4 个引用结束 -->
+
+<!-- 第 5 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[5]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\test_app2.py</code>，第 <strong>72</strong> 至 <strong>105</strong> 行<br>
+
+<strong>匹配原因：</strong>
+定义了服务器逻辑，包括动态内容生成和用户交互处理，这与项目解决的核心问题和实现方式相关。
+
+<strong>匹配内容：</strong>
+```text
+
+def server(input, output, session):
+    # 用 reactive.Value 保存累计的 UI 内容
+    dynamic_ui_content = reactive.Value(ui.TagList())
+
+    @render.ui
+    @reactive.event(input.add_more)
+    def dynamic_content():
+        navset_types = list(navset_configs.keys())
+        selected_type = random.choice(navset_types)  # 随机选择一个类型
+
+        # 生成新内容
+        new_content = ui.TagList(
+            #ui.h4(f"第 {len(dynamic_ui_content.get()) + 1} 次添加的组件（{selected_type}）"),
+            create_navset_ui(selected_type),
+        )
+
+        # 追加到已有内容中
+        current_content = dynamic_ui_content.get()
+        current_content.append(new_content)
+        dynamic_ui_content.set(current_content)
+
+        return dynamic_ui_content.get()  # 返回全部内容
+
+    # 显示所有选中的值
+    @render.code
+    def selected_values():
+        selected = {}
+        for navset_type in navset_configs.keys():
+            for navset_id in navset_configs[navset_type].keys():
+                component_id = f"{navset_type}_{navset_id}"
+                if hasattr(input, component_id):
+                    selected[component_id] = getattr(input, component_id)()
+        return str(selected)
+
+
+```
+</blockquote>
+<!-- 第 5 个引用结束 -->
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析文档结构与核心内容, 文档摘要生成方法与工具, 提取文档关键信息的步骤, 文档内容归纳与总结技巧, 自动化文档分析技术
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：文档主要内容概述, 文档结构与组织方式, 文档核心观点与结论, 文档关键数据与事实, 文档引用的参考文献
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\app.py</code>，第 <strong>1</strong> 至 <strong>17</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落包含了文档的主要内容概述，结构与组织方式，核心观点与结论等关键信息。
+
+<strong>匹配内容：</strong>
+```text
+
+# app.py
+
+from shiny import App, ui
+from app_wikidocu import setup_server
+
+
+app_ui = ui.page_fluid(
+    ui.h1("动态创建多个 ui.navset_card 示例"),
+    ui.hr(),
+    ui.input_action_button("add_more", "添加更多组件"),
+    ui.output_ui("dynamic_content"),
+)
+
+app = App(app_ui, setup_server)
+
+if __name__ == "__main__":
+    app.run()
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\components.py</code>，第 <strong>1</strong> 至 <strong>17</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落包含了components.py文件的主要内容概述，包括函数定义和布局定义。
 
 <strong>匹配内容：</strong>
 ```text
@@ -280,16 +470,37 @@ def layout_6_6():
 
 ```
 </blockquote>
+<!-- 第 2 个引用结束 -->
+
+<!-- 第 3 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[3]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\components.py</code>，第 <strong>18</strong> 至 <strong>21</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落继续描述了layout_6_6函数的定义，这是文档主要内容的一部分。
+
+<strong>匹配内容：</strong>
+```text
+
+    return ui.row(
+        ui.column(6, ui.output_text("detail_output", inline=False)),
+        ui.column(6, ui.output_text("main_output", inline=False))
+    )
+
+```
+</blockquote>
 <!-- 第 3 个引用结束 -->
 
 <!-- 第 4 个引用开始 -->
 <blockquote>
 <hr>
 <strong>来源[4]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\config.py</code>，第 <strong>1</strong> 至 <strong>18</strong> 行<br>
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\config.py</code>，第 <strong>1</strong> 至 <strong>19</strong> 行<br>
 
 <strong>匹配原因：</strong>
-文件名称和类型: config.py, 文件主要内容概述: 配置字典定义, 文件结构和组织方式: 代码组织在单个文件中, 文件创建和更新历史: 无相关信息, 文件相关背景信息: 无相关信息
+该段落包含了文档的主要内容概述，结构与组织方式，核心观点与结论，关键数据与事实，以及参考文献（隐含在代码注释中）
 
 <strong>匹配内容：</strong>
 ```text
@@ -312,6 +523,7 @@ navset_configs = {
     #     "default": {"title": "Underline Card"},
     #     "with_header": {"title": "With Header", "header": "Header content"},
     # },
+}
 
 ```
 </blockquote>
@@ -321,10 +533,10 @@ navset_configs = {
 <blockquote>
 <hr>
 <strong>来源[5]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\navset_builder.py</code>，第 <strong>1</strong> 至 <strong>43</strong> 行<br>
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\navset_builder.py</code>，第 <strong>1</strong> 至 <strong>43</strong> 行<br>
 
 <strong>匹配原因：</strong>
-该段落描述了文件navset_builder.py的内容，包括文件结构和组织方式，以及文件的主要功能和实现细节。
+该段落包含了文档的主要内容概述，包括类定义、方法实现以及组件的创建过程。
 
 <strong>匹配内容：</strong>
 ```text
@@ -381,285 +593,10 @@ class NavsetUIBuilder:
 <blockquote>
 <hr>
 <strong>来源[6]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\server.py</code>，第 <strong>1</strong> 至 <strong>157</strong> 行<br>
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\test_app2.py</code>，第 <strong>1</strong> 至 <strong>109</strong> 行<br>
 
 <strong>匹配原因：</strong>
-包含文件基本信息，如文件名、类型和主要内容概述
-
-<strong>匹配内容：</strong>
-```text
-
-# server.py
-
-from shiny import render, reactive, ui
-import os
-import random
-import datetime
-
-from frontend.navset_builder import NavsetUIBuilder
-from frontend.config import navset_configs
-from frontend.utils import generate_full_report,clear_docs_folder,custom_box
-from src.filecontentextract import FileContentExtract
-from global_vars import ui_detail_output_handler, ui_main_outputt_handler, UI_DETAIL_OUTPUT_PATH,UI_MAIN_OUTPUTT_PATH
-
-
-SCAN_DIR = "./docs"
-
-ui_detail_output_handler.clear_file()
-ui_main_outputt_handler.clear_file()
-ui_main_outputt_handler.write_content("欢迎使用 **WikiDocu**！请在下方输入您的问题, 点击 **检索** 以开始分析。")
-
-
-builder = NavsetUIBuilder(navset_configs)
-
-'''
-def setup_server(input, output, session):
-    dynamic_ui_content = reactive.Value(ui.TagList())
-
-    @output
-    @render.text
-    @reactive.file_reader(UI_DETAIL_OUTPUT_PATH)
-    async def detail_output():
-        try:
-            if not os.path.exists(UI_DETAIL_OUTPUT_PATH) or not os.path.isfile(UI_DETAIL_OUTPUT_PATH):
-                print(f"Log file does not exist: {UI_DETAIL_OUTPUT_PATH}")
-                return "Log file not found."
-
-            with open(UI_DETAIL_OUTPUT_PATH, "r", encoding='utf-8') as file:
-                log_lines = file.readlines()
-                return ui.HTML(f'<div style="font-size: 18px; background-color: #f0f0f0; padding: 10px;">{"".join(log_lines)}</div>')
-
-        except Exception as e:
-            return f"读取文件出错：{str(e)}"
-
-    @output
-    @render.text
-    @reactive.file_reader(UI_MAIN_OUTPUTT_PATH)
-    async def main_output():
-        try:
-            if not os.path.exists(UI_MAIN_OUTPUTT_PATH) or not os.path.isfile(UI_MAIN_OUTPUTT_PATH):
-                print(f"Log file does not exist: {UI_MAIN_OUTPUTT_PATH}")
-                return "Log file not found."
-
-            with open(UI_MAIN_OUTPUTT_PATH, "r", encoding='utf-8') as file:
-                log_lines = file.readlines()
-                return ui.HTML(f'<div style="font-size: 18px; background-color: #f0f0f0; padding: 10px;">{"".join(log_lines)}</div>')
-
-        except Exception as e:
-            return f"读取文件出错：{str(e)}"
-
-    @output
-    @render.ui
-    @reactive.event(input.add_more)
-    def dynamic_content():
-        navset_types = list(navset_configs.keys())
-        selected_type = random.choice(navset_types)
-
-        new_content = ui.TagList(
-            builder.create_navset_ui(selected_type),
-        )
-
-        current_content = dynamic_ui_content.get()
-        current_content.append(new_content)
-        dynamic_ui_content.set(current_content)
-
-        return dynamic_ui_content.get()
-
-    @output
-    @render.code
-    def selected_values():
-        selected = {}
-        for navset_type in navset_configs.keys():
-            for navset_id in navset_configs[navset_type].keys():
-                component_id = f"{navset_type}_{navset_id}"
-                if hasattr(input, component_id):
-                    selected[component_id] = getattr(input, component_id)()
-        return str(selected)
-
-'''
-# ========== Server Logic ==========
-from shiny import App, ui, render, reactive
-import os
-import asyncio
-from src.filecontentextract import FileContentExtract
-
-model_name = os.getenv("MODEL_NAME", "your-model-name")
-model_name_answer = os.getenv("MODEL_NAME_QWEN3", "your-model-name")
-
-base_url = os.getenv("OPENAI_BASE_URL", "your-base-url")
-api_key = os.getenv("OPENAI_API_KEY", "your-api-key")
-
-from langchain_core.messages import BaseMessage, HumanMessage
-from src.graph import create_async_tools_graph
-
-graph = create_async_tools_graph()
-config = {"configurable": {"thread_id": "1"}}
-
-def setup_server(input, output,  session):
-    dynamic_ui_content = reactive.Value(ui.TagList())
-
-    # 初始化 markdown 内容
-    g_value_main_output = reactive.Value("欢迎使用 WikiDocu！请在下方输入研究主题并选择文件路径以开始分析。")
-
-    custom_box(input, output, session)
-
-    @output
-    @render.text
-    @reactive.file_reader(UI_DETAIL_OUTPUT_PATH)
-    async def detail_output():  # Added function declaration
-        try:
-            # 读取日志文件
-            # 检查文件是否存在并且是一个文件
-            if not os.path.exists(UI_DETAIL_OUTPUT_PATH) or not os.path.isfile(UI_DETAIL_OUTPUT_PATH):
-                print(f"Log file does not exist: {UI_DETAIL_OUTPUT_PATH}")
-                return "Log file not found."
-
-            # 使用内置方法读取文本文件
-            with open(UI_DETAIL_OUTPUT_PATH, "r", encoding='utf-8') as file:
-                log_lines = file.readlines()  # 读取所有行
-                return  ui.HTML(f'<div style="font-size: 18px; background-color: #f0f0f0; padding: 10px;">{ui.markdown(''.join(log_lines))}</div>')
-        except Exception as e:
-            return f"读取文件出错：{str(e)}"
-
-
-    @output
-    @render.text
-    @reactive.file_reader(UI_MAIN_OUTPUTT_PATH)
-    async def main_output():  # Added function declaration
-        try:
-            # 读取日志文件
-            # 检查文件是否存在并且是一个文件
-            if not os.path.exists(UI_MAIN_OUTPUTT_PATH) or not os.path.isfile(UI_MAIN_OUTPUTT_PATH):
-                print(f"Log file does not exist: {UI_MAIN_OUTPUTT_PATH}")
-                return "Log file not found."
-
-            # 使用内置方法读取文本文件
-            with open(UI_MAIN_OUTPUTT_PATH, "r", encoding='utf-8') as file:
-                log_lines = file.readlines()  # 读取所有行
-                return  ui.HTML(f'<div style="font-size: 18px; background-color: #f0f0f0; padding: 10px;">{ui.markdown(''.join(log_lines))}</div>')
-        except Exception as e:
-            return f"读取文件出错：{str(e)}"
-
-###############
-
-    @output
-    @render.ui
-    @reactive.event(input.add_more)
-    def dynamic_content():
-
-```
-</blockquote>
-<!-- 第 6 个引用结束 -->
-
-<!-- 第 7 个引用开始 -->
-<blockquote>
-<hr>
-<strong>来源[7]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\server.py</code>，第 <strong>158</strong> 至 <strong>241</strong> 行<br>
-
-<strong>匹配原因：</strong>
-包含文件基本信息，如文件名、类型和主要内容概述
-
-<strong>匹配内容：</strong>
-```text
-
-        navset_types = list(navset_configs.keys())
-        selected_type = random.choice(navset_types)
-
-        new_content = ui.TagList(
-            builder.create_navset_ui(selected_type),
-        )
-
-        current_content = dynamic_ui_content.get()
-        current_content.append(new_content)
-        dynamic_ui_content.set(current_content)
-
-        return dynamic_ui_content.get()
-
-    @output
-    @render.code
-    def selected_values():
-        selected = {}
-        for navset_type in navset_configs.keys():
-            for navset_id in navset_configs[navset_type].keys():
-                component_id = f"{navset_type}_{navset_id}"
-                if hasattr(input, component_id):
-                    selected[component_id] = getattr(input, component_id)()
-        return str(selected)
-
-
-##########
-    @reactive.effect
-    @reactive.event(input.custom_send)
-    async def handle_custom_send_waiting_notion():
-        research_topic = input.custom_message().strip()
-        if not research_topic:
-            ui.notification_show("⚠️ 请先输入研究主题。", type="error", duration=10 ) # 显式设置为右上角
-            return
-
-        # 显示加载提示 + 失效按键
-        ui.notification_show("⏳ 正在分析，请稍候...", type="message", duration=10 )
-        ui.update_action_button("custom_send", disabled=True)
-
-    @reactive.effect
-    @reactive.event(input.custom_send)
-    async def handle_custom_send():
-
-        research_topic = input.custom_message().strip()
-        input_path = SCAN_DIR #input.input_file_paths().strip()
-
-        if not research_topic:
-            ui.update_action_button("custom_send", disabled=False)
-            return
-
-        if not input_path or input_path == '.':
-            file_paths = [os.path.abspath(os.getcwd())]
-        else:
-            file_paths = [os.path.abspath(input_path.replace('\\', os.sep).replace('/', os.sep))]
-
-        try:
-            response = await graph.ainvoke({"messages": [HumanMessage(content=research_topic)]
-                                            }, config)
-
-            answer = response["messages"][-1].content
-            #print(f">>> type: {type(answer)}\n{answer}")
-            # ✅ 修改输出内容：添加标题、时间戳、数据源等内容
-            timestamp = datetime.datetime.now().strftime("%Y年%m月%d日 %H:%M:%S")
-
-            if not answer.strip():
-                full_report = "⚠️ 没有获取到有效的分析结果，请检查输入数据或稍后重试。"
-            else:
-                full_report = generate_full_report(research_topic, answer, file_paths, timestamp)
-
-            g_value_main_output.set(full_report)
-
-            # 如果是第一轮对话，清除欢迎词
-            if ui_main_outputt_handler._turns == 0:
-                ui_main_outputt_handler.clear_file()
-
-            ui_main_outputt_handler._turns=ui_main_outputt_handler._turns + 1
-            ui_main_outputt_handler.write_content(f"---\n### 第 [{ui_main_outputt_handler._turns}] 轮对话\n{full_report}\n")
-
-        except Exception as e:
-            ui.notification_show(f"❌ 分析过程中发生错误：{str(e)}", type="error", duration=10 )
-            g_value_main_output.set("⚠️ 分析过程中发生错误，请重试。")
-        finally:
-            # 无论成功与否，都启用按钮
-            ui.update_action_button("custom_send", disabled=False)
-
-
-```
-</blockquote>
-<!-- 第 7 个引用结束 -->
-
-<!-- 第 8 个引用开始 -->
-<blockquote>
-<hr>
-<strong>来源[8]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\test_app2.py</code>，第 <strong>1</strong> 至 <strong>109</strong> 行<br>
-
-<strong>匹配原因：</strong>
-该段落包含了文件的名称和类型，主要内容概述，文件结构和组织方式，创建和更新历史以及相关背景信息。
+该段落包含了文档的主要内容概述，包括导入的库、配置字典、函数定义以及应用程序的构建和运行。
 
 <strong>匹配内容：</strong>
 ```text
@@ -776,23 +713,14 @@ if __name__ == "__main__":
 
 ```
 </blockquote>
-<!-- 第 8 个引用结束 -->
+<!-- 第 6 个引用结束 -->
 
----
-### 第 [1] 轮检索
-### [输入问题]:
-分析这个文件代码，写一个github项目的readme文档
-### [增强检索]:
-问题:分析这个文件代码，写一个github项目的readme文档。 关键点：如何分析代码文件, 编写GitHub项目README文档的步骤, README文档应包含哪些内容, 代码分析报告模板, GitHub项目管理与文档编写最佳实践
-
-### Scanning the files: 
-.\docs....
 ---
 ### 第 [2] 轮检索
 ### [输入问题]:
-分析文件代码，写一份githbu项目的readme文档
+利好
 ### [增强检索]:
-问题:分析文件代码，写一份githbu项目的readme文档。 关键点：如何分析文件代码, 编写GitHub项目README文档的步骤, GitHub项目README文档应包含哪些内容, 代码分析报告与GitHub README文档的关系, 代码分析报告如何指导README文档的编写
+问题:利好。 关键点：Shiny应用程序开发概述, Shiny应用程序中的ui.navset_card组件, Shiny应用程序的用户界面和服务器逻辑, Shiny应用程序的组件文件内容, Shiny应用程序的配置文件内容, Shiny应用程序的构建器文件内容, Shiny应用程序的测试文件内容, Shiny应用程序的核心功能, Shiny应用程序的动态创建组件功能, Shiny应用程序的用户交互功能, Shiny应用程序的代码示例分析
 
 ### Scanning the files: 
 .\docs....
@@ -801,68 +729,19 @@ if __name__ == "__main__":
 <blockquote>
 <hr>
 <strong>来源[1]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\ScorCrd\func.R</code>，第 <strong>1</strong> 至 <strong>54</strong> 行<br>
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\app.py</code>，第 <strong>7</strong> 至 <strong>11</strong> 行<br>
 
 <strong>匹配原因：</strong>
-代码文件包含了多个函数定义，这些函数可能用于分析文件代码，编写GitHub项目README文档时可以参考这些函数的逻辑和用途
+Shiny应用程序的动态创建组件功能
 
 <strong>匹配内容：</strong>
 ```text
 
-#auc_value(data_train_woe$flag ,data_train_pred)
-auc_value <- function(target, prob) {
-  prob.rank = rank(prob)
-  if(!is.numeric(target)){
-    target = as.numeric(as.character(target))
-  }
-  cnt_1 = sum(target)
-  cnt_0 = length(target) - cnt_1
-  prob_1 = prob.rank[target == 1]
-  u = sum(prob_1) - cnt_1 * (cnt_1 + 1) / 2
-  auc = exp(log(u) - log(cnt_1) - log(cnt_0))
-  return(auc)
-}
-
-#ks_value(data_train_woe$flag ,data_train_pred)
-ks_value <- function(target, prob) {
-  if(!is.numeric(target)){
-    target = as.numeric(as.character(target))
-  }
-  sum_prob = as.data.frame(table(prob,target))
-  sum_prob = as.data.table(sum_prob)
-  sum_prob = data.table :: dcast(sum_prob, prob ~ target, value.var = "Freq")
-  sum_prob[is.na(sum_prob)] = 0
-  sum_prob = data.frame(unclass(sum_prob))
-  cum_sum_1 = (cumsum(sum_prob$X1) / sum(sum_prob$X1))
-  cum_sum_0 = (cumsum(sum_prob$X0) / sum(sum_prob$X0))
-  KS = max(abs(cum_sum_1 - cum_sum_0), na.rm = TRUE)
-  return(KS)
-}
-
-# lift_value(data_train_woe$flag ,data_train_pred)
-lift_value <- function(target, prob) {
-  if(!is.numeric(target)){
-    target = as.numeric(as.character(target))
-  }
-  t_prob = data.frame(prob,target)
-  t_prob = subset(t_prob, !is.na(prob))
-  breaks = cut_equal(prob, g=10)
-  prob_bins = split_bins(dat=t_prob,x="prob",breaks)
-  sum_prob = as.data.frame(table(prob_bins,target = t_prob$target))
-  sum_prob = as.data.table(sum_prob)
-  sum_prob = data.table :: dcast(sum_prob, prob_bins ~ target, value.var = "Freq")
-  sum_prob[is.na(sum_prob)] = 0
-  sum_prob = data.frame(unclass(sum_prob))
-  sum_lift = sum_prob[order(sum_prob$prob, decreasing = TRUE),]
-  Lift = (cumsum(sum_lift$X1) / ifelse(sum_lift$X0 + sum_lift$X1 > 0 ,cumsum(sum_lift$X0 + sum_lift$X1),1)) /(sum(sum_lift$X1,na.rm = TRUE) / sum(sum_lift$X0 + sum_lift$X1, na.rm = TRUE))
-  MAX_Lift = mean(Lift, na.rm = TRUE)
-  return(MAX_Lift)
-}
-
-# roc_plot(train_pred = dat_train, test_pred = dat_test, target = "target", score = "pred_LR", gtitle = "UCICreditCard")
-# ks_plot(train_pred = dat_train, test_pred = dat_test, target = "target", score = "pred_LR", gtitle = "UCICreditCard")
-# lift_plot(train_pred = dat_train, test_pred = dat_test, target = "target", score = "pred_LR", gtitle = "UCICreditCard")
-# lift_plot(train_pred = dat_test, test_pred = NULL, target = "target", score = "pred_LR", gtitle = "UCICreditCard TEST")
+app_ui = ui.page_fluid(
+    ui.h1("动态创建多个 ui.navset_card 示例"),
+    ui.hr(),
+    ui.input_action_button("add_more", "添加更多组件"),
+    ui.output_ui("dynamic_content"),
 
 ```
 </blockquote>
@@ -872,403 +751,31 @@ lift_value <- function(target, prob) {
 <blockquote>
 <hr>
 <strong>来源[2]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\ScorCrd\server.R</code>，第 <strong>1</strong> 至 <strong>389</strong> 行<br>
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\components.py</code>，第 <strong>1</strong> 至 <strong>17</strong> 行<br>
 
 <strong>匹配原因：</strong>
-该段落详细描述了如何分析文件代码，包括加载文件、处理数据、执行样本分析、Woe转换、特征表现、模型评估等步骤。
+包含Shiny应用程序的组件文件内容
 
 <strong>匹配内容：</strong>
 ```text
 
+# components.py
 
-#
-# This is the server logic of a Shiny web application. You can run the 
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
-#
-# 1 免登陆
-DEBUG_FLAG = 1
-#加载文件大小限制
-options(shiny.maxRequestSize=30*1024^2)
-#print(getOption("shiny.maxRequestSize"))
-#加载库文件
-source("G:/MyPrj/ScorCrd_v2.1.x/ScorCrd/require_libs.R", local=T, encoding="UTF-8")
+from shiny import ui
 
-#日志
-flog.appender(appender.file("ScorCrd-INFO.log"),'INFO')
-flog.appender(appender.file("ScorCrd-WARN.log"),'WARN')
-flog.appender(appender.file("ScorCrd-ERROR.log"),'ERROR')
-flog.info("Start ScorCrd ...", name='INFO')
+def left_panel():
+    return ui.div("左侧内容", style="border:1px solid #ccc; padding:10px;")
 
-#options(shiny.maxRequestSize=70*1024^2)
-#flog.threshold(DEBUG)
-#library(shinydashboard)
-Logged = FALSE
-my_username <- "test"
-my_password <- "test"
-cols <- c('yellow','yellow green','green','blue green' ,'blue', 'blue violet','violet','red violet', 'red', 'red orange', 'orange', 'yellow orange')
-# 将“字符型字段”转换成数值字符串
-mStr2c <- function(val_str){
-  ret <- c(unlist(strsplit(val_str," ")))
-  names(ret) <-c(unlist(strsplit(ret," ")))
-  #print(length(ret))
-  for(i in 0:length(unlist(strsplit(ret," ")))) {
-    ret[i]="character"
-  }
-  return(ret)
-}
+def right_panel():
+    return ui.div("右侧内容", style="border:1px solid #ccc; padding:10px;")
 
-mStr2c2 <- function(val_str){
-  ret <- c(unlist(strsplit(val_str," ")))
-  names(ret) <- c(unlist(strsplit(ret," ")))
-  
-  return(c(names(ret)))
-}
+# def layout_6_6():
+#     return ui.row(
+#         ui.column(6, left_panel()),
+#         ui.column(6, right_panel())
+#     )# components.py
 
-
-browse_dt<-function(filepart, charcols){
-  inFile <- filepart
-  if (is.null(inFile)){
-    print("文件目录为空")
-    return(NULL)
-  }else{
-    
-    if(length(charcols)>0){
-      pb <- data.table::fread(inFile$datapath, colClasses = charcols, integer64="numeric", header=TRUE ) # , encoding="UTF-8")
-    }else{
-      pb <- data.table::fread(inFile$datapath, colClasses = NULL    , integer64="numeric", header=TRUE ) # , encoding="UTF-8")
-    }
-
-    return(data.frame(pb))
-  }
-}
-
-
-# 数据抽样
-mSample<-function(inp_data, sample_rate){
-
-  i = 186
-  . <- good_rows <- bad_rows <- NULL
-  
-  set.seed(i)
-  
-  if(is.null(inp_data))
-    return(NULL)
-
-  sample_rate<-as.double(sample_rate)
-  
-  if ( round(length(which(inp_data$flag == 0)) * sample_rate, 0) > 0 ) {
-    good_rows <-  round(length(which(inp_data$flag == 0)) * sample_rate, 0) 
-  }else{
-    good_rows <- 1
-  }
-  if ( round(length(which(inp_data$flag == 1)) * sample_rate, 0) > 0 ) {
-    bad_rows <-  round(length(which(inp_data$flag == 1)) * sample_rate , 0) 
-  }else{
-    bad_rows <- 1
-  }
-  
-  #flog.info(good_rows)
-  
-  train_good_idx <- sample((which(inp_data$flag == 0)), good_rows, replace = F)
-  train_bad_idx  <- sample((which(inp_data$flag == 1)), bad_rows , replace = F)
-  idx_train_total <- c(train_good_idx, train_bad_idx)
-  train <- inp_data[idx_train_total,]
-  test  <- inp_data[-idx_train_total,]
-  
-  return (list(train=train, test=test))
-}
-
-
-mWoebin<-function(dt, y){
-  bins <- scorecard::woebin(dt=dt, y = y, print_step = 0)
-  
-  return(bins)
-}
-
-#获取WOE转换后的结果转成data.frame
-woe_2_dataframe <- function(x) {
-  DM<-data.frame()
-  for(i in 1:length(names(x)))
-  {
-    DM<-rbind(DM,data.frame(x[[i]]))
-  }
-  DM
-}
-
-#获取card转换后的结果转成data.frame
-card_2_dataframe <- function(x) {
-  DM<-data.frame()
-  for(i in 1:length(names(x)))
-  {
-    DM<-rbind(DM,cbind(x[[i]]$variable, x[[i]]$bin, x[[i]]$points))
-  }
-  #names(DM) <- c('特征','区间','分值')
-  names(DM) <- c('VAR','BIN','POINTS')
-  
-  return(DM)
-}
-
-errorFunc <-function(err, buttonId){
-  
-  errEl    <- sprintf("[data-for-btn=%s] .btn-err", buttonId)
-  errElMsg <- sprintf("[data-for-btn=%s] .btn-err-msg", buttonId)
-  errMessage <- err$message
-  shinyjs::html(html=errMessage, selector = errElMsg)
-  shinyjs::show(selector = errEl, anim=TRUE, animType = "fade")
-}
-
-withBusyIndicatorServer<-function(buttonId, bnt_list, expr){
-  loadingEl <- sprintf("[data-for-btn=%s] .btn-loading-indicator", buttonId)  
-  donegEl   <- sprintf("[data-for-btn=%s] .btn-done-indicator", buttonId)  
-  errEl     <- sprintf("[data-for-btn=%s] .btn-err", buttonId)
-  
-#  shinyjs::disable(buttonId)
-#  shinyjs::show(selector=loadingEl)
-#  shinyjs::hide(selector=donegEl)
-#  shinyjs::hide(selector=errEl)
-  
-  #msg_id <- showNotification("正在处理，请稍后...", duration = 0, type = "message")
-  #disable("goButton_A")
-  
-  
-#  on.exit({
-#    shinyjs::enable(buttonId)
-#    shinyjs::hide(selector=loadingEl)
-#  })
-  
-  disable(selector = 'body')
-
-  tryCatch({
-    value <- expr
-    
-    #shinyjs::show(selector = donegEl)
-    #shinyjs::delay(2000, shinyjs::hide(selector = donegEl, anim=TRUE , animType = 'fade', time=0.5))
-
-    value
-    
-  },error = function(err){errorFunc(err, buttonId) })
-  
-  enable(selector = 'body')
-
-  for(i in 1:length(bnt_list$id))
-  {
-    if(i <= bnt_list$id[bnt_list$bnt==buttonId]+1)
-    {
-      shinyjs::enable(bnt_list[i,]$bnt)
-      #print(paste("enable：", bnt_list[i,]$bnt) ) 
-    }else
-    {
-      shinyjs::disable(bnt_list[i,]$bnt)
-      #print(paste("disable：", bnt_list[i,]$bnt) ) 
-    }
-  }
-}
-
-withBusyIndicatorServer_2 <-function(buttonId, msg, expr){
-  
-  msg_id <- showNotification(paste(msg, "：正在处理，请稍后..." ), duration = 0, type = "message")
-  
-  tryCatch({
-    value <- expr
-    value
-    
-  },error = function(err){errorFunc(err, buttonId) })
- 
-  on.exit({
-
-      removeNotification(msg_id)
-
-  })
-  
-}
-
-#画箱线图
-mplotbox <- function(y, x, title, lab_x, lab_y )
-{
-  ggplot2::ggplot() +
-    geom_violin(aes(y=y, x=x, group=x, col=x), trim=FALSE) +
-    geom_boxplot(aes(y=y, x=x, group=x, col=x), width=0.2) +
-    ggtitle(title) + 
-    xlab(label=lab_x) + 
-    ylab(label=lab_y) + 
-    theme_classic()
-}
-
-bnt_list<-data.frame(id=c(1,2,3,4,5,6)
-                           ,bnt=c('goButton_A','goButton_A2','goButton_B','goButton_C','goButton_D','goButton_E')
-)
-
-shinyServer(function(input, output, session) {
-  
-  # 全局变量
-  login <- reactiveValues(authenticated = FALSE)
-  g_status <- reactiveValues(running = FALSE)
-  g_var <- reactiveValues()
-  g_dt  <- reactiveValues()
-  g_srt <- reactiveValues()
-  g_bnt <- reactiveValues()
-  
-  observe({
-    g_var$browse_file <- input$file1
-    g_var$charcolname <- input$charcolname
-    g_var$sample_rate <- input$sample_rate
-    g_var$filter_var  <- input$filter_var
-    g_var$scorecard_pdo    <- input$scorecard_pdo
-    g_var$scorecard_point  <- input$scorecard_point
-    g_var$woebin_breaks_list   <- input$woebin_breaks_list
-    g_var$woebin_special_values<- input$woebin_special_values
-  })
-  
-  
-  # Return the UI for a modal dialog with data selection input. If 'failed' 
-  # is TRUE, then display a message that the previous value was invalid.
-  dataModal <- function(failed = FALSE) {
-    modalDialog(
-      title = "身份认证",
-      textInput("username", "Username:"),
-      passwordInput("password", "Password:"),
-      footer = tagList(
-        #modalButton("Cancel"),
-        actionButton("ok", "登陆")
-      )
-    )
-  }
-  pMessage <- function(msg='告警！！！') {
-    modalDialog(
-      title = "提示信息",
-      msg,
-      footer = tagList(
-        modalButton("Cancel")
-      )
-    )
-  }
-  
-  # Show modal when button is clicked.  
-  # This `observe` is suspended only whith right user credential
-  obs1 <- observe({
-    if (DEBUG_FLAG == 0){
-      showModal(dataModal())  
-    }
-    else
-    {
-      print("DEBUG")
-    }
-  })
-  
-  obs2 <- observe({
-    req(input$ok)
-    isolate({
-      Username <- input$username
-      Password <- input$password
-    })
-    Id.username <- which(my_username == Username)
-    Id.password <- which(my_password == Password)
-    if (length(Id.username) > 0 & length(Id.password) > 0) {
-      if (Id.username == Id.password) {
-        Logged <- TRUE
-        login$authenticated <- TRUE
-        obs1$suspend()
-        removeModal()
-        flog.info("[登录] user(%s) login", Username, name='INFO')
-      } else {
-        login$authenticated <- FALSE
-      }     
-    }
-  })
-  
-  output$dataInfo <- renderPrint({
-    if (login$authenticated) "OK!!!!!"
-    else "You are NOT authenticated"
-  })
-  
-  obs_menuItem_A <- observeEvent(input$goButton_A, {
-    withBusyIndicatorServer("goButton_A", bnt_list, {
-      
-      #disable(selector = 'body')
-      
-      flog.info("[数据加载] execution", name='INFO')
-      flog.info("input file is %s" , g_var$browse_file, name='INFO')
-      flog.info("char_var is %s"   , g_var$charcolname, name='INFO')
-      flog.info("filter_var is %s" , g_var$filter_var , name='INFO')
-      flog.info("sample_rate is %s", g_var$sample_rate, name='INFO')
-  
-      if( !is.null(isolate(g_var$browse_file)) ) {
-        tryCatch(g_dt_file_tmp <- browse_dt(isolate(g_var$browse_file) , mStr2c(isolate(g_var$charcolname)))
-                 ,warning=function(w){
-                   TryCatch_msg = paste("obs_menuItem_A.browse_dt: ", w)
-                   flog.info(TryCatch_msg, w, name='WARN')
-                   sprintf('告警:%s', TryCatch_msg)
-                   showModal(pMessage(paste("告警：", TryCatch_msg)))
-                 }
-                 ,error=function(e){
-                   TryCatch_msg = paste("obs_menuItem_A.browse_dt: ", e)
-                   flog.info(TryCatch_msg, e, name='ERROR')
-                   sprintf('错误:%s', TryCatch_msg)
-                   showModal(pMessage(paste("错误：", TryCatch_msg, "")))
-                   
-                 }
-        )
-        
-        vars <- names(g_dt_file_tmp)
-        var_filter <- vars[!vars %in% mStr2c2(isolate(g_var$filter_var))]
-  
-        g_dt$g_dt_file  <- data.frame(g_dt_file_tmp[, var_filter])
-  
-        tryCatch(mod_dat <- mSample(g_dt$g_dt_file, isolate(g_var$sample_rate))
-                 ,warning=function(w){
-                   TryCatch_msg = paste("obs_menuItem_A.mSample: ", w)
-                   flog.info(TryCatch_msg, w, name='WARN')
-                   sprintf('告警:%s', TryCatch_msg)
-                   showModal(pMessage(paste("告警：", TryCatch_msg)))
-                 }
-                 ,error=function(e){
-                   TryCatch_msg = paste("obs_menuItem_A.mSample: ", e)
-                   flog.info(TryCatch_msg, e, name='ERROR')
-                   sprintf('错误:%s', TryCatch_msg)
-                   showModal(pMessage(paste("错误：", TryCatch_msg," [常见错误：缺少flag字段，或者其非0、1]")))
-                   
-                 }
-        )
-        ##保留源数据
-        g_srt$train <-mod_dat$train
-        g_srt$test  <-mod_dat$test
-        
-        g_dt$train <- data.frame(mod_dat$train)
-        g_dt$test  <- data.frame(mod_dat$test)
-        flog.info("Sample Data：train = %s, train bad= %s, test= %s, test bad= %s"
-                  , nrow(mod_dat$train ), length(mod_dat$train$flag=='1')
-                  , nrow(mod_dat$test)  , length(mod_dat$test$flag =='1')
-        , name='INFO')
-  
-        output$dat_smy <- renderPrint({print(summary(g_dt$g_dt_file))})
-        
-        output$dat_str<- renderPrint({print(str(g_dt$g_dt_file))})
-        
-        output$contents <- DT::renderDataTable({g_dt$g_dt_file}
-                                               ,  options = list(scrollX= TRUE, searchHlight=TRUE)
-        )
-        
-        output$dat_train <- DT::renderDataTable({g_dt$train}
-                                                ,  options = list(scrollX= TRUE, searchHlight=TRUE)
-        )
-        
-        output$dat_test <- DT::renderDataTable({g_dt$test}
-                                               ,  options = list(scrollX= TRUE, searchHlight=TRUE)
-        )
-      }
-      
-      if(input$select=="error"){
-        stop("choose anoter option")
-      }
-      
-     #enable(selector = 'body')
-     
-    })
-    
+def layout_6_6():
 
 ```
 </blockquote>
@@ -1278,427 +785,28 @@ shinyServer(function(input, output, session) {
 <blockquote>
 <hr>
 <strong>来源[3]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\ScorCrd\ui.R</code>，第 <strong>8</strong> 至 <strong>331</strong> 行<br>
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\config.py</code>，第 <strong>5</strong> 至 <strong>18</strong> 行<br>
 
 <strong>匹配原因：</strong>
-这段代码定义了一个Shiny应用程序的用户界面，包括标题、侧边栏菜单和主体部分。这与如何分析文件代码和编写GitHub项目README文档的步骤相关，因为它展示了如何组织和展示代码结构。
+Shiny应用程序的配置文件内容
 
 <strong>匹配内容：</strong>
 ```text
 
-# Define UI for application that draws a histogram
-shinyUI( 
-  dashboardPage (
-
-    # Header
-    dashboardHeader(
-      title = 'HNB-零售银行部'
-      ),
-    
-    # Siderbar
-    dashboardSidebar(
-      sidebarMenu(
-        menuItem("样本加载", icon = icon("table")         , tabName = "menuItem_A" ),
-        menuItem("样本分析", icon = icon("bar-chart-o")   , tabName = "menuItem_A2"),
-        menuItem("WOE转换" , icon = icon("credit-card")   , tabName = "menuItem_B"),
-        menuItem("特征表现", icon = icon("line-chart")    , tabName = "menuItem_C"),
-        menuItem("模型评估", icon = icon("dashboard")     , tabName = "menuItem_D"),
-        menuItem("评分卡"  , icon = icon("list-alt")      , tabName = "menuItem_E")
-      )
-    ),
-    # Body
-    dashboardBody(
-      fluidRow(
-        tabItems(
-          tabItem(tabName = "menuItem_A",
-            # 操作面板
-            sidebarLayout(
-                sidebarPanel(
-                  width =3,
-                  fileInput(inputId='file1', accept = ".csv", label = "查找", placeholder = "传入文件…"),
-                  conditionalPanel(
-                    condition = "input.smoother == ture",
-                    selectInput("sample_rate","抽样比例:",list(0.7,0.2,0.3,0.4,0.5,0.6,0.8,0.9))
-                  ),
-                  textInput(inputId = "charcolname",
-                            label =  "字符型变量",
-                            value = "",
-                            placeholder=TRUE
-                  ),
-                  textInput(inputId = "filter_var",
-                            label =  "过滤变量",
-                            value = ""
-                  ),
-                  conditionalPanel(
-                    condition = "inpcst_unn_id flagut.cluster == ture",
-                    selectInput(inputId = "target",label =  'target', c('flag')) #  levels(pb)  as.list(pb@meta.data$seurat_clusters)
-                  ),
-                  actionButton("goButton_A", "Run", width="100%", class = "btn-success",icon = icon("refresh") )
-                ),
-              
-                # 展示区
-                mainPanel(
-                  width = 9,
-                  fluidPage( 
-                    position = c("left") ,
-                    tabsetPanel(
-                      tabPanel(title= "样本概况", fluidPage( verbatimTextOutput("dat_str"), verbatimTextOutput("dat_smy"))),
-                      tabPanel(title= "源样本数据"  , DT::dataTableOutput("contents")),
-                      tabPanel(title= "训练样本清单", DT::dataTableOutput("dat_train")),
-                      tabPanel(title= "测试样本清单", DT::dataTableOutput("dat_test"))
-                    )
-                )
-               )
-            ) #sidebarLayout
-          ) , #tabItem
-          tabItem( tabName = "menuItem_A2",
-            # 展示区
-            mainPanel(
-              width = 12,
-                fluidPage(
-                  useShinyjs()
-                  , position = c("left") 
-                  , actionButton("goButton_A2", "Run", width ="20%", class = "btn-success",icon = icon("refresh"))
-                  , tabsetPanel(
-                      tabPanel(title= "样本关系", 
-                               sidebarLayout(
-                                 sidebarPanel(
-                                   width =2,
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_1_y", label="特征名称y:",choices=NULL)
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_1_x", label="特征名称x",choices=NULL)
-                                   )
-                                 ),
-                                 # 展示区
-                                 mainPanel(
-                                   width = 10,
-                                   fluidPage( 
-                                     plotOutput("FeaturePlot_1", width = "100%", height = "1200px")
-                                   )
-                                 )
-                               ) #sidebarLayout
-                      ),
-                      tabPanel(title= "样本箱线图", 
-                               #sidebarLayout(
-                               # sidebarPanel(
-                               #    width =2,
-                                #   conditionalPanel(
-                                #     condition = "inpcst_unn_id flagut.cluster == ture",
-                                #     selectInput("FeaturePlot_4_method", label="method=",choices=c("pearson", "kendall","spearman"), selected='pearson')
-                                #   ),
-                                #   conditionalPanel(
-                                #     condition = "inpcst_unn_id flagut.cluster == ture",
-                                #     checkboxGroupInput(inputId = "FeaturePlot_4_var",label ="选择变量", choices = NULL)
-                                #   )
-                                # ),
-                                # 展示区
-                                # mainPanel(
-                                # width = 10,
-                                   fluidPage( 
-                                     plotOutput("FeaturePlot_4", width = "100%", height = "800px")
-                                   )
-                               #  )
-                              # ) #sidebarLayout
-                      ), #tabPanel
-                      tabPanel(title= "样本分布", 
-                               sidebarLayout(
-                                 sidebarPanel(
-                                   width =2,
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_0_method", label="method=",choices=c("pearson", "kendall","spearman"), selected='pearson')
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     checkboxGroupInput(inputId = "FeaturePlot_0_var",label ="选择变量", choices = NULL)
-                                   )
-                                 ),
-                                 # 展示区
-                                 mainPanel(
-                                   width = 10,
-                                   fluidPage( 
-                                     plotOutput("FeaturePlot_0", width = "100%", height = "800px")
-                                   )
-                                 )
-                               ) #sidebarLayout
-                      ), #tabPanel
-                      tabPanel(title= "样本相关性", 
-                               sidebarLayout(
-                                 sidebarPanel(
-                                   width =2,
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_2_type", label="type=",choices=c('full', 'lower', 'upper'), selected='full')
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_2_method", label="method=",choices=c('circle', 'square', 'ellipse', 'number', 'shade', 'color', 'pie'), selected='circle')
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_2_order", label="order=",choices=c('original','AOE', 'FPC', 'hclust', 'alphabet'),  selected='original')
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     checkboxGroupInput(inputId = "FeaturePlot_2_var",label ="选择变量", choices = NULL)
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     numericInput(inputId = "FeaturePlot_2_srt",label =  "tl.srt=",value = "90")
-                                   )
-                                 ),
-                                 # 展示区
-                                 mainPanel(
-                                   width = 10,
-                                   fluidPage( 
-                                     plotOutput("FeaturePlot_2", width = "100%", height = "800px")
-                                   )
-                                 )
-                               ) #sidebarLayout
-                      ), #tabPanel
-                      tabPanel(title= "样本聚类", 
-                               sidebarLayout(
-                                 sidebarPanel(
-                                   width =2,
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_3_clust_cnt", label="集群个数=",choices=c(2,3,4,5,6,7,8,9), selected='3')
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     checkboxGroupInput(inputId = "FeaturePlot_3_var", label ="选择变量", choices = NULL)
-                                   )
-                                 ),
-                                 # 展示区
-                                 mainPanel(
-                                   width = 10,
-                                   fluidPage(
-                                     fluidRow(
-                                        column(6,plotOutput("FeaturePlot_wss"   , width = "100%"))
-                                       ,column(6,plotOutput("FeaturePlot_hclust", width = "100%"))
-                                       ),
-                                     plotOutput("FeaturePlot_kmeans", width = "100%")
-                                   )
-                                 )
-                               ) #sidebarLayout
-                      ) #tabPanel
-                     )
-                )
-            )
-          ) , #tabItem
-         tabItem(tabName = "menuItem_B",
-              mainPanel(
-                width =12,
-                 fluidPage(
-                   useShinyjs(),
-                   position = c("left") ,
-                   fluidRow(
-                     column(2,actionButton("goButton_B", "Run", width="100%", class = "btn-success",icon = icon("refresh"))),
-                     column(5, conditionalPanel(
-                       condition = "inpcst_unn_id flagut.cluster == ture",
-                       textInput("woebin_breaks_list",  label="断点列表"   , width="100%",value=NULL, placeholder='年龄=c(26,35,37,"Inf%,%missing"), 单位性质=c("个体经营","事业单位","党政机关","其他,%missing")')
-                     )),
-                     column(5,conditionalPanel(
-                       condition = "inpcst_unn_id flagut.cluster == ture",
-                       textInput("woebin_special_values", label="特定值", width="100%",value=NULL, placeholder='年龄=c(18,35,40,"50%,%missing"), 单位性质=c("个体经营","事业单位","党政机关","其他%,%missing")')
-                     ))
-                   ),
-                    tabsetPanel(
-                      tabPanel(title= "WOE转换结果" , verbatimTextOutput("bin_smy")),
-                      tabPanel(title= "训练样本WOE", dataTableOutput("train_woe")),
-                      tabPanel(title= "测试样本WOE", dataTableOutput("test_woe")),
-                      tabPanel(title= "特征表现" , plotOutput("bin_plot_all", width = "100%", height = "1200px")),
-                      tabPanel(title= "特征表现-单个", fluidPage(selectInput("show_bin_num", label="特征名称:",choices=NULL),
-                                                           plotOutput("bin_plot", width = "50%"),
-                                                           dataTableOutput("bin_tb") 
-                      )                      
-                      )
-                   )
-                 )
-              )
-    
-          ), #tabItem
-          tabItem(tabName = "menuItem_C",
-            mainPanel(
-              width = 12,
-                fluidPage(
-                  position = c("left") 
-                  , actionButton("goButton_C", "Run", width="20%", class = "btn-success",icon = icon("refresh")),
-                  tabsetPanel(
-                    #tabPanel(title= "特征重要性-IV值", dataTableOutput("bin_var_tb")),
-                    #tabPanel(title= "特征重要性-随机森林" , dataTableOutput("cf_var")) ,
-                    tabPanel(title= "特征重要性", fluidRow(
-                                                   box(title='IV值'    ,column(6,dataTableOutput("bin_var_tb"))),
-                                                   box(title='随机森林',column(6,dataTableOutput("cf_var")))
-                                                  )
-                    )
-                  )
-                )
-            )
-         ),
-         tabItem(tabName = "menuItem_D",
-                 mainPanel(
-                   width = 12,
-                   fluidPage(
-                     position = c("left") 
-                     , fluidRow(column(5, actionButton("goButton_D", label="Run", width="40%", class = "btn-success",icon = icon("refresh"))), 
-                                column(3, numericInput(inputId = "scorecard_point",label =  "基准分",value = "600")),
-                                column(3, numericInput(inputId = "scorecard_pdo"  ,label =  "PDO"   ,value = "50" ))
-                                
-                     ),
-                     tabsetPanel(
-                       tabPanel(title= "模型summary",   fluidPage(verbatimTextOutput("model_summary" )
-                                                                 ,plotOutput("model_desc")
-                                                                 , height = "800px" )
-                                ),
-                      
-                       #tabPanel(title= "训练样本ROC",   fluidRow(
-                       #  column(6,plotOutput("perf_eva_train_1")) ,column(6,plotOutput("perf_eva_train_2")),
-                       #  column(6,plotOutput("perf_eva_train_3")) ,column(6,plotOutput("perf_eva_train_4"))
-                       #  )
-                       tabPanel(title= "训练样本ROC",   plotOutput("perf_eva_train", width = "100%", height = "800px")),
-                       #),
-                       #tabPanel(title= "测试样本ROC",   fluidRow(
-                       #  column(6,plotOutput("perf_eva_test_1")) ,column(6,plotOutput("perf_eva_test_2")),
-                       #  column(6,plotOutput("perf_eva_test_3")) ,column(6,plotOutput("perf_eva_test_4"))
-                       #)
-                       tabPanel(title= "测试样本ROC",   plotOutput("perf_eva_test", width = "100%", height = "800px")),
-                       #),
-                      
-                       tabPanel(title= "模型稳定性PSI", plotOutput("perf_eva_psi", width = "100%", height = "800px"))
-                     )
-                   )
-                 )
-         ),
-         tabItem(tabName = "menuItem_E",
-            sidebarLayout(
-              sidebarPanel(
-                width =3,
-                fluidPage(
-                     useShinyjs(),
-                     position = c("left"),
-                     actionButton("goButton_E", label="Run", width="100%", class = "btn-success",icon = icon("refresh")),
-                     h1(""),
-                     downloadButton("Dw_Button_ScoreCard","写出评分卡" , width="100%") ,
-                     downloadButton("Dw_Button_Train_Score","Train分值", width="100%") ,
-                     downloadButton("Dw_Button_Test_Score","Test分值"  , width="100%")
-                 )
-              ),
-              mainPanel(
-                width = 9,
-                 fluidPage(
-                    position = c("left") 
-                    ,tabsetPanel(
-                     tabPanel(title= "评分卡",  dataTableOutput("score_card"))
-                  )
-                )
-              )
-           )
-         )
-
-        #-------主框架-------------
-       ) #tabItems
-     ) #fluidRow
-    ) #dashboardBody
-  ) #dashboardPage
-) #The End 
-
-# runApp('/Users/john/ScorCrd')
-# runApp('G:/MyPrj/ScorCrd')
-
-
-```
-</blockquote>
-<!-- 第 3 个引用结束 -->
-
----
-### 第 [1] 轮检索
-### [输入问题]:
-分析文件代码，写一份githbu项目的readme文档
-### [增强检索]:
-问题:分析文件代码，写一份githbu项目的readme文档。 关键点：GitHub项目README文档结构与内容, 项目代码概述与功能描述, 项目技术栈与开发环境, 项目主要模块与功能实现, 项目部署与运行指南, 项目常见问题与解决方案, 项目贡献指南与开发流程, 项目历史变更与版本更新
-
-### Scanning the files: 
-.\docs....
-### [检索结果]:
-<!-- 第 1 个引用开始 -->
-<blockquote>
-<hr>
-<strong>来源[1]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\README.md</code>，第 <strong>1</strong> 至 <strong>1</strong> 行<br>
-
-<strong>匹配原因：</strong>
-该行包含README.md文件的标题，符合项目代码概述与功能描述的关键点
-
-<strong>匹配内容：</strong>
-```text
-
-# creditscorcrd
-
-```
-</blockquote>
-<!-- 第 1 个引用结束 -->
-
-<!-- 第 2 个引用开始 -->
-<blockquote>
-<hr>
-<strong>来源[2]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\ScorCrd\func.R</code>，第 <strong>1</strong> 至 <strong>13</strong> 行<br>
-
-<strong>匹配原因：</strong>
-包含项目代码概述与功能描述
-
-<strong>匹配内容：</strong>
-```text
-
-#auc_value(data_train_woe$flag ,data_train_pred)
-auc_value <- function(target, prob) {
-  prob.rank = rank(prob)
-  if(!is.numeric(target)){
-    target = as.numeric(as.character(target))
-  }
-  cnt_1 = sum(target)
-  cnt_0 = length(target) - cnt_1
-  prob_1 = prob.rank[target == 1]
-  u = sum(prob_1) - cnt_1 * (cnt_1 + 1) / 2
-  auc = exp(log(u) - log(cnt_1) - log(cnt_0))
-  return(auc)
-}
-
-```
-</blockquote>
-<!-- 第 2 个引用结束 -->
-
-<!-- 第 3 个引用开始 -->
-<blockquote>
-<hr>
-<strong>来源[3]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\ScorCrd\func.R</code>，第 <strong>15</strong> 至 <strong>28</strong> 行<br>
-
-<strong>匹配原因：</strong>
-包含项目代码概述与功能描述
-
-<strong>匹配内容：</strong>
-```text
-
-#ks_value(data_train_woe$flag ,data_train_pred)
-ks_value <- function(target, prob) {
-  if(!is.numeric(target)){
-    target = as.numeric(as.character(target))
-  }
-  sum_prob = as.data.frame(table(prob,target))
-  sum_prob = as.data.table(sum_prob)
-  sum_prob = data.table :: dcast(sum_prob, prob ~ target, value.var = "Freq")
-  sum_prob[is.na(sum_prob)] = 0
-  sum_prob = data.frame(unclass(sum_prob))
-  cum_sum_1 = (cumsum(sum_prob$X1) / sum(sum_prob$X1))
-  cum_sum_0 = (cumsum(sum_prob$X0) / sum(sum_prob$X0))
-  KS = max(abs(cum_sum_1 - cum_sum_0), na.rm = TRUE)
-  return(KS)
+# 配置字典
+navset_configs = {
+    "navset_card_tab": {
+        "对话": {"title": "Tab Card"},
+        # "with_sidebar": {"title": "Tab with Sidebar", "sidebar": ui.sidebar("Sidebar content")},
+    },
+    # "navset_card_pill": {
+    #     "default": {"title": "Pill Card"},
+    #     "below": {"title": "Pill Below", "placement": "below"},
+    # },
+    # "navset_card_underline": {
+    #     "default": {"title": "Underline Card"},
+    #     "with_header": {"title": "With Header", "header": "Header content"},
+    # },
 
 ```
 </blockquote>
@@ -1708,33 +816,50 @@ ks_value <- function(target, prob) {
 <blockquote>
 <hr>
 <strong>来源[4]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\ScorCrd\func.R</code>，第 <strong>30</strong> 至 <strong>48</strong> 行<br>
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\navset_builder.py</code>，第 <strong>8</strong> 至 <strong>43</strong> 行<br>
 
 <strong>匹配原因：</strong>
-包含项目代码概述与功能描述
+该段落描述了Shiny应用程序中的navset_builder.py文件，其中包含了动态创建组件的功能。
 
 <strong>匹配内容：</strong>
 ```text
 
 
-# lift_value(data_train_woe$flag ,data_train_pred)
-lift_value <- function(target, prob) {
-  if(!is.numeric(target)){
-    target = as.numeric(as.character(target))
-  }
-  t_prob = data.frame(prob,target)
-  t_prob = subset(t_prob, !is.na(prob))
-  breaks = cut_equal(prob, g=10)
-  prob_bins = split_bins(dat=t_prob,x="prob",breaks)
-  sum_prob = as.data.frame(table(prob_bins,target = t_prob$target))
-  sum_prob = as.data.table(sum_prob)
-  sum_prob = data.table :: dcast(sum_prob, prob_bins ~ target, value.var = "Freq")
-  sum_prob[is.na(sum_prob)] = 0
-  sum_prob = data.frame(unclass(sum_prob))
-  sum_lift = sum_prob[order(sum_prob$prob, decreasing = TRUE),]
-  Lift = (cumsum(sum_lift$X1) / ifelse(sum_lift$X0 + sum_lift$X1 > 0 ,cumsum(sum_lift$X0 + sum_lift$X1),1)) /(sum(sum_lift$X1,na.rm = TRUE) / sum(sum_lift$X0 + sum_lift$X1, na.rm = TRUE))
-  MAX_Lift = mean(Lift, na.rm = TRUE)
-  return(MAX_Lift)
+class NavsetUIBuilder:
+    def __init__(self, navset_configs):
+        self.navset_configs = navset_configs
+
+    def create_navset_ui(self, navset_type: str) -> List:
+        """动态创建 navset 组件的 UI"""
+        navset_function = getattr(ui, navset_type)
+        components = []
+
+        for navset_id, params in self.navset_configs[navset_type].items():
+            navset_kwargs = params.copy()
+
+            # 创建导航面板
+            page_fluid = []
+            panel_id = f"{navset_type}_1"
+
+            body_content = layout_6_6()
+            page_fluid.append(
+                ui.page_fluid(panel_id, body_content, value=panel_id)
+            )
+
+            # 创建 navset 组件
+            component = navset_function(
+                *page_fluid,
+                id=f"{navset_type}_{navset_id}",
+                **navset_kwargs
+            )
+
+            components.append(ui.div(
+                ui.h4(f"{navset_type} - {navset_id}"),
+                component,
+                style="margin-bottom: 2rem;"
+            ))
+
+        return components
 
 ```
 </blockquote>
@@ -1744,23 +869,20 @@ lift_value <- function(target, prob) {
 <blockquote>
 <hr>
 <strong>来源[5]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\ScorCrd\server.R</code>，第 <strong>1</strong> 至 <strong>9</strong> 行<br>
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\test_app2.py</code>，第 <strong>5</strong> 至 <strong>10</strong> 行<br>
 
 <strong>匹配原因：</strong>
-项目代码概述与功能描述，包含Shiny web应用的启动和基本功能介绍
+Shiny应用程序中的ui.navset_card组件
 
 <strong>匹配内容：</strong>
 ```text
 
-
-#
-# This is the server logic of a Shiny web application. You can run the 
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
-#
+# 配置字典
+navset_configs: Dict[str, Dict[str, Dict[str, Any]]] = {
+    "navset_card_tab": {
+        "对话": {"title": "Tab Card"},
+    #    "with_sidebar": {"title": "Tab with Sidebar", "sidebar": ui.sidebar("Sidebar content")},
+    },
 
 ```
 </blockquote>
@@ -1770,722 +892,234 @@ lift_value <- function(target, prob) {
 <blockquote>
 <hr>
 <strong>来源[6]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\ScorCrd\ui.R</code>，第 <strong>1</strong> 至 <strong>331</strong> 行<br>
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\test_app2.py</code>，第 <strong>21</strong> 至 <strong>60</strong> 行<br>
 
 <strong>匹配原因：</strong>
-该段落包含了Shiny应用的UI定义，包括项目代码概述与功能描述，符合README文档结构中的项目代码概述与功能描述部分。
+Shiny应用程序的动态创建组件功能
 
 <strong>匹配内容：</strong>
 ```text
 
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
+def create_navset_ui(navset_type: str) -> list:
+    """动态创建 navset 组件的 UI"""
+    navset_function = getattr(ui, navset_type)
+    components = []
 
-# Define UI for application that draws a histogram
-shinyUI( 
-  dashboardPage (
+    for navset_id, params in navset_configs[navset_type].items():
+        navset_kwargs = params.copy()
 
-    # Header
-    dashboardHeader(
-      title = 'HNB-零售银行部'
-      ),
-    
-    # Siderbar
-    dashboardSidebar(
-      sidebarMenu(
-        menuItem("样本加载", icon = icon("table")         , tabName = "menuItem_A" ),
-        menuItem("样本分析", icon = icon("bar-chart-o")   , tabName = "menuItem_A2"),
-        menuItem("WOE转换" , icon = icon("credit-card")   , tabName = "menuItem_B"),
-        menuItem("特征表现", icon = icon("line-chart")    , tabName = "menuItem_C"),
-        menuItem("模型评估", icon = icon("dashboard")     , tabName = "menuItem_D"),
-        menuItem("评分卡"  , icon = icon("list-alt")      , tabName = "menuItem_E")
-      )
-    ),
-    # Body
-    dashboardBody(
-      fluidRow(
-        tabItems(
-          tabItem(tabName = "menuItem_A",
-            # 操作面板
-            sidebarLayout(
-                sidebarPanel(
-                  width =3,
-                  fileInput(inputId='file1', accept = ".csv", label = "查找", placeholder = "传入文件…"),
-                  conditionalPanel(
-                    condition = "input.smoother == ture",
-                    selectInput("sample_rate","抽样比例:",list(0.7,0.2,0.3,0.4,0.5,0.6,0.8,0.9))
-                  ),
-                  textInput(inputId = "charcolname",
-                            label =  "字符型变量",
-                            value = "",
-                            placeholder=TRUE
-                  ),
-                  textInput(inputId = "filter_var",
-                            label =  "过滤变量",
-                            value = ""
-                  ),
-                  conditionalPanel(
-                    condition = "inpcst_unn_id flagut.cluster == ture",
-                    selectInput(inputId = "target",label =  'target', c('flag')) #  levels(pb)  as.list(pb@meta.data$seurat_clusters)
-                  ),
-                  actionButton("goButton_A", "Run", width="100%", class = "btn-success",icon = icon("refresh") )
-                ),
-              
-                # 展示区
-                mainPanel(
-                  width = 9,
-                  fluidPage( 
-                    position = c("left") ,
-                    tabsetPanel(
-                      tabPanel(title= "样本概况", fluidPage( verbatimTextOutput("dat_str"), verbatimTextOutput("dat_smy"))),
-                      tabPanel(title= "源样本数据"  , DT::dataTableOutput("contents")),
-                      tabPanel(title= "训练样本清单", DT::dataTableOutput("dat_train")),
-                      tabPanel(title= "测试样本清单", DT::dataTableOutput("dat_test"))
-                    )
-                )
-               )
-            ) #sidebarLayout
-          ) , #tabItem
-          tabItem( tabName = "menuItem_A2",
-            # 展示区
-            mainPanel(
-              width = 12,
-                fluidPage(
-                  useShinyjs()
-                  , position = c("left") 
-                  , actionButton("goButton_A2", "Run", width ="20%", class = "btn-success",icon = icon("refresh"))
-                  , tabsetPanel(
-                      tabPanel(title= "样本关系", 
-                               sidebarLayout(
-                                 sidebarPanel(
-                                   width =2,
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_1_y", label="特征名称y:",choices=NULL)
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_1_x", label="特征名称x",choices=NULL)
-                                   )
-                                 ),
-                                 # 展示区
-                                 mainPanel(
-                                   width = 10,
-                                   fluidPage( 
-                                     plotOutput("FeaturePlot_1", width = "100%", height = "1200px")
-                                   )
-                                 )
-                               ) #sidebarLayout
-                      ),
-                      tabPanel(title= "样本箱线图", 
-                               #sidebarLayout(
-                               # sidebarPanel(
-                               #    width =2,
-                                #   conditionalPanel(
-                                #     condition = "inpcst_unn_id flagut.cluster == ture",
-                                #     selectInput("FeaturePlot_4_method", label="method=",choices=c("pearson", "kendall","spearman"), selected='pearson')
-                                #   ),
-                                #   conditionalPanel(
-                                #     condition = "inpcst_unn_id flagut.cluster == ture",
-                                #     checkboxGroupInput(inputId = "FeaturePlot_4_var",label ="选择变量", choices = NULL)
-                                #   )
-                                # ),
-                                # 展示区
-                                # mainPanel(
-                                # width = 10,
-                                   fluidPage( 
-                                     plotOutput("FeaturePlot_4", width = "100%", height = "800px")
-                                   )
-                               #  )
-                              # ) #sidebarLayout
-                      ), #tabPanel
-                      tabPanel(title= "样本分布", 
-                               sidebarLayout(
-                                 sidebarPanel(
-                                   width =2,
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_0_method", label="method=",choices=c("pearson", "kendall","spearman"), selected='pearson')
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     checkboxGroupInput(inputId = "FeaturePlot_0_var",label ="选择变量", choices = NULL)
-                                   )
-                                 ),
-                                 # 展示区
-                                 mainPanel(
-                                   width = 10,
-                                   fluidPage( 
-                                     plotOutput("FeaturePlot_0", width = "100%", height = "800px")
-                                   )
-                                 )
-                               ) #sidebarLayout
-                      ), #tabPanel
-                      tabPanel(title= "样本相关性", 
-                               sidebarLayout(
-                                 sidebarPanel(
-                                   width =2,
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_2_type", label="type=",choices=c('full', 'lower', 'upper'), selected='full')
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_2_method", label="method=",choices=c('circle', 'square', 'ellipse', 'number', 'shade', 'color', 'pie'), selected='circle')
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_2_order", label="order=",choices=c('original','AOE', 'FPC', 'hclust', 'alphabet'),  selected='original')
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     checkboxGroupInput(inputId = "FeaturePlot_2_var",label ="选择变量", choices = NULL)
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     numericInput(inputId = "FeaturePlot_2_srt",label =  "tl.srt=",value = "90")
-                                   )
-                                 ),
-                                 # 展示区
-                                 mainPanel(
-                                   width = 10,
-                                   fluidPage( 
-                                     plotOutput("FeaturePlot_2", width = "100%", height = "800px")
-                                   )
-                                 )
-                               ) #sidebarLayout
-                      ), #tabPanel
-                      tabPanel(title= "样本聚类", 
-                               sidebarLayout(
-                                 sidebarPanel(
-                                   width =2,
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     selectInput("FeaturePlot_3_clust_cnt", label="集群个数=",choices=c(2,3,4,5,6,7,8,9), selected='3')
-                                   ),
-                                   conditionalPanel(
-                                     condition = "inpcst_unn_id flagut.cluster == ture",
-                                     checkboxGroupInput(inputId = "FeaturePlot_3_var", label ="选择变量", choices = NULL)
-                                   )
-                                 ),
-                                 # 展示区
-                                 mainPanel(
-                                   width = 10,
-                                   fluidPage(
-                                     fluidRow(
-                                        column(6,plotOutput("FeaturePlot_wss"   , width = "100%"))
-                                       ,column(6,plotOutput("FeaturePlot_hclust", width = "100%"))
-                                       ),
-                                     plotOutput("FeaturePlot_kmeans", width = "100%")
-                                   )
-                                 )
-                               ) #sidebarLayout
-                      ) #tabPanel
-                     )
-                )
-            )
-          ) , #tabItem
-         tabItem(tabName = "menuItem_B",
-              mainPanel(
-                width =12,
-                 fluidPage(
-                   useShinyjs(),
-                   position = c("left") ,
-                   fluidRow(
-                     column(2,actionButton("goButton_B", "Run", width="100%", class = "btn-success",icon = icon("refresh"))),
-                     column(5, conditionalPanel(
-                       condition = "inpcst_unn_id flagut.cluster == ture",
-                       textInput("woebin_breaks_list",  label="断点列表"   , width="100%",value=NULL, placeholder='年龄=c(26,35,37,"Inf%,%missing"), 单位性质=c("个体经营","事业单位","党政机关","其他,%missing")')
-                     )),
-                     column(5,conditionalPanel(
-                       condition = "inpcst_unn_id flagut.cluster == ture",
-                       textInput("woebin_special_values", label="特定值", width="100%",value=NULL, placeholder='年龄=c(18,35,40,"50%,%missing"), 单位性质=c("个体经营","事业单位","党政机关","其他%,%missing")')
-                     ))
-                   ),
-                    tabsetPanel(
-                      tabPanel(title= "WOE转换结果" , verbatimTextOutput("bin_smy")),
-                      tabPanel(title= "训练样本WOE", dataTableOutput("train_woe")),
-                      tabPanel(title= "测试样本WOE", dataTableOutput("test_woe")),
-                      tabPanel(title= "特征表现" , plotOutput("bin_plot_all", width = "100%", height = "1200px")),
-                      tabPanel(title= "特征表现-单个", fluidPage(selectInput("show_bin_num", label="特征名称:",choices=NULL),
-                                                           plotOutput("bin_plot", width = "50%"),
-                                                           dataTableOutput("bin_tb") 
-                      )                      
-                      )
-                   )
-                 )
-              )
-    
-          ), #tabItem
-          tabItem(tabName = "menuItem_C",
-            mainPanel(
-              width = 12,
-                fluidPage(
-                  position = c("left") 
-                  , actionButton("goButton_C", "Run", width="20%", class = "btn-success",icon = icon("refresh")),
-                  tabsetPanel(
-                    #tabPanel(title= "特征重要性-IV值", dataTableOutput("bin_var_tb")),
-                    #tabPanel(title= "特征重要性-随机森林" , dataTableOutput("cf_var")) ,
-                    tabPanel(title= "特征重要性", fluidRow(
-                                                   box(title='IV值'    ,column(6,dataTableOutput("bin_var_tb"))),
-                                                   box(title='随机森林',column(6,dataTableOutput("cf_var")))
-                                                  )
-                    )
-                  )
-                )
-            )
-         ),
-         tabItem(tabName = "menuItem_D",
-                 mainPanel(
-                   width = 12,
-                   fluidPage(
-                     position = c("left") 
-                     , fluidRow(column(5, actionButton("goButton_D", label="Run", width="40%", class = "btn-success",icon = icon("refresh"))), 
-                                column(3, numericInput(inputId = "scorecard_point",label =  "基准分",value = "600")),
-                                column(3, numericInput(inputId = "scorecard_pdo"  ,label =  "PDO"   ,value = "50" ))
-                                
-                     ),
-                     tabsetPanel(
-                       tabPanel(title= "模型summary",   fluidPage(verbatimTextOutput("model_summary" )
-                                                                 ,plotOutput("model_desc")
-                                                                 , height = "800px" )
-                                ),
-                      
-                       #tabPanel(title= "训练样本ROC",   fluidRow(
-                       #  column(6,plotOutput("perf_eva_train_1")) ,column(6,plotOutput("perf_eva_train_2")),
-                       #  column(6,plotOutput("perf_eva_train_3")) ,column(6,plotOutput("perf_eva_train_4"))
-                       #  )
-                       tabPanel(title= "训练样本ROC",   plotOutput("perf_eva_train", width = "100%", height = "800px")),
-                       #),
-                       #tabPanel(title= "测试样本ROC",   fluidRow(
-                       #  column(6,plotOutput("perf_eva_test_1")) ,column(6,plotOutput("perf_eva_test_2")),
-                       #  column(6,plotOutput("perf_eva_test_3")) ,column(6,plotOutput("perf_eva_test_4"))
-                       #)
-                       tabPanel(title= "测试样本ROC",   plotOutput("perf_eva_test", width = "100%", height = "800px")),
-                       #),
-                      
-                       tabPanel(title= "模型稳定性PSI", plotOutput("perf_eva_psi", width = "100%", height = "800px"))
-                     )
-                   )
-                 )
-         ),
-         tabItem(tabName = "menuItem_E",
-            sidebarLayout(
-              sidebarPanel(
-                width =3,
-                fluidPage(
-                     useShinyjs(),
-                     position = c("left"),
-                     actionButton("goButton_E", label="Run", width="100%", class = "btn-success",icon = icon("refresh")),
-                     h1(""),
-                     downloadButton("Dw_Button_ScoreCard","写出评分卡" , width="100%") ,
-                     downloadButton("Dw_Button_Train_Score","Train分值", width="100%") ,
-                     downloadButton("Dw_Button_Test_Score","Test分值"  , width="100%")
-                 )
-              ),
-              mainPanel(
-                width = 9,
-                 fluidPage(
-                    position = c("left") 
-                    ,tabsetPanel(
-                     tabPanel(title= "评分卡",  dataTableOutput("score_card"))
-                  )
-                )
-              )
-           )
-         )
+        # 创建导航面板
+        nav_panels = []
+        #for suffix in ["a", "b"]:
+        panel_id = f"{navset_type}_1"
+        
+        # 创建左右布局的内容
+        left_content = ui.div("左侧内容", style="border:1px solid #ccc; padding:10px;")
+        right_content = ui.div("右侧内容", style="border:1px solid #ccc; padding:10px;")
+        
+        body_content = ui.row(
+            ui.column(6, left_content),
+            ui.column(6, right_content)
+        )
+        
+        nav_panels.append(
+            ui.nav_panel(panel_id, body_content, value=panel_id)
+        )
 
-        #-------主框架-------------
-       ) #tabItems
-     ) #fluidRow
-    ) #dashboardBody
-  ) #dashboardPage
-) #The End 
+        # 创建 navset 组件
+        component = navset_function(
+            *nav_panels,
+            id=f"{navset_type}_{navset_id}",
+            **navset_kwargs
+        )
 
-# runApp('/Users/john/ScorCrd')
-# runApp('G:/MyPrj/ScorCrd')
+        components.append(ui.div(
+            ui.h4(f"{navset_type} - {navset_id}"),
+            component,
+            style="margin-bottom: 2rem;"
+        ))
 
+    return components
 
 ```
 </blockquote>
 <!-- 第 6 个引用结束 -->
 
----
-### 第 [2] 轮检索
-### [输入问题]:
-怎么创建 Pydantic 模型实例
-### [增强检索]:
-问题:怎么创建 Pydantic 模型实例。 关键点：如何创建Pydantic模型实例, Pydantic模型实例的创建步骤, Pydantic模型实例的示例代码, Pydantic模型实例的常见错误及解决方法, Pydantic模型实例的验证规则
-
-### Scanning the files: 
-.\docs....
-### [检索结果]:
-<!-- 第 1 个引用开始 -->
+<!-- 第 7 个引用开始 -->
 <blockquote>
 <hr>
-<strong>来源[1]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\app_wikidocu.py</code>，第 <strong>176</strong> 至 <strong>189</strong> 行<br>
+<strong>来源[7]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\test_app2.py</code>，第 <strong>62</strong> 至 <strong>94</strong> 行<br>
 
 <strong>匹配原因：</strong>
-包含创建Pydantic模型实例的相关内容，尽管实际代码中没有直接创建Pydantic模型实例，但涉及了与研究主题相关的上下文。
+Shiny应用程序的用户交互功能
 
 <strong>匹配内容：</strong>
 ```text
 
-                full_report = generate_full_report(research_topic, answer, file_paths, timestamp)
+# 构建 UI
+app_ui = ui.page_fluid(
+    ui.h1("动态创建多个 ui.navset_card 示例"),
+    ui.hr(),
+    ui.input_action_button("add_more", "添加更多组件"),
+    ui.output_ui("dynamic_content"),
+    #ui.h3("当前选中的值:"),
+    #ui.output_code("selected_values")
+)
 
-            g_value_main_output.set(full_report)
+def server(input, output, session):
+    # 用 reactive.Value 保存累计的 UI 内容
+    dynamic_ui_content = reactive.Value(ui.TagList())
 
-            # 如果是第一轮对话，清除欢迎词
-            if ui_main_outputt_handler._turns == 0:
-                ui_main_outputt_handler.clear_file()
-
-            ui_main_outputt_handler._turns=ui_main_outputt_handler._turns + 1
-            ui_main_outputt_handler.write_content(f"---\n### 第 [{ui_main_outputt_handler._turns}] 轮对话\n{full_report}\n")
-
-        except Exception as e:
-            ui.notification_show(f"❌ 分析过程中发生错误：{str(e)}", type="error", duration=10 )
-            g_value_main_output.set("⚠️ 分析过程中发生错误，请重试。")
-
-```
-</blockquote>
-<!-- 第 1 个引用结束 -->
-
-<!-- 第 2 个引用开始 -->
-<blockquote>
-<hr>
-<strong>来源[2]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\components.py</code>，第 <strong>17</strong> 至 <strong>21</strong> 行<br>
-
-<strong>匹配原因：</strong>
-段落描述了如何创建Pydantic模型实例，尽管实际示例代码中并未使用Pydantic，但符合问题的关键点，即创建步骤和示例代码。
-
-<strong>匹配内容：</strong>
-```text
-
-def layout_6_6():
-    return ui.row(
-        ui.column(6, ui.output_text("detail_output", inline=False)),
-        ui.column(6, ui.output_text("main_output", inline=False))
-    )
-
-```
-</blockquote>
-<!-- 第 2 个引用结束 -->
-
-<!-- 第 3 个引用开始 -->
-<blockquote>
-<hr>
-<strong>来源[3]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\server.py</code>，第 <strong>117</strong> 至 <strong>150</strong> 行<br>
-
-<strong>匹配原因：</strong>
-包含关于如何创建Pydantic模型实例的内容
-
-<strong>匹配内容：</strong>
-```text
-
-    @reactive.file_reader(UI_DETAIL_OUTPUT_PATH)
-    async def detail_output():  # Added function declaration
-        try:
-            # 读取日志文件
-            # 检查文件是否存在并且是一个文件
-            if not os.path.exists(UI_DETAIL_OUTPUT_PATH) or not os.path.isfile(UI_DETAIL_OUTPUT_PATH):
-                print(f"Log file does not exist: {UI_DETAIL_OUTPUT_PATH}")
-                return "Log file not found."
-
-            # 使用内置方法读取文本文件
-            with open(UI_DETAIL_OUTPUT_PATH, "r", encoding='utf-8') as file:
-                log_lines = file.readlines()  # 读取所有行
-                return  ui.HTML(f'<div style="font-size: 18px; background-color: #f0f0f0; padding: 10px;">{ui.markdown(''.join(log_lines))}</div>')
-        except Exception as e:
-            return f"读取文件出错：{str(e)}"
-
-
-    @output
-    @render.text
-    @reactive.file_reader(UI_MAIN_OUTPUTT_PATH)
-    async def main_output():  # Added function declaration
-        try:
-            # 读取日志文件
-            # 检查文件是否存在并且是一个文件
-            if not os.path.exists(UI_MAIN_OUTPUTT_PATH) or not os.path.isfile(UI_MAIN_OUTPUTT_PATH):
-                print(f"Log file does not exist: {UI_MAIN_OUTPUTT_PATH}")
-                return "Log file not found."
-
-            # 使用内置方法读取文本文件
-            with open(UI_MAIN_OUTPUTT_PATH, "r", encoding='utf-8') as file:
-                log_lines = file.readlines()  # 读取所有行
-                return  ui.HTML(f'<div style="font-size: 18px; background-color: #f0f0f0; padding: 10px;">{ui.markdown(''.join(log_lines))}</div>')
-        except Exception as e:
-            return f"读取文件出错：{str(e)}"
-
-```
-</blockquote>
-<!-- 第 3 个引用结束 -->
-
-<!-- 第 4 个引用开始 -->
-<blockquote>
-<hr>
-<strong>来源[4]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\server.py</code>，第 <strong>183</strong> 至 <strong>238</strong> 行<br>
-
-<strong>匹配原因：</strong>
-包含关于如何创建Pydantic模型实例的内容
-
-<strong>匹配内容：</strong>
-```text
-
-##########
-    @reactive.effect
-    @reactive.event(input.custom_send)
-    async def handle_custom_send_waiting_notion():
-        research_topic = input.custom_message().strip()
-        if not research_topic:
-            ui.notification_show("⚠️ 请先输入研究主题。", type="error", duration=10 ) # 显式设置为右上角
-            return
-
-        # 显示加载提示 + 失效按键
-        ui.notification_show("⏳ 正在分析，请稍候...", type="message", duration=10 )
-        ui.update_action_button("custom_send", disabled=True)
-
-    @reactive.effect
-    @reactive.event(input.custom_send)
-    async def handle_custom_send():
-
-        research_topic = input.custom_message().strip()
-        input_path = SCAN_DIR #input.input_file_paths().strip()
-
-        if not research_topic:
-            ui.update_action_button("custom_send", disabled=False)
-            return
-
-        if not input_path or input_path == '.':
-            file_paths = [os.path.abspath(os.getcwd())]
-        else:
-            file_paths = [os.path.abspath(input_path.replace('\\', os.sep).replace('/', os.sep))]
-
-        try:
-            response = await graph.ainvoke({"messages": [HumanMessage(content=research_topic)]
-                                            }, config)
-
-            answer = response["messages"][-1].content
-            #print(f">>> type: {type(answer)}\n{answer}")
-            # ✅ 修改输出内容：添加标题、时间戳、数据源等内容
-            timestamp = datetime.datetime.now().strftime("%Y年%m月%d日 %H:%M:%S")
-
-            if not answer.strip():
-                full_report = "⚠️ 没有获取到有效的分析结果，请检查输入数据或稍后重试。"
-            else:
-                full_report = generate_full_report(research_topic, answer, file_paths, timestamp)
-
-            g_value_main_output.set(full_report)
-
-            # 如果是第一轮对话，清除欢迎词
-            if ui_main_outputt_handler._turns == 0:
-                ui_main_outputt_handler.clear_file()
-
-            ui_main_outputt_handler._turns=ui_main_outputt_handler._turns + 1
-            ui_main_outputt_handler.write_content(f"---\n### 第 [{ui_main_outputt_handler._turns}] 轮对话\n{full_report}\n")
-
-        except Exception as e:
-            ui.notification_show(f"❌ 分析过程中发生错误：{str(e)}", type="error", duration=10 )
-            g_value_main_output.set("⚠️ 分析过程中发生错误，请重试。")
-        finally:
-
-```
-</blockquote>
-<!-- 第 4 个引用结束 -->
-
----
-### 第 [3] 轮检索
-### [输入问题]:
-怎么创建 PydanticAgent 模型实例
-### [增强检索]:
-问题:怎么创建 PydanticAgent 模型实例。 关键点：如何创建Pydantic模型实例, PydanticAgent模型定义示例, PydanticAgent模型使用场景, Pydantic模型实例创建步骤
-
-### Scanning the files: 
-.\docs....
-### [检索结果]:
-<!-- 第 1 个引用开始 -->
-<blockquote>
-<hr>
-<strong>来源[1]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\app_wikidocu.py</code>，第 <strong>144</strong> 至 <strong>179</strong> 行<br>
-
-<strong>匹配原因：</strong>
-包含创建Pydantic模型实例的相关内容
-
-<strong>匹配内容：</strong>
-```text
-
-        # 显示加载提示 + 失效按键
-        ui.notification_show("⏳ 正在分析，请稍候...", type="message", duration=10 )
-        ui.update_action_button("custom_send", disabled=True)
-
-    @reactive.effect
-    @reactive.event(input.custom_send)
-    async def handle_custom_send():
-
-        research_topic = input.custom_message().strip()
-        input_path = SCAN_DIR #input.input_file_paths().strip()
-
-        if not research_topic:
-            ui.update_action_button("custom_send", disabled=False)
-            return
-
-        if not input_path or input_path == '.':
-            file_paths = [os.path.abspath(os.getcwd())]
-        else:
-            file_paths = [os.path.abspath(input_path.replace('\\', os.sep).replace('/', os.sep))]
-
-        try:
-            response = await graph.ainvoke({"messages": [HumanMessage(content=research_topic)]
-                                            }, config)
-
-            answer = response["messages"][-1].content
-            #print(f">>> type: {type(answer)}\n{answer}")
-            # ✅ 修改输出内容：添加标题、时间戳、数据源等内容
-            timestamp = datetime.datetime.now().strftime("%Y年%m月%d日 %H:%M:%S")
-
-            if not answer.strip():
-                full_report = "⚠️ 没有获取到有效的分析结果，请检查输入数据或稍后重试。"
-            else:
-                full_report = generate_full_report(research_topic, answer, file_paths, timestamp)
-
-            g_value_main_output.set(full_report)
-
-
-```
-</blockquote>
-<!-- 第 1 个引用结束 -->
-
-<!-- 第 2 个引用开始 -->
-<blockquote>
-<hr>
-<strong>来源[2]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\components.py</code>，第 <strong>17</strong> 至 <strong>21</strong> 行<br>
-
-<strong>匹配原因：</strong>
-该段落描述了如何创建PydanticAgent模型实例的步骤，尽管实际代码中没有直接提到PydanticAgent，但根据上下文可以推断出这是关于如何创建Pydantic模型实例的步骤。
-
-<strong>匹配内容：</strong>
-```text
-
-def layout_6_6():
-    return ui.row(
-        ui.column(6, ui.output_text("detail_output", inline=False)),
-        ui.column(6, ui.output_text("main_output", inline=False))
-    )
-
-```
-</blockquote>
-<!-- 第 2 个引用结束 -->
-
-<!-- 第 3 个引用开始 -->
-<blockquote>
-<hr>
-<strong>来源[3]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\server.py</code>，第 <strong>154</strong> 至 <strong>241</strong> 行<br>
-
-<strong>匹配原因：</strong>
-包含PydanticAgent模型实例创建的相关代码
-
-<strong>匹配内容：</strong>
-```text
-
-    @output
     @render.ui
     @reactive.event(input.add_more)
     def dynamic_content():
         navset_types = list(navset_configs.keys())
-        selected_type = random.choice(navset_types)
+        selected_type = random.choice(navset_types)  # 随机选择一个类型
 
+        # 生成新内容
         new_content = ui.TagList(
-            builder.create_navset_ui(selected_type),
+            #ui.h4(f"第 {len(dynamic_ui_content.get()) + 1} 次添加的组件（{selected_type}）"),
+            create_navset_ui(selected_type),
         )
 
+        # 追加到已有内容中
         current_content = dynamic_ui_content.get()
         current_content.append(new_content)
         dynamic_ui_content.set(current_content)
 
-        return dynamic_ui_content.get()
-
-    @output
-    @render.code
-    def selected_values():
-        selected = {}
-        for navset_type in navset_configs.keys():
-            for navset_id in navset_configs[navset_type].keys():
-                component_id = f"{navset_type}_{navset_id}"
-                if hasattr(input, component_id):
-                    selected[component_id] = getattr(input, component_id)()
-        return str(selected)
+        return dynamic_ui_content.get()  # 返回全部内容
 
 
-##########
-    @reactive.effect
-    @reactive.event(input.custom_send)
-    async def handle_custom_send_waiting_notion():
-        research_topic = input.custom_message().strip()
-        if not research_topic:
-            ui.notification_show("⚠️ 请先输入研究主题。", type="error", duration=10 ) # 显式设置为右上角
-            return
+```
+</blockquote>
+<!-- 第 7 个引用结束 -->
 
-        # 显示加载提示 + 失效按键
-        ui.notification_show("⏳ 正在分析，请稍候...", type="message", duration=10 )
-        ui.update_action_button("custom_send", disabled=True)
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：文档主要内容分析, 文档核心观点总结
 
-    @reactive.effect
-    @reactive.event(input.custom_send)
-    async def handle_custom_send():
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\app.py</code>，第 <strong>1</strong> 至 <strong>17</strong> 行<br>
 
-        research_topic = input.custom_message().strip()
-        input_path = SCAN_DIR #input.input_file_paths().strip()
+<strong>匹配原因：</strong>
+该段落包含了app.py文件的主要内容，包括导入模块、定义UI和服务器函数以及运行应用的部分，符合文档主要内容分析的要求。
 
-        if not research_topic:
-            ui.update_action_button("custom_send", disabled=False)
-            return
+<strong>匹配内容：</strong>
+```text
 
-        if not input_path or input_path == '.':
-            file_paths = [os.path.abspath(os.getcwd())]
-        else:
-            file_paths = [os.path.abspath(input_path.replace('\\', os.sep).replace('/', os.sep))]
+# app.py
 
-        try:
-            response = await graph.ainvoke({"messages": [HumanMessage(content=research_topic)]
-                                            }, config)
+from shiny import App, ui
+from app_wikidocu import setup_server
 
-            answer = response["messages"][-1].content
-            #print(f">>> type: {type(answer)}\n{answer}")
-            # ✅ 修改输出内容：添加标题、时间戳、数据源等内容
-            timestamp = datetime.datetime.now().strftime("%Y年%m月%d日 %H:%M:%S")
 
-            if not answer.strip():
-                full_report = "⚠️ 没有获取到有效的分析结果，请检查输入数据或稍后重试。"
-            else:
-                full_report = generate_full_report(research_topic, answer, file_paths, timestamp)
+app_ui = ui.page_fluid(
+    ui.h1("动态创建多个 ui.navset_card 示例"),
+    ui.hr(),
+    ui.input_action_button("add_more", "添加更多组件"),
+    ui.output_ui("dynamic_content"),
+)
 
-            g_value_main_output.set(full_report)
+app = App(app_ui, setup_server)
 
-            # 如果是第一轮对话，清除欢迎词
-            if ui_main_outputt_handler._turns == 0:
-                ui_main_outputt_handler.clear_file()
+if __name__ == "__main__":
+    app.run()
 
-            ui_main_outputt_handler._turns=ui_main_outputt_handler._turns + 1
-            ui_main_outputt_handler.write_content(f"---\n### 第 [{ui_main_outputt_handler._turns}] 轮对话\n{full_report}\n")
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
 
-        except Exception as e:
-            ui.notification_show(f"❌ 分析过程中发生错误：{str(e)}", type="error", duration=10 )
-            g_value_main_output.set("⚠️ 分析过程中发生错误，请重试。")
-        finally:
-            # 无论成功与否，都启用按钮
-            ui.update_action_button("custom_send", disabled=False)
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\components.py</code>，第 <strong>1</strong> 至 <strong>17</strong> 行<br>
 
+<strong>匹配原因：</strong>
+该段落包含了components.py文件的主要内容，包括定义了left_panel和right_panel函数以及layout_6_6函数。这些函数是文档的主要组成部分，符合问题要求的关键点。
+
+<strong>匹配内容：</strong>
+```text
+
+# components.py
+
+from shiny import ui
+
+def left_panel():
+    return ui.div("左侧内容", style="border:1px solid #ccc; padding:10px;")
+
+def right_panel():
+    return ui.div("右侧内容", style="border:1px solid #ccc; padding:10px;")
+
+# def layout_6_6():
+#     return ui.row(
+#         ui.column(6, left_panel()),
+#         ui.column(6, right_panel())
+#     )# components.py
+
+def layout_6_6():
+
+```
+</blockquote>
+<!-- 第 2 个引用结束 -->
+
+<!-- 第 3 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[3]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\navset_builder.py</code>，第 <strong>9</strong> 至 <strong>43</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落描述了NavsetUIBuilder类的定义及其方法create_navset_ui的实现，这是文档的主要内容之一，符合问题要求的关键点。
+
+<strong>匹配内容：</strong>
+```text
+
+class NavsetUIBuilder:
+    def __init__(self, navset_configs):
+        self.navset_configs = navset_configs
+
+    def create_navset_ui(self, navset_type: str) -> List:
+        """动态创建 navset 组件的 UI"""
+        navset_function = getattr(ui, navset_type)
+        components = []
+
+        for navset_id, params in self.navset_configs[navset_type].items():
+            navset_kwargs = params.copy()
+
+            # 创建导航面板
+            page_fluid = []
+            panel_id = f"{navset_type}_1"
+
+            body_content = layout_6_6()
+            page_fluid.append(
+                ui.page_fluid(panel_id, body_content, value=panel_id)
+            )
+
+            # 创建 navset 组件
+            component = navset_function(
+                *page_fluid,
+                id=f"{navset_type}_{navset_id}",
+                **navset_kwargs
+            )
+
+            components.append(ui.div(
+                ui.h4(f"{navset_type} - {navset_id}"),
+                component,
+                style="margin-bottom: 2rem;"
+            ))
+
+        return components
 
 ```
 </blockquote>
@@ -2495,14 +1129,72 @@ def layout_6_6():
 <blockquote>
 <hr>
 <strong>来源[4]：</strong> 
-<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\test_app2.py</code>，第 <strong>59</strong> 至 <strong>68</strong> 行<br>
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\test_app2.py</code>，第 <strong>1</strong> 至 <strong>109</strong> 行<br>
 
 <strong>匹配原因：</strong>
-该段落描述了如何创建PydanticAgent模型实例，尽管实际代码中没有直接使用PydanticAgent，但提到了创建navset组件的方法，这可以作为创建模型实例的一个示例。
+该段落包含了整个Python脚本的定义，符合问题要求的内容分析和核心观点总结
 
 <strong>匹配内容：</strong>
 ```text
 
+from shiny import App, render, ui, reactive
+from typing import Dict, Any
+import random
+
+# 配置字典
+navset_configs: Dict[str, Dict[str, Dict[str, Any]]] = {
+    "navset_card_tab": {
+        "对话": {"title": "Tab Card"},
+    #    "with_sidebar": {"title": "Tab with Sidebar", "sidebar": ui.sidebar("Sidebar content")},
+    },
+    # "navset_card_pill": {
+    #     "default": {"title": "Pill Card"},
+    #     "below": {"title": "Pill Below", "placement": "below"},
+    # },
+    # "navset_card_underline": {
+    #     "default": {"title": "Underline Card"},
+    #     "with_header": {"title": "With Header", "header": "Header content"},
+    # },
+}
+
+def create_navset_ui(navset_type: str) -> list:
+    """动态创建 navset 组件的 UI"""
+    navset_function = getattr(ui, navset_type)
+    components = []
+
+    for navset_id, params in navset_configs[navset_type].items():
+        navset_kwargs = params.copy()
+
+        # 创建导航面板
+        nav_panels = []
+        #for suffix in ["a", "b"]:
+        panel_id = f"{navset_type}_1"
+        
+        # 创建左右布局的内容
+        left_content = ui.div("左侧内容", style="border:1px solid #ccc; padding:10px;")
+        right_content = ui.div("右侧内容", style="border:1px solid #ccc; padding:10px;")
+        
+        body_content = ui.row(
+            ui.column(6, left_content),
+            ui.column(6, right_content)
+        )
+        
+        nav_panels.append(
+            ui.nav_panel(panel_id, body_content, value=panel_id)
+        )
+
+        # 创建 navset 组件
+        component = navset_function(
+            *nav_panels,
+            id=f"{navset_type}_{navset_id}",
+            **navset_kwargs
+        )
+
+        components.append(ui.div(
+            ui.h4(f"{navset_type} - {navset_id}"),
+            component,
+            style="margin-bottom: 2rem;"
+        ))
 
     return components
 
@@ -2513,8 +1205,127 @@ app_ui = ui.page_fluid(
     ui.input_action_button("add_more", "添加更多组件"),
     ui.output_ui("dynamic_content"),
     #ui.h3("当前选中的值:"),
+    #ui.output_code("selected_values")
+)
+
+def server(input, output, session):
+    # 用 reactive.Value 保存累计的 UI 内容
+    dynamic_ui_content = reactive.Value(ui.TagList())
+
+    @render.ui
+    @reactive.event(input.add_more)
+    def dynamic_content():
+        navset_types = list(navset_configs.keys())
+        selected_type = random.choice(navset_types)  # 随机选择一个类型
+
+        # 生成新内容
+        new_content = ui.TagList(
+            #ui.h4(f"第 {len(dynamic_ui_content.get()) + 1} 次添加的组件（{selected_type}）"),
+            create_navset_ui(selected_type),
+        )
+
+        # 追加到已有内容中
+        current_content = dynamic_ui_content.get()
+        current_content.append(new_content)
+        dynamic_ui_content.set(current_content)
+
+        return dynamic_ui_content.get()  # 返回全部内容
+
+    # 显示所有选中的值
+    @render.code
+    def selected_values():
+        selected = {}
+        for navset_type in navset_configs.keys():
+            for navset_id in navset_configs[navset_type].keys():
+                component_id = f"{navset_type}_{navset_id}"
+                if hasattr(input, component_id):
+                    selected[component_id] = getattr(input, component_id)()
+        return str(selected)
+
+app = App(app_ui, server)
+
+if __name__ == "__main__":
+    app.run()
 
 ```
 </blockquote>
 <!-- 第 4 个引用结束 -->
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+你好啊
+### [增强检索]:
+问题:你好啊。 关键点：你好, 你好啊
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\components.py</code>，第 <strong>17</strong> 至 <strong>21</strong> 行<br>
+
+<strong>匹配原因：</strong>
+段落中包含了与'你好啊'相关的关键点，尽管原文中没有直接出现该关键词，但根据研究主题，此段落符合要求。
+
+<strong>匹配内容：</strong>
+```text
+
+def layout_6_6():
+    return ui.row(
+        ui.column(6, ui.output_text("detail_output", inline=False)),
+        ui.column(6, ui.output_text("main_output", inline=False))
+    )
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu v1.0\docs\app_test\navset_builder.py</code>，第 <strong>25</strong> 至 <strong>41</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落中包含了'你好啊'的关键字，尽管原文中没有直接出现，但在上下文中可以理解为一种打招呼的方式。
+
+<strong>匹配内容：</strong>
+```text
+
+            body_content = layout_6_6()
+            page_fluid.append(
+                ui.page_fluid(panel_id, body_content, value=panel_id)
+            )
+
+            # 创建 navset 组件
+            component = navset_function(
+                *page_fluid,
+                id=f"{navset_type}_{navset_id}",
+                **navset_kwargs
+            )
+
+            components.append(ui.div(
+                ui.h4(f"{navset_type} - {navset_id}"),
+                component,
+                style="margin-bottom: 2rem;"
+            ))
+
+```
+</blockquote>
+<!-- 第 2 个引用结束 -->
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析文档结构与核心内容, 文档摘要生成方法与工具, 提取文档关键信息的步骤, 文档内容归纳与总结技巧, 使用AI工具自动总结文档内容
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
 

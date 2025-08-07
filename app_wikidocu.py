@@ -11,27 +11,30 @@ import time  # 同步延迟使用
 from src.graph import create_async_tools_graph
 from frontend.navset_builder import NavsetUIBuilder
 from frontend.config import navset_configs
-from frontend.utils import generate_full_report,custom_box
+from frontend.utils import generate_full_report, custom_box, show_api_config_modal
 
 SCAN_DIR = "./docs"
 
 builder = NavsetUIBuilder(navset_configs)
 
 # ========== Server Logic ==========
-model_name = os.getenv("MODEL_NAME", "your-model-name")
-model_name_answer = os.getenv("MODEL_NAME_QWEN3", "your-model-name")
+# 初始化时从环境变量获取默认值
+api_key = os.getenv("OPENAI_API_KEY", "sk-xxx")
+model_name = os.getenv("OPENAI_MODEL", "Qwen/Qwen2.5-7B-Instruct")
+model_name_answer= os.getenv("OPENAI_MODEL", "Qwen/Qwen2.5-7B-Instruct")
+base_url = os.getenv("OPENAI_BASE_URL", "https://api.siliconflow.cn/v1")
 
-base_url = os.getenv("OPENAI_BASE_URL", "your-base-url")
-api_key = os.getenv("OPENAI_API_KEY", "your-api-key")
 
-graph = create_async_tools_graph()
-config = {"configurable": {"thread_id": "1"}}
+# graph 和 config 的初始化移到 handle_custom_send 内部，
+# 以便可以根据用户输入动态创建
 
 def setup_server(input, output,  session):
     g_value_main_output = reactive.Value("")
     g_value_detail_output = reactive.Value("")
     dynamic_ui_content = reactive.Value(ui.TagList())
+    g_openai_config=reactive.Value({"model_name": model_name, "base_url": base_url, "api_key": api_key})
 
+    # 显示欢迎模态框
     m = ui.modal(
         ui.markdown(f"""
 ### 欢迎使用 **WikiDocu** —— 基于人工智能的多文档智能问答系统
@@ -56,7 +59,7 @@ def setup_server(input, output,  session):
     time.sleep(3)
     ui.modal_remove()
 
-    # 初始化 markdown 内容
+    # 初始化 markdown 内容和底部输入栏
     custom_box(input, output, session)
 
     # 动态生成对话tab
@@ -91,49 +94,87 @@ def setup_server(input, output,  session):
                 dynamic_ui_content.get(),
                 style="max-height: 800px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"
             )
+    
+    # 处理“检索”按钮点击前的加载提示和按钮禁用
     @reactive.effect
     @reactive.event(input.custom_send)
     async def handle_custom_send_waiting_notion():
-
         research_topic = input.custom_message().strip()
+        # 清空输入框
         ui.update_text_area(  
             id="custom_message",  
-            value=""  # 设置为空字符串  
+            value=""  
         )
         if not research_topic:
-            ui.notification_show("⚠️ 请先输入研究主题。", type="error", duration=10 ) # 显式设置为右上角
+            ui.notification_show("⚠️ 请先输入研究主题。", type="error", duration=10)
             return
 
         # 显示加载提示 + 失效按键
-        ui.notification_show("⏳ 正在分析，请稍候...", type="message", duration=10 )
+        ui.notification_show("⏳ 正在分析，请稍候...", type="message", duration=10)
         ui.update_action_button("custom_send", disabled=True)
 
-
+    # 处理“检索”按钮点击事件，执行核心逻辑
     @reactive.effect
     @reactive.event(input.custom_send)
     async def handle_custom_send():
         research_topic = input.custom_message().strip()
+        # 再次清空输入框（以防等待提示逻辑未触发）
         ui.update_text_area(  
             id="custom_message",  
-            value=""  # 设置为空字符串  
+            value=""  
         )
-        input_path = SCAN_DIR #input.input_file_paths().strip()
+        input_path = SCAN_DIR
 
         if not research_topic:
             ui.update_action_button("custom_send", disabled=False)
             return
 
+        # 1. 获取用户配置或使用默认值
+        # 优先使用会话中存储的用户配置，否则回退到环境变量或初始默认值
+        # user_api_key = input.api_key_input() or api_key
+        # user_model_name = input.model_name_input() or model_name
+        # user_base_url = input.base_url_input() or base_url
+
+        config=g_openai_config.get()
+        user_api_key = config.get("api_key")
+        user_model_name =  config.get("model_name")
+        user_base_url = config.get("base_url")
+        #print("config:",    config)
+
+        # 2. 根据用户配置动态创建 graph 实例
+        # 注意：这里假设 src.graph.create_async_tools_graph 接受这些参数
+        # 如果实际实现不同，需要相应调整
+        try:
+            from src.graph import create_async_tools_graph
+            # 将用户配置传递给 graph 创建函数
+            graph = create_async_tools_graph(
+                api_key=user_api_key,
+                model_name=user_model_name,
+                base_url=user_base_url
+            )
+        except Exception as e:
+            ui.notification_show(f"❌ 创建分析器实例失败: {str(e)}", type="error", duration=10)
+            g_value_main_output.set("⚠️ 创建分析器实例失败，请检查配置。")
+            ui.update_action_button("custom_send", disabled=False)
+            return
+            
+        config = {"configurable": {"thread_id": "1"}}
+
+        # 3. 准备文件路径
         if not input_path or input_path == '.':
             file_paths = [os.path.abspath(os.getcwd())]
         else:
             file_paths = [os.path.abspath(input_path.replace('\\', os.sep).replace('/', os.sep))]
 
+        # 4. 执行分析
         try:
             response = await graph.ainvoke({"messages": [HumanMessage(content=research_topic)]
                                             }, config)
 
             if response.get("messages"):
                 answer_resp = response["messages"][-1].content
+            else:
+                answer_resp = "未生成答案。"
 
             if response.get("web_research_result"):
                 retrieve_resp = response["web_research_result"][-1]
@@ -157,24 +198,70 @@ def setup_server(input, output,  session):
             # 无论成功与否，都启用按钮
             ui.update_action_button("custom_send", disabled=False)
 
+    # 当用户点击“⚙️ 配置”按钮时，显示配置模态框
+    @reactive.effect
+    @reactive.event(input.open_config)
+    def _():
+        openai_config=g_openai_config.get()
+        show_api_config_modal(input, output, session, openai_config)
+
+    # 当用户点击“保存”按钮时，保存配置并关闭模态框
+    @reactive.effect
+    @reactive.event(input.save_config)
+    def _():
+
+        # 保存配置
+        g_openai_config.set({"model_name": input.model_name_input(), 
+                             "base_url": input.base_url_input(), 
+                             "api_key": input.api_key_input()}
+                             )
+
+        # 显示成功通知
+        ui.notification_show("✅ 配置已保存!", type="message", duration=5)
+        # 关闭模态框
+        ui.modal_remove()
+
+    # 当用户点击“取消”按钮时，关闭模态框
+    @reactive.effect
+    @reactive.event(input.cancel_config)
+    def _():
+        ui.modal_remove()
+
 
 # ========== 启动应用 ==========
-from shiny import App, ui
-from app_wikidocu import setup_server
-
+# 定义应用的用户界面
 app_ui = ui.page_fluid(
     # 自定义 CSS 样式
     ui.tags.style("""
+        /* 隐藏模态框的背景遮罩 */
         .shiny-modal-backdrop {
             display: none !important;
         }
+        
+        /* 动态内容区域样式 */
         #dynamic_content {
             overflow: visible !important;
             min-height: auto;
             height: auto !important;
         }
+        
+        /* 内容包装器样式：允许垂直滚动 */
         .content-wrapper {
-            overflow-y: auto;  /* 允许垂直滚动 */
+            overflow-y: auto;
+            max-height: calc(100vh - 100px); /* 预留顶部和底部空间 */
+        }
+        
+        /* 卡片 header 样式 */
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            font-weight: bold;
+            padding: 10px 15px;
+        }
+        
+        /* 卡片 body 样式 */
+        .card-body {
+            padding: 15px;
         }
     """),
     
@@ -202,38 +289,10 @@ app_ui = ui.page_fluid(
         })();
     """)
 )
-app_ui2 = ui.page_fluid(
-    ui.tags.style("""
-        .shiny-modal-backdrop {
-            display: none !important;
-        }
-        #dynamic_content {
-            overflow: visible !important;
-            height: auto !important;
-            min-height: unset !important;
-        }
-    """),
-    
-    ui.br(),
-    ui.markdown(f"""
-    ### 欢迎使用 **WikiDocu** —— 基于人工智能的多文档智能问答系统
 
-    在这里，你可以：
-
-    - 📚 **跨文档智能问答**：在多个文档之间建立关联，实现知识的跨文档检索与精准问答，支持复杂场景下的信息整合。
-    - 🧩 **深度知识理解**：融合代码理解与技术文档生成能力，可深入解析结构化内容（如代码仓库），实现从代码到文档的自动推理与解释。
-    - 🧠 **上下文感知交互**：支持基于上下文的多轮对话理解，智能定位相关内容，提升检索效率与准确性。
-    - 🛠 **无需索引构建**：无需预处理构建向量库或索引，直接利用大模型理解内容，部署更轻量，响应更迅速。
-
-    请将需要分析的文档放入目录 **`{SCAN_DIR}`**，然后输入你的问题，点击 **检索**，即可开启高效、智能的知识探索之旅。
-
-    """),
-    ui.br(),
-    ui.output_ui("dynamic_content"),
-)
-
-
+# 创建 Shiny 应用实例
 app = App(app_ui, setup_server)
 
+# 如果作为主模块运行，则启动应用
 if __name__ == "__main__":
     app.run()
