@@ -3,7 +3,7 @@
 from typing import List
 from shiny import ui
 from .config import navset_configs
-from .components import layout_6_6,layout_box
+from .components import layout_6_6, layout_box
 
 class NavsetUIBuilder:
     def __init__(self, navset_configs):

@@ -1,6 +1,9 @@
 from typing import Any, Dict, List
 from langchain_core.messages import AnyMessage, AIMessage, HumanMessage
 from datetime import datetime
+import os
+import shutil
+from shiny import ui
 
 def get_current_date():
   return datetime.now().strftime("%Y-%m-%d")
@@ -53,24 +56,17 @@ def insert_citation_markers(text, citations_list):
     Returns:
         str: The text with citation markers inserted.
     """
-    # Sort citations by end_index in descending order.
-    # If end_index is the same, secondary sort by start_index descending.
-    # This ensures that insertions at the end of the string don't affect
-    # the indices of earlier parts of the string that still need to be processed.
     sorted_citations = sorted(
         citations_list, key=lambda c: (c["end_index"], c["start_index"]), reverse=True
     )
 
     modified_text = text
     for citation_info in sorted_citations:
-        # These indices refer to positions in the *original* text,
-        # but since we iterate from the end, they remain valid for insertion
-        # relative to the parts of the string already processed.
         end_idx = citation_info["end_index"]
         marker_to_insert = ""
         for segment in citation_info["segments"]:
             marker_to_insert += f" [{segment['label']}]({segment['short_url']})"
-        # Insert the citation marker at the original end_idx position
+
         modified_text = (
             modified_text[:end_idx] + marker_to_insert + modified_text[end_idx:]
         )
@@ -167,3 +163,84 @@ def get_citations(response, resolved_urls_map):
                     pass
         citations.append(citation)
     return citations
+
+
+def clear_docs_folder(docs_path:str):
+    
+    if os.path.exists(docs_path):
+        # 如果存在，删除整个目录及其内容
+        try:
+            shutil.rmtree(docs_path)
+            print("✅ docs 目录已删除")
+        except Exception as e:
+            print(f"❌ 删除 docs 目录失败：{str(e)}")
+            return False
+
+    # 重新创建空的 docs 目录
+    try:
+        os.makedirs(docs_path)
+        print("✅ docs 目录已重新创建")
+        return True
+    except Exception as e:
+        print(f"❌ 创建 docs 目录失败：{str(e)}")
+        return False
+
+
+def cpoy_directory(src_dir: str, target_dir: str):
+
+    # 获取用户选择的目录
+    selected_dir = src_dir.strip()
+
+    # 创建目标目录
+    if not os.path.exists(selected_dir):
+        print("⚠️ 目标目录不存在")
+        return []
+
+    # 创建目标目录
+    if not os.path.exists(target_dir):
+        os.makedirs(target_dir)
+    else:
+        # 清空目录
+        clear_docs_folder(target_dir)
+
+    all_files = []
+    # 当输入是单个文件路径
+    if os.path.isfile(selected_dir):
+
+        src_file = selected_dir
+        dest_file = os.path.join(target_dir, os.path.basename(selected_dir))
+
+        try:
+            shutil.copy2(src_file, dest_file)  # 拷贝并保留元数据
+            all_files.append(dest_file)
+            print(f"✅ 已复制：{src_file} → {dest_file}")
+            ui.notification_show(f"✅ 已复制：{src_file} → {dest_file}", type="message", duration=10)
+
+        except Exception as e:
+            print(f"❌ 复制失败：{src_file}，错误：{str(e)}")
+            ui.notification_show(f"❌ 复制失败：{src_file}，错误：{str(e)}", type="message", duration=10)
+
+    # 当输入是目录路径
+    else:
+        for root, _, files in os.walk(selected_dir):
+            rel_path = os.path.relpath(root, selected_dir)
+            dest_subdir = os.path.join(target_dir, rel_path)
+            os.makedirs(dest_subdir, exist_ok=True)
+
+            for f in files:
+                src_file = os.path.join(root, f)
+                dest_file = os.path.join(dest_subdir, f)
+
+                try:
+                    shutil.copy2(src_file, dest_file)  # 拷贝并保留元数据
+                    all_files.append(dest_file)
+                    print(f"✅ 已复制：{src_file} → {dest_file}")
+                    ui.notification_show(f"✅ 已复制：{src_file} → {dest_file}", type="message", duration=10)
+
+                except Exception as e:
+                    print(f"❌ 复制失败：{src_file}，错误：{str(e)}")
+                    ui.notification_show(f"❌ 复制失败：{src_file}，错误：{str(e)}", type="message", duration=10)
+   
+    ui.notification_show("✅ 数据初始化完成", type="message", duration=10)
+
+    return all_files

@@ -1329,3 +1329,1866 @@ def layout_6_6():
 ### [检索结果]:
 
 
+---
+### 第 [2] 轮检索
+### [输入问题]:
+这个份代码描述什么
+### [增强检索]:
+问题:这个份代码描述什么。 关键点：代码功能描述与用途说明, 代码结构与模块解析, 代码中关键函数和类的作用, 代码依赖的库或框架分析, 代码注释与文档内容提取
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\app.py</code>，第 <strong>1</strong> 至 <strong>1</strong> 行<br>
+
+<strong>匹配原因：</strong>
+代码注释与文档内容提取：文件标题注释
+
+<strong>匹配内容：</strong>
+```text
+
+# app.py
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\app.py</code>，第 <strong>3</strong> 至 <strong>4</strong> 行<br>
+
+<strong>匹配原因：</strong>
+代码依赖的库或框架分析：导入了shiny框架和app_wikidocu模块
+
+<strong>匹配内容：</strong>
+```text
+
+from shiny import App, ui
+from app_wikidocu import setup_server
+
+```
+</blockquote>
+<!-- 第 2 个引用结束 -->
+
+<!-- 第 3 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[3]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\app.py</code>，第 <strong>7</strong> 至 <strong>12</strong> 行<br>
+
+<strong>匹配原因：</strong>
+代码功能描述与用途说明：定义了应用的UI界面，包括标题、按钮和动态内容输出
+
+<strong>匹配内容：</strong>
+```text
+
+app_ui = ui.page_fluid(
+    ui.h1("动态创建多个 ui.navset_card 示例"),
+    ui.hr(),
+    ui.input_action_button("add_more", "添加更多组件"),
+    ui.output_ui("dynamic_content"),
+)
+
+```
+</blockquote>
+<!-- 第 3 个引用结束 -->
+
+<!-- 第 4 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[4]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\app.py</code>，第 <strong>14</strong> 至 <strong>14</strong> 行<br>
+
+<strong>匹配原因：</strong>
+代码结构与模块解析：创建了App实例，连接UI和服务器逻辑
+
+<strong>匹配内容：</strong>
+```text
+
+app = App(app_ui, setup_server)
+
+```
+</blockquote>
+<!-- 第 4 个引用结束 -->
+
+<!-- 第 5 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[5]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\app.py</code>，第 <strong>16</strong> 至 <strong>17</strong> 行<br>
+
+<strong>匹配原因：</strong>
+代码结构与模块解析：主程序入口，用于运行应用
+
+<strong>匹配内容：</strong>
+```text
+
+if __name__ == "__main__":
+    app.run()
+
+```
+</blockquote>
+<!-- 第 5 个引用结束 -->
+
+<!-- 第 6 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[6]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\components.py</code>，第 <strong>1</strong> 至 <strong>1</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该行是文件的标题注释，说明了文件名，与代码功能描述相关
+
+<strong>匹配内容：</strong>
+```text
+
+# components.py
+
+```
+</blockquote>
+<!-- 第 6 个引用结束 -->
+
+<!-- 第 7 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[7]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\components.py</code>，第 <strong>3</strong> 至 <strong>3</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该行引入了依赖库shiny，与代码依赖的库或框架分析相关
+
+<strong>匹配内容：</strong>
+```text
+
+from shiny import ui
+
+```
+</blockquote>
+<!-- 第 7 个引用结束 -->
+
+<!-- 第 8 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[8]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\components.py</code>，第 <strong>5</strong> 至 <strong>6</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段定义了left_panel函数，与代码中关键函数的作用相关
+
+<strong>匹配内容：</strong>
+```text
+
+def left_panel():
+    return ui.div("左侧内容", style="border:1px solid #ccc; padding:10px;")
+
+```
+</blockquote>
+<!-- 第 8 个引用结束 -->
+
+<!-- 第 9 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[9]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\components.py</code>，第 <strong>8</strong> 至 <strong>9</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段定义了right_panel函数，与代码中关键函数的作用相关
+
+<strong>匹配内容：</strong>
+```text
+
+def right_panel():
+    return ui.div("右侧内容", style="border:1px solid #ccc; padding:10px;")
+
+```
+</blockquote>
+<!-- 第 9 个引用结束 -->
+
+<!-- 第 10 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[10]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\components.py</code>，第 <strong>17</strong> 至 <strong>21</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段定义了layout_6_6函数，与代码中关键函数的作用相关
+
+<strong>匹配内容：</strong>
+```text
+
+def layout_6_6():
+    return ui.row(
+        ui.column(6, ui.output_text("detail_output", inline=False)),
+        ui.column(6, ui.output_text("main_output", inline=False))
+    )
+
+```
+</blockquote>
+<!-- 第 10 个引用结束 -->
+
+<!-- 第 11 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[11]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\config.py</code>，第 <strong>1</strong> 至 <strong>1</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该行是文件的标题注释，说明了文件的基本用途，与代码功能描述与用途说明相关。
+
+<strong>匹配内容：</strong>
+```text
+
+# config.py
+
+```
+</blockquote>
+<!-- 第 11 个引用结束 -->
+
+<!-- 第 12 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[12]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\config.py</code>，第 <strong>3</strong> 至 <strong>3</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该行导入了shiny库，属于代码依赖的库或框架分析的内容。
+
+<strong>匹配内容：</strong>
+```text
+
+from shiny import ui
+
+```
+</blockquote>
+<!-- 第 12 个引用结束 -->
+
+<!-- 第 13 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[13]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\config.py</code>，第 <strong>5</strong> 至 <strong>18</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落定义了一个配置字典，包含了不同导航组件的配置信息，涉及代码结构与模块解析以及关键函数和类的作用。
+
+<strong>匹配内容：</strong>
+```text
+
+# 配置字典
+navset_configs = {
+    "navset_card_tab": {
+        "对话": {"title": "Tab Card"},
+        # "with_sidebar": {"title": "Tab with Sidebar", "sidebar": ui.sidebar("Sidebar content")},
+    },
+    # "navset_card_pill": {
+    #     "default": {"title": "Pill Card"},
+    #     "below": {"title": "Pill Below", "placement": "below"},
+    # },
+    # "navset_card_underline": {
+    #     "default": {"title": "Underline Card"},
+    #     "with_header": {"title": "With Header", "header": "Header content"},
+    # },
+
+```
+</blockquote>
+<!-- 第 13 个引用结束 -->
+
+<!-- 第 14 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[14]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\navset_builder.py</code>，第 <strong>1</strong> 至 <strong>1</strong> 行<br>
+
+<strong>匹配原因：</strong>
+文件标题，说明该文件是 navset_builder.py，与代码功能描述相关
+
+<strong>匹配内容：</strong>
+```text
+
+# navset_builder.py
+
+```
+</blockquote>
+<!-- 第 14 个引用结束 -->
+
+<!-- 第 15 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[15]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\navset_builder.py</code>，第 <strong>9</strong> 至 <strong>12</strong> 行<br>
+
+<strong>匹配原因：</strong>
+类定义及初始化方法，说明该类用于构建 navset UI，属于代码结构与模块解析
+
+<strong>匹配内容：</strong>
+```text
+
+class NavsetUIBuilder:
+    def __init__(self, navset_configs):
+        self.navset_configs = navset_configs
+
+
+```
+</blockquote>
+<!-- 第 15 个引用结束 -->
+
+<!-- 第 16 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[16]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\navset_builder.py</code>，第 <strong>13</strong> 至 <strong>43</strong> 行<br>
+
+<strong>匹配原因：</strong>
+方法 create_navset_ui 的实现，描述了如何动态创建 navset 组件 UI，涉及关键函数的作用和用途说明
+
+<strong>匹配内容：</strong>
+```text
+
+    def create_navset_ui(self, navset_type: str) -> List:
+        """动态创建 navset 组件的 UI"""
+        navset_function = getattr(ui, navset_type)
+        components = []
+
+        for navset_id, params in self.navset_configs[navset_type].items():
+            navset_kwargs = params.copy()
+
+            # 创建导航面板
+            page_fluid = []
+            panel_id = f"{navset_type}_1"
+
+            body_content = layout_6_6()
+            page_fluid.append(
+                ui.page_fluid(panel_id, body_content, value=panel_id)
+            )
+
+            # 创建 navset 组件
+            component = navset_function(
+                *page_fluid,
+                id=f"{navset_type}_{navset_id}",
+                **navset_kwargs
+            )
+
+            components.append(ui.div(
+                ui.h4(f"{navset_type} - {navset_id}"),
+                component,
+                style="margin-bottom: 2rem;"
+            ))
+
+        return components
+
+```
+</blockquote>
+<!-- 第 16 个引用结束 -->
+
+<!-- 第 17 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[17]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\navset_builder.py</code>，第 <strong>3</strong> 至 <strong>6</strong> 行<br>
+
+<strong>匹配原因：</strong>
+导入语句，说明该模块依赖的库或框架包括 typing、shiny、config 和 components
+
+<strong>匹配内容：</strong>
+```text
+
+from typing import List
+from shiny import ui
+from config import navset_configs
+from components import layout_6_6
+
+```
+</blockquote>
+<!-- 第 17 个引用结束 -->
+
+<!-- 第 18 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[18]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\test_app2.py</code>，第 <strong>1</strong> 至 <strong>3</strong> 行<br>
+
+<strong>匹配原因：</strong>
+导入了代码依赖的库或框架，包括 shiny、typing 和 random
+
+<strong>匹配内容：</strong>
+```text
+
+from shiny import App, render, ui, reactive
+from typing import Dict, Any
+import random
+
+```
+</blockquote>
+<!-- 第 18 个引用结束 -->
+
+<!-- 第 19 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[19]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\test_app2.py</code>，第 <strong>5</strong> 至 <strong>19</strong> 行<br>
+
+<strong>匹配原因：</strong>
+定义了配置字典，属于代码结构与模块解析的一部分
+
+<strong>匹配内容：</strong>
+```text
+
+# 配置字典
+navset_configs: Dict[str, Dict[str, Dict[str, Any]]] = {
+    "navset_card_tab": {
+        "对话": {"title": "Tab Card"},
+    #    "with_sidebar": {"title": "Tab with Sidebar", "sidebar": ui.sidebar("Sidebar content")},
+    },
+    # "navset_card_pill": {
+    #     "default": {"title": "Pill Card"},
+    #     "below": {"title": "Pill Below", "placement": "below"},
+    # },
+    # "navset_card_underline": {
+    #     "default": {"title": "Underline Card"},
+    #     "with_header": {"title": "With Header", "header": "Header content"},
+    # },
+}
+
+```
+</blockquote>
+<!-- 第 19 个引用结束 -->
+
+<!-- 第 20 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[20]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\test_app2.py</code>，第 <strong>21</strong> 至 <strong>60</strong> 行<br>
+
+<strong>匹配原因：</strong>
+定义了 create_navset_ui 函数，用于动态创建 navset 组件的 UI，说明了关键函数的作用
+
+<strong>匹配内容：</strong>
+```text
+
+def create_navset_ui(navset_type: str) -> list:
+    """动态创建 navset 组件的 UI"""
+    navset_function = getattr(ui, navset_type)
+    components = []
+
+    for navset_id, params in navset_configs[navset_type].items():
+        navset_kwargs = params.copy()
+
+        # 创建导航面板
+        nav_panels = []
+        #for suffix in ["a", "b"]:
+        panel_id = f"{navset_type}_1"
+        
+        # 创建左右布局的内容
+        left_content = ui.div("左侧内容", style="border:1px solid #ccc; padding:10px;")
+        right_content = ui.div("右侧内容", style="border:1px solid #ccc; padding:10px;")
+        
+        body_content = ui.row(
+            ui.column(6, left_content),
+            ui.column(6, right_content)
+        )
+        
+        nav_panels.append(
+            ui.nav_panel(panel_id, body_content, value=panel_id)
+        )
+
+        # 创建 navset 组件
+        component = navset_function(
+            *nav_panels,
+            id=f"{navset_type}_{navset_id}",
+            **navset_kwargs
+        )
+
+        components.append(ui.div(
+            ui.h4(f"{navset_type} - {navset_id}"),
+            component,
+            style="margin-bottom: 2rem;"
+        ))
+
+    return components
+
+```
+</blockquote>
+<!-- 第 20 个引用结束 -->
+
+<!-- 第 21 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[21]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\test_app2.py</code>，第 <strong>62</strong> 至 <strong>70</strong> 行<br>
+
+<strong>匹配原因：</strong>
+构建了应用的 UI 界面，属于代码结构与模块解析的一部分
+
+<strong>匹配内容：</strong>
+```text
+
+# 构建 UI
+app_ui = ui.page_fluid(
+    ui.h1("动态创建多个 ui.navset_card 示例"),
+    ui.hr(),
+    ui.input_action_button("add_more", "添加更多组件"),
+    ui.output_ui("dynamic_content"),
+    #ui.h3("当前选中的值:"),
+    #ui.output_code("selected_values")
+)
+
+```
+</blockquote>
+<!-- 第 21 个引用结束 -->
+
+<!-- 第 22 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[22]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\test_app2.py</code>，第 <strong>72</strong> 至 <strong>106</strong> 行<br>
+
+<strong>匹配原因：</strong>
+定义了 server 函数，包含应用的逻辑处理，说明了关键函数和类的作用
+
+<strong>匹配内容：</strong>
+```text
+
+def server(input, output, session):
+    # 用 reactive.Value 保存累计的 UI 内容
+    dynamic_ui_content = reactive.Value(ui.TagList())
+
+    @render.ui
+    @reactive.event(input.add_more)
+    def dynamic_content():
+        navset_types = list(navset_configs.keys())
+        selected_type = random.choice(navset_types)  # 随机选择一个类型
+
+        # 生成新内容
+        new_content = ui.TagList(
+            #ui.h4(f"第 {len(dynamic_ui_content.get()) + 1} 次添加的组件（{selected_type}）"),
+            create_navset_ui(selected_type),
+        )
+
+        # 追加到已有内容中
+        current_content = dynamic_ui_content.get()
+        current_content.append(new_content)
+        dynamic_ui_content.set(current_content)
+
+        return dynamic_ui_content.get()  # 返回全部内容
+
+    # 显示所有选中的值
+    @render.code
+    def selected_values():
+        selected = {}
+        for navset_type in navset_configs.keys():
+            for navset_id in navset_configs[navset_type].keys():
+                component_id = f"{navset_type}_{navset_id}"
+                if hasattr(input, component_id):
+                    selected[component_id] = getattr(input, component_id)()
+        return str(selected)
+
+app = App(app_ui, server)
+
+```
+</blockquote>
+<!-- 第 22 个引用结束 -->
+
+<!-- 第 23 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[23]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\app_test\test_app2.py</code>，第 <strong>106</strong> 至 <strong>106</strong> 行<br>
+
+<strong>匹配原因：</strong>
+创建了 App 实例，属于代码功能描述与用途说明的一部分
+
+<strong>匹配内容：</strong>
+```text
+
+app = App(app_ui, server)
+
+```
+</blockquote>
+<!-- 第 23 个引用结束 -->
+
+---
+### 第 [3] 轮检索
+### [输入问题]:
+总结内容
+### [增强检索]:
+问题:总结内容。 关键点：文档内容总结方法, 如何提取文档核心要点, 文本摘要生成技巧, 结构化总结报告格式, 高效阅读与总结工具
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\news.txt</code>，第 <strong>1</strong> 至 <strong>22</strong> 行<br>
+
+<strong>匹配原因：</strong>
+整个文档围绕河北省推行远程异地评标改革展开，涉及评审方法、实施情况、技术支撑、专家培训、风险规避等多个方面，内容集中且连贯，符合‘总结内容’的要求，并涵盖了文档核心要点的提取和结构化信息。
+
+<strong>匹配内容：</strong>
+```text
+
+持续深化“双盲”评审改革 河北省全面推行远程异地评标
+2025-08-05 17:45:58来源：河北新闻网
+
+  持续深化“双盲”评审改革
+
+  我省全面推行远程异地评标
+
+  3月以来，采用该评标模式的标段7202个，交易额896.15亿元
+
+  招标投标，是衡量一个地区营商环境优劣的重要晴雨表。从河北省数据和政务服务局获悉，今年，河北省持续深化“双盲”评审改革，将全面推行远程异地评标作为最主要抓手，上线运行省远程异地协调系统，督促市县平台升级改造，实现全省依法必招工程建设项目和政府采购公开招标项目全部采用专家场地“盲抽”“盲定”的远程异地评标模式。
+
+  自3月以来，河北省采用远程异地评标模式的标段总数为7202个，交易额896.15亿元。其中，工程建设类标段总数为2888个，政府采购类标段总数为4314个。
+
+  “远程异地评标，能有效解决部分地区场地和专家不足等问题，进一步增强评标的公正性和专业性，为创建更加公平阳光的公共资源交易环境提供有力支撑。”河北省数据和政务服务局公共资源交易和招标投标指导协调处处长韩英利介绍。
+
+  目前，河北省已建成全省统一的信息化支撑系统，实现与各市交易系统互联互通，确保全省范围随机安排场地、随机抽取专家。
+
+  河北省还着重加强专家培训指导，在招标投标公共服务平台、专家通客户端上线操作指导视频，在评标现场放置操作手册，帮助评标专家熟悉系统操作流程，进一步提升评标审标质效。
+
+  此外，河北省加强了招标人代表管理，采用文字制式化方式代替招标人代表在评标现场进行项目情况介绍，最大程度规避招标人代表影响专家评审风险。
+
+  今年下半年，河北省数据和政务服务局将坚持问题导向，纵深推进招标投标领域体制机制改革创新，持续强化对远程异地评标工作的评估和改进，不断提升远程异地评标安全稳定性。（记者解楚楚）
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+---
+### 第 [4] 轮检索
+### [输入问题]:
+远程异地评标 有什么优势
+### [增强检索]:
+问题:远程异地评标 有什么优势。 关键点：远程异地评标的主要优势, 远程异地评标如何提升招标投标公正性, 远程异地评标在河北省的实施效果, 远程异地评标与传统评标方式的对比分析, 远程异地评标中的专家抽取机制及其作用
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\news.txt</code>，第 <strong>1</strong> 至 <strong>1</strong> 行<br>
+
+<strong>匹配原因：</strong>
+标题直接提及远程异地评标，与研究主题相关
+
+<strong>匹配内容：</strong>
+```text
+
+持续深化“双盲”评审改革 河北省全面推行远程异地评标
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\news.txt</code>，第 <strong>10</strong> 至 <strong>10</strong> 行<br>
+
+<strong>匹配原因：</strong>
+提到河北省全面推行远程异地评标作为主要抓手，涉及实施效果和提升公正性
+
+<strong>匹配内容：</strong>
+```text
+
+  招标投标，是衡量一个地区营商环境优劣的重要晴雨表。从河北省数据和政务服务局获悉，今年，河北省持续深化“双盲”评审改革，将全面推行远程异地评标作为最主要抓手，上线运行省远程异地协调系统，督促市县平台升级改造，实现全省依法必招工程建设项目和政府采购公开招标项目全部采用专家场地“盲抽”“盲定”的远程异地评标模式。
+
+```
+</blockquote>
+<!-- 第 2 个引用结束 -->
+
+<!-- 第 3 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[3]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\news.txt</code>，第 <strong>12</strong> 至 <strong>12</strong> 行<br>
+
+<strong>匹配原因：</strong>
+提供具体数据支持远程异地评标的实施效果
+
+<strong>匹配内容：</strong>
+```text
+
+  自3月以来，河北省采用远程异地评标模式的标段总数为7202个，交易额896.15亿元。其中，工程建设类标段总数为2888个，政府采购类标段总数为4314个。
+
+```
+</blockquote>
+<!-- 第 3 个引用结束 -->
+
+<!-- 第 4 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[4]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\news.txt</code>，第 <strong>14</strong> 至 <strong>14</strong> 行<br>
+
+<strong>匹配原因：</strong>
+明确指出远程异地评标的优势，包括解决专家和场地问题，增强公正性和专业性
+
+<strong>匹配内容：</strong>
+```text
+
+  “远程异地评标，能有效解决部分地区场地和专家不足等问题，进一步增强评标的公正性和专业性，为创建更加公平阳光的公共资源交易环境提供有力支撑。”河北省数据和政务服务局公共资源交易和招标投标指导协调处处长韩英利介绍。
+
+```
+</blockquote>
+<!-- 第 4 个引用结束 -->
+
+<!-- 第 5 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[5]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\news.txt</code>，第 <strong>16</strong> 至 <strong>16</strong> 行<br>
+
+<strong>匹配原因：</strong>
+描述了远程异地评标的信息化支撑系统及其作用，体现其机制优势
+
+<strong>匹配内容：</strong>
+```text
+
+  目前，河北省已建成全省统一的信息化支撑系统，实现与各市交易系统互联互通，确保全省范围随机安排场地、随机抽取专家。
+
+```
+</blockquote>
+<!-- 第 5 个引用结束 -->
+
+<!-- 第 6 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[6]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\news.txt</code>，第 <strong>20</strong> 至 <strong>20</strong> 行<br>
+
+<strong>匹配原因：</strong>
+说明通过管理改进减少人为影响，提升评标公正性
+
+<strong>匹配内容：</strong>
+```text
+
+  此外，河北省加强了招标人代表管理，采用文字制式化方式代替招标人代表在评标现场进行项目情况介绍，最大程度规避招标人代表影响专家评审风险。
+
+```
+</blockquote>
+<!-- 第 6 个引用结束 -->
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析文档结构与核心内容, 文档摘要生成方法与工具, 文本内容关键信息提取技巧, 长文档总结自动化处理方式, 文档分析中的常见问题与解决方案
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [2] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析和总结文档主要内容的步骤, 文档内容分析工具与方法, 用户未提供文档时如何引导其上传或粘贴内容, 文档摘要生成的最佳实践, 文本分析中的关键信息提取技巧
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [3] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何提供文档内容以供分析, 文档内容格式要求与示例, 总结文档主要内容的步骤说明, 文档分析所需的关键信息类型, 上传或粘贴文档的最佳实践
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp-zh.toml</code>，第 <strong>1</strong> 至 <strong>79</strong> 行<br>
+
+<strong>匹配原因：</strong>
+整个文档内容与指定研究主题相关，涉及如何提供文档内容以供分析、文档内容格式要求与示例、总结文档主要内容的步骤说明、文档分析所需的关键信息类型以及上传或粘贴文档的最佳实践。
+
+<strong>匹配内容：</strong>
+```text
+
+description = "需求文档生成(task-master prs)"  
+prompt = """
+# 参数检查命令：
+
+**用户的原始命令附加在下方。**
+ - 如果用户没有提供任何参数，请输出错误信息："错误：此命令需要输入参数"。  
+ - 如果用户提供了参数（命令后面有内容），获取参数值。
+ 
+
+# 执行命令如下命令：
+
+## 创建 PRP
+
+### 功能文件： `{{args}}`
+
+为通用功能实现生成一份完整的 PRP（问题解决预案），并进行充分的研究。确保将上下文传递给 AI 代理，以实现自我验证和迭代优化。首先阅读功能文件，理解需要创建的内容、所提供的示例如何帮助实现，以及其他注意事项。
+
+AI 代理仅能获取你附加到 PRP 中的上下文信息以及其训练数据。假设 AI 代理可以访问代码库，并拥有与你相同的知识截止时间，因此将你的研究成果包含或引用在 PRP 中非常重要。该代理具备网络搜索能力，因此请在 PRP 中提供文档和示例的 URL。
+
+### 研究流程
+
+1. **代码库分析**
+   - 在代码库中搜索类似的功能/模式
+   - 确定 PRP 中需要引用的文件
+   - 记录需遵循的现有规范
+   - 检查测试模式以确定验证方法
+
+2. **外部研究**
+   - 在网上搜索类似的功能/模式
+   - 查阅库文档（包含具体 URL）
+   - 实现示例（GitHub/StackOverflow/博客）
+   - 最佳实践和常见陷阱
+
+3. **用户澄清**（如需要）
+   - 需要模仿的具体模式及查找位置？
+   - 集成要求及查找位置？
+
+### PRP 生成
+
+使用 PRPs/templates/prp_base-zh.md 作为模板：
+
+#### 必须包含并传递给 AI 代理的关键上下文（作为 PRP 的一部分）
+- **文档**：带有具体章节的 URL
+- **代码示例**：来自代码库的真实代码片段
+- **注意事项**：库的怪癖、版本问题
+- **模式**：需遵循的现有方法
+
+#### 实现蓝图
+- 以伪代码开始，展示整体方法
+- 引用代码库中的真实文件以参考模式
+- 包含错误处理策略
+- 列出为完成 PRP 所需按顺序完成的任务
+
+#### 验证关卡（必须可执行）例如 Python
+```bash
+# 语法/风格检查
+ruff check --fix && mypy .
+
+## 单元测试
+uv run pytest tests/ -v
+```
+
+*** 在完成对代码库的研究和探索之后、开始编写PRP之前 ***
+*** 对 PRP 进行深度思考（ULTRATHINK），规划你的方法，然后开始撰写 PRP ***
+
+### 输出
+保存为：`PRPs/{功能名称}.md`
+
+### 质量检查清单
+- [ ] 所有必要的上下文均已包含
+- [ ] 验证关卡可由 AI 执行
+- [ ] 引用了现有模式
+- [ ] 实现路径清晰
+- [ ] 错误处理已记录
+
+根据使用Claude代码进行一次性实现的成功信心程度，对PRP在1-10分范围内进行评分。
+
+记住：目标是通过全面的上下文实现一次通过的成功实施。
+"""
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>1</strong> 至 <strong>6</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落描述了创建PRP的总体目标和要求，包括阅读特性文件以理解需求，这是文档分析和内容总结的一部分。
+
+<strong>匹配内容：</strong>
+```text
+
+# Create PRP
+
+## Feature file: D:\github_rep\context-engineering\task-master\.taskmaster\docs\prd.txt
+
+Generate a complete PRP for general feature implementation with thorough research. Ensure context is passed to the AI agent to enable self-validation and iterative refinement. Read the feature file first to understand what needs to be created, how the examples provided help, and any other considerations.
+
+
+```
+</blockquote>
+<!-- 第 2 个引用结束 -->
+
+<!-- 第 3 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[3]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>9</strong> 至 <strong>26</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落详细描述了研究过程，包括代码库分析和外部研究，这些是文档分析所需的关键信息类型。
+
+<strong>匹配内容：</strong>
+```text
+
+## Research Process
+
+1. **Codebase Analysis**
+   - Search for similar features/patterns in the codebase
+   - Identify files to reference in PRP
+   - Note existing conventions to follow
+   - Check test patterns for validation approach
+
+2. **External Research**
+   - Search for similar features/patterns online
+   - Library documentation (include specific URLs)
+   - Implementation examples (GitHub/StackOverflow/blogs)
+   - Best practices and common pitfalls
+
+3. **User Clarification** (if needed)
+   - Specific patterns to mirror and where to find them?
+   - Integration requirements and where to find them?
+
+
+```
+</blockquote>
+<!-- 第 3 个引用结束 -->
+
+<!-- 第 4 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[4]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>27</strong> 至 <strong>41</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落描述了PRP生成的步骤和关键内容，包括关键上下文、实现蓝图等，属于总结文档主要内容的步骤说明。
+
+<strong>匹配内容：</strong>
+```text
+
+## PRP Generation
+
+Using PRPs/templates/prp_base.md as template:
+
+### Critical Context to Include and pass to the AI agent as part of the PRP
+- **Documentation**: URLs with specific sections
+- **Code Examples**: Real snippets from codebase
+- **Gotchas**: Library quirks, version issues
+- **Patterns**: Existing approaches to follow
+
+### Implementation Blueprint
+- Start with pseudocode showing approach
+- Reference real files for patterns
+- Include error handling strategy
+- list tasks to be completed to fullfill the PRP in the order they should be completed
+
+```
+</blockquote>
+<!-- 第 4 个引用结束 -->
+
+<!-- 第 5 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[5]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>43</strong> 至 <strong>51</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落提供了验证门的示例，属于文档内容格式要求与示例。
+
+<strong>匹配内容：</strong>
+```text
+
+### Validation Gates (Must be Executable) eg for python
+```bash
+# Syntax/Style
+ruff check --fix && mypy .
+
+# Unit Tests
+uv run pytest tests/ -v
+
+```
+
+```
+</blockquote>
+<!-- 第 5 个引用结束 -->
+
+<!-- 第 6 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[6]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>53</strong> 至 <strong>56</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落强调了在编写PRP之前进行彻底研究和思考的重要性，属于上传或粘贴文档的最佳实践。
+
+<strong>匹配内容：</strong>
+```text
+
+*** CRITICAL AFTER YOU ARE DONE RESEARCHING AND EXPLORING THE CODEBASE BEFORE YOU START WRITING THE PRP ***
+
+*** ULTRATHINK ABOUT THE PRP AND PLAN YOUR APPROACH THEN START WRITING THE PRP ***
+
+
+```
+</blockquote>
+<!-- 第 6 个引用结束 -->
+
+<!-- 第 7 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[7]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>57</strong> 至 <strong>67</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落描述了输出要求和质量检查清单，这是文档分析所需的关键信息类型。
+
+<strong>匹配内容：</strong>
+```text
+
+## Output
+Save as: `PRPs/{feature-name}.md`
+
+## Quality Checklist
+- [ ] All necessary context included
+- [ ] Validation gates are executable by AI
+- [ ] References existing patterns
+- [ ] Clear implementation path
+- [ ] Error handling documented
+
+Score the PRP on a scale of 1-10 (confidence level to succeed in one-pass implementation using claude codes)
+
+```
+</blockquote>
+<!-- 第 7 个引用结束 -->
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析文档结构与核心内容, 文档摘要生成方法与工具, 文本内容总结技巧与实践, 文档关键信息提取指南, 自动化文档分析与总结技术
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\execute-prp.md</code>，第 <strong>1</strong> 至 <strong>3</strong> 行<br>
+
+<strong>匹配原因：</strong>
+标题和首段内容介绍了文档的主题是关于执行BASE PRP，涉及使用PRP文件实现功能，这与'如何分析文档结构与核心内容'相关。
+
+<strong>匹配内容：</strong>
+```text
+
+# Execute BASE PRP
+
+Implement a feature using using the PRP file.
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\execute-prp.md</code>，第 <strong>7</strong> 至 <strong>39</strong> 行<br>
+
+<strong>匹配原因：</strong>
+从'Execution Process'开始的整个部分详细描述了执行PRP的步骤，包括加载、思考、执行、验证和完成等阶段，这些内容涵盖了'文档关键信息提取指南'和'自动化文档分析与总结技术'的相关实践方法。
+
+<strong>匹配内容：</strong>
+```text
+
+## Execution Process
+
+1. **Load PRP**
+   - Read the specified PRP file
+   - Understand all context and requirements
+   - Follow all instructions in the PRP and extend the research if needed
+   - Ensure you have all needed context to implement the PRP fully
+   - Do more web searches and codebase exploration as needed
+
+2. **ULTRATHINK**
+   - Think hard before you execute the plan. Create a comprehensive plan addressing all requirements.
+   - Break down complex tasks into smaller, manageable steps using your todos tools.
+   - Use the TodoWrite tool to create and track your implementation plan.
+   - Identify implementation patterns from existing code to follow.
+
+3. **Execute the plan**
+   - Execute the PRP
+   - Implement all the code
+
+4. **Validate**
+   - Run each validation command
+   - Fix any failures
+   - Re-run until all pass
+
+5. **Complete**
+   - Ensure all checklist items done
+   - Run final validation suite
+   - Report completion status
+   - Read the PRP again to ensure you have implemented everything
+
+6. **Reference the PRP**
+   - You can always reference the PRP again if needed
+
+
+```
+</blockquote>
+<!-- 第 2 个引用结束 -->
+
+<!-- 第 3 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[3]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp-zh.toml</code>，第 <strong>22</strong> 至 <strong>27</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落描述了代码库分析的步骤，涉及文档结构与核心内容的分析，与研究主题中的'如何分析文档结构与核心内容'相关。
+
+<strong>匹配内容：</strong>
+```text
+
+1. **代码库分析**
+   - 在代码库中搜索类似的功能/模式
+   - 确定 PRP 中需要引用的文件
+   - 记录需遵循的现有规范
+   - 检查测试模式以确定验证方法
+
+
+```
+</blockquote>
+<!-- 第 3 个引用结束 -->
+
+<!-- 第 4 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[4]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp-zh.toml</code>，第 <strong>28</strong> 至 <strong>33</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落描述了外部研究的步骤，包括查阅文档和示例，与研究主题中的'文档关键信息提取指南'相关。
+
+<strong>匹配内容：</strong>
+```text
+
+2. **外部研究**
+   - 在网上搜索类似的功能/模式
+   - 查阅库文档（包含具体 URL）
+   - 实现示例（GitHub/StackOverflow/博客）
+   - 最佳实践和常见陷阱
+
+
+```
+</blockquote>
+<!-- 第 4 个引用结束 -->
+
+<!-- 第 5 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[5]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp-zh.toml</code>，第 <strong>42</strong> 至 <strong>47</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落描述了必须包含在PRP中的关键上下文信息，如文档、代码示例等，与研究主题中的'文档关键信息提取指南'和'如何分析文档结构与核心内容'相关。
+
+<strong>匹配内容：</strong>
+```text
+
+#### 必须包含并传递给 AI 代理的关键上下文（作为 PRP 的一部分）
+- **文档**：带有具体章节的 URL
+- **代码示例**：来自代码库的真实代码片段
+- **注意事项**：库的怪癖、版本问题
+- **模式**：需遵循的现有方法
+
+
+```
+</blockquote>
+<!-- 第 5 个引用结束 -->
+
+<!-- 第 6 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[6]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp-zh.toml</code>，第 <strong>48</strong> 至 <strong>53</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落描述了实现蓝图的步骤，包括伪代码和引用真实文件，与研究主题中的'文档摘要生成方法与工具'和'文本内容总结技巧与实践'相关。
+
+<strong>匹配内容：</strong>
+```text
+
+#### 实现蓝图
+- 以伪代码开始，展示整体方法
+- 引用代码库中的真实文件以参考模式
+- 包含错误处理策略
+- 列出为完成 PRP 所需按顺序完成的任务
+
+
+```
+</blockquote>
+<!-- 第 6 个引用结束 -->
+
+<!-- 第 7 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[7]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>11</strong> 至 <strong>16</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落描述了代码库分析的过程，涉及如何识别相关文件、现有约定和测试模式，这与文档结构分析和关键信息提取相关。
+
+<strong>匹配内容：</strong>
+```text
+
+1. **Codebase Analysis**
+   - Search for similar features/patterns in the codebase
+   - Identify files to reference in PRP
+   - Note existing conventions to follow
+   - Check test patterns for validation approach
+
+
+```
+</blockquote>
+<!-- 第 7 个引用结束 -->
+
+<!-- 第 8 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[8]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>17</strong> 至 <strong>22</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落涉及外部研究过程，包括搜索类似功能、库文档和实现示例，这与文档内容总结和关键信息提取相关。
+
+<strong>匹配内容：</strong>
+```text
+
+2. **External Research**
+   - Search for similar features/patterns online
+   - Library documentation (include specific URLs)
+   - Implementation examples (GitHub/StackOverflow/blogs)
+   - Best practices and common pitfalls
+
+
+```
+</blockquote>
+<!-- 第 8 个引用结束 -->
+
+<!-- 第 9 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[9]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>29</strong> 至 <strong>36</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落描述了生成PRP时需要包含的关键上下文信息，如文档URL、代码示例和现有模式，这与文档摘要生成和关键信息提取相关。
+
+<strong>匹配内容：</strong>
+```text
+
+Using PRPs/templates/prp_base.md as template:
+
+### Critical Context to Include and pass to the AI agent as part of the PRP
+- **Documentation**: URLs with specific sections
+- **Code Examples**: Real snippets from codebase
+- **Gotchas**: Library quirks, version issues
+- **Patterns**: Existing approaches to follow
+
+
+```
+</blockquote>
+<!-- 第 9 个引用结束 -->
+
+<!-- 第 10 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[10]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>37</strong> 至 <strong>42</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落提供了实现蓝图的指导，包括伪代码、错误处理策略和任务列表，这与文档结构分析和内容总结相关。
+
+<strong>匹配内容：</strong>
+```text
+
+### Implementation Blueprint
+- Start with pseudocode showing approach
+- Reference real files for patterns
+- Include error handling strategy
+- list tasks to be completed to fullfill the PRP in the order they should be completed
+
+
+```
+</blockquote>
+<!-- 第 10 个引用结束 -->
+
+<!-- 第 11 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[11]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>57</strong> 至 <strong>59</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落描述了输出文件的保存位置，涉及文档生成的一部分，与文档摘要生成方法相关。
+
+<strong>匹配内容：</strong>
+```text
+
+## Output
+Save as: `PRPs/{feature-name}.md`
+
+
+```
+</blockquote>
+<!-- 第 11 个引用结束 -->
+
+<!-- 第 12 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[12]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>60</strong> 至 <strong>66</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落提供了质量检查清单，确保所有必要上下文被包含，这与文档关键信息提取和自动化分析相关。
+
+<strong>匹配内容：</strong>
+```text
+
+## Quality Checklist
+- [ ] All necessary context included
+- [ ] Validation gates are executable by AI
+- [ ] References existing patterns
+- [ ] Clear implementation path
+- [ ] Error handling documented
+
+
+```
+</blockquote>
+<!-- 第 12 个引用结束 -->
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析文档结构与核心内容, 文档摘要生成方法与工具, 提取文档关键信息的步骤, 文档内容归纳与总结技巧, 使用AI进行文档分析的最佳实践
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\execute-prp-zh.toml</code>，第 <strong>1</strong> 至 <strong>52</strong> 行<br>
+
+<strong>匹配原因：</strong>
+整个文档描述了如何分析和执行PRP文件的步骤，涵盖了文档结构分析、核心内容提取、执行流程和验证方法，符合研究主题的要求。
+
+<strong>匹配内容：</strong>
+```text
+
+description = "任务执行(task-master next)"  
+prompt = """
+# 参数检查命令：
+
+**用户的原始命令附加在下方。**
+ - 如果用户没有提供任何参数，请输出错误信息："错误：此命令需要输入参数"。  
+ - 如果用户提供了参数（命令后面有内容），获取参数值。
+
+
+# 执行命令如下命令：
+
+## 执行 BASE PRP
+
+使用 PRP 文件实现一个功能。
+
+### PRP 文件：`{{args}}`
+
+### 执行流程
+
+1. **加载 PRP**
+   - 读取指定的 PRP 文件
+   - 理解所有上下文和要求
+   - 遵循 PRP 中的所有指令，如有需要可扩展研究
+   - 确保拥有充分的上下文以完整实现 PRP
+   - 根据需要进行更多的网络搜索和代码库探索
+
+2. **深度思考 (ULTRATHINK)**
+   - 在执行计划前深入思考。制定一个全面的计划以满足所有要求。
+   - 使用你的待办事项工具将复杂任务分解为更小、更易管理的步骤。
+   - 使用 TodoWrite 工具创建并跟踪你的实施计划。
+   - 从现有代码中识别可遵循的实现模式。
+
+3. **执行计划**
+   - 执行 PRP
+   - 实现所有代码
+
+4. **验证**
+   - 运行每个验证命令
+   - 修复任何失败
+   - 重新运行直至全部通过
+
+5. **完成**
+   - 确保所有清单项目已完成
+   - 运行最终验证套件
+   - 报告完成状态
+   - 重新阅读 PRP 以确保已实现所有内容
+
+6. **参考 PRP**
+   - 如有需要，可随时再次参考 PRP
+
+注意：如果验证失败，请使用 PRP 中的错误模式进行修复并重试。
+"""
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp-zh.toml</code>，第 <strong>16</strong> 至 <strong>19</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段描述了如何分析文档结构与核心内容，包括理解功能文件、示例和注意事项，符合研究主题。
+
+<strong>匹配内容：</strong>
+```text
+
+为通用功能实现生成一份完整的 PRP（问题解决预案），并进行充分的研究。确保将上下文传递给 AI 代理，以实现自我验证和迭代优化。首先阅读功能文件，理解需要创建的内容、所提供的示例如何帮助实现，以及其他注意事项。
+
+AI 代理仅能获取你附加到 PRP 中的上下文信息以及其训练数据。假设 AI 代理可以访问代码库，并拥有与你相同的知识截止时间，因此将你的研究成果包含或引用在 PRP 中非常重要。该代理具备网络搜索能力，因此请在 PRP 中提供文档和示例的 URL。
+
+
+```
+</blockquote>
+<!-- 第 2 个引用结束 -->
+
+<!-- 第 3 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[3]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp-zh.toml</code>，第 <strong>20</strong> 至 <strong>37</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段描述了文档分析的步骤，包括代码库分析、外部研究和用户澄清，符合研究主题。
+
+<strong>匹配内容：</strong>
+```text
+
+### 研究流程
+
+1. **代码库分析**
+   - 在代码库中搜索类似的功能/模式
+   - 确定 PRP 中需要引用的文件
+   - 记录需遵循的现有规范
+   - 检查测试模式以确定验证方法
+
+2. **外部研究**
+   - 在网上搜索类似的功能/模式
+   - 查阅库文档（包含具体 URL）
+   - 实现示例（GitHub/StackOverflow/博客）
+   - 最佳实践和常见陷阱
+
+3. **用户澄清**（如需要）
+   - 需要模仿的具体模式及查找位置？
+   - 集成要求及查找位置？
+
+
+```
+</blockquote>
+<!-- 第 3 个引用结束 -->
+
+<!-- 第 4 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[4]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp-zh.toml</code>，第 <strong>38</strong> 至 <strong>54</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段描述了如何生成文档摘要和关键信息提取的步骤，包括使用模板、实现蓝图和验证关卡，符合研究主题。
+
+<strong>匹配内容：</strong>
+```text
+
+### PRP 生成
+
+使用 PRPs/templates/prp_base-zh.md 作为模板：
+
+#### 必须包含并传递给 AI 代理的关键上下文（作为 PRP 的一部分）
+- **文档**：带有具体章节的 URL
+- **代码示例**：来自代码库的真实代码片段
+- **注意事项**：库的怪癖、版本问题
+- **模式**：需遵循的现有方法
+
+#### 实现蓝图
+- 以伪代码开始，展示整体方法
+- 引用代码库中的真实文件以参考模式
+- 包含错误处理策略
+- 列出为完成 PRP 所需按顺序完成的任务
+
+#### 验证关卡（必须可执行）例如 Python
+
+```
+</blockquote>
+<!-- 第 4 个引用结束 -->
+
+<!-- 第 5 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[5]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp-zh.toml</code>，第 <strong>63</strong> 至 <strong>65</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段描述了在文档生成前进行深度思考和规划的技巧，符合研究主题。
+
+<strong>匹配内容：</strong>
+```text
+
+*** 在完成对代码库的研究和探索之后、开始编写PRP之前 ***
+*** 对 PRP 进行深度思考（ULTRATHINK），规划你的方法，然后开始撰写 PRP ***
+
+
+```
+</blockquote>
+<!-- 第 5 个引用结束 -->
+
+<!-- 第 6 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[6]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp-zh.toml</code>，第 <strong>69</strong> 至 <strong>75</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段描述了文档内容归纳与总结的技巧，包括质量检查清单，符合研究主题。
+
+<strong>匹配内容：</strong>
+```text
+
+### 质量检查清单
+- [ ] 所有必要的上下文均已包含
+- [ ] 验证关卡可由 AI 执行
+- [ ] 引用了现有模式
+- [ ] 实现路径清晰
+- [ ] 错误处理已记录
+
+
+```
+</blockquote>
+<!-- 第 6 个引用结束 -->
+
+<!-- 第 7 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[7]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>9</strong> 至 <strong>26</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落描述了研究过程，包括代码库分析、外部研究和用户澄清，这些内容与如何分析文档结构与核心内容相关。
+
+<strong>匹配内容：</strong>
+```text
+
+## Research Process
+
+1. **Codebase Analysis**
+   - Search for similar features/patterns in the codebase
+   - Identify files to reference in PRP
+   - Note existing conventions to follow
+   - Check test patterns for validation approach
+
+2. **External Research**
+   - Search for similar features/patterns online
+   - Library documentation (include specific URLs)
+   - Implementation examples (GitHub/StackOverflow/blogs)
+   - Best practices and common pitfalls
+
+3. **User Clarification** (if needed)
+   - Specific patterns to mirror and where to find them?
+   - Integration requirements and where to find them?
+
+
+```
+</blockquote>
+<!-- 第 7 个引用结束 -->
+
+<!-- 第 8 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[8]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>27</strong> 至 <strong>51</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落详细说明了PRP生成的过程，包括关键上下文的包含、实现蓝图和验证门，这些内容与文档摘要生成方法与工具、提取文档关键信息的步骤相关。
+
+<strong>匹配内容：</strong>
+```text
+
+## PRP Generation
+
+Using PRPs/templates/prp_base.md as template:
+
+### Critical Context to Include and pass to the AI agent as part of the PRP
+- **Documentation**: URLs with specific sections
+- **Code Examples**: Real snippets from codebase
+- **Gotchas**: Library quirks, version issues
+- **Patterns**: Existing approaches to follow
+
+### Implementation Blueprint
+- Start with pseudocode showing approach
+- Reference real files for patterns
+- Include error handling strategy
+- list tasks to be completed to fullfill the PRP in the order they should be completed
+
+### Validation Gates (Must be Executable) eg for python
+```bash
+# Syntax/Style
+ruff check --fix && mypy .
+
+# Unit Tests
+uv run pytest tests/ -v
+
+```
+
+```
+</blockquote>
+<!-- 第 8 个引用结束 -->
+
+<!-- 第 9 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[9]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\generate-prp.md</code>，第 <strong>57</strong> 至 <strong>67</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落提供了输出和质量检查清单，这些内容与文档内容归纳与总结技巧、使用AI进行文档分析的最佳实践相关。
+
+<strong>匹配内容：</strong>
+```text
+
+## Output
+Save as: `PRPs/{feature-name}.md`
+
+## Quality Checklist
+- [ ] All necessary context included
+- [ ] Validation gates are executable by AI
+- [ ] References existing patterns
+- [ ] Clear implementation path
+- [ ] Error handling documented
+
+Score the PRP on a scale of 1-10 (confidence level to succeed in one-pass implementation using claude codes)
+
+```
+</blockquote>
+<!-- 第 9 个引用结束 -->
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析文档结构与核心内容, 文档摘要生成方法与工具, 提取文档关键信息的步骤, 文档内容总结技巧与模板, 自动化文档分析软件推荐
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [2] 轮检索
+### [输入问题]:
+介绍内容
+### [增强检索]:
+问题:介绍内容。 关键点：用户指定文档的内容文本, 待分析文档的主题和范围说明, 文档总结的关键要点提取方法
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\test.toml</code>，第 <strong>1</strong> 至 <strong>3</strong> 行<br>
+
+<strong>匹配原因：</strong>
+这部分内容介绍了文件的基本信息和用途，符合'介绍内容'的要求。
+
+<strong>匹配内容：</strong>
+```text
+
+# In: ~/.qwen/commands/test.toml
+# Invoked via: 测试命令
+description = "测试命令"  
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\test.toml</code>，第 <strong>5</strong> 至 <strong>16</strong> 行<br>
+
+<strong>匹配原因：</strong>
+这部分内容描述了命令的执行逻辑和参数处理方式，属于对待分析文档主题和范围的说明。
+
+<strong>匹配内容：</strong>
+```text
+
+# The prompt uses !{...} to execute the command and inject its args.
+prompt = """
+# 参数检查命令：
+
+**用户的原始命令附加在下方。**
+ - 如果用户没有提供任何参数，请输出错误信息："错误：此命令需要输入参数"。  
+ - 如果用户提供了参数（命令后面有内容），获取参数值。
+ 
+# 执行命令
+- 打印：`{{args}}`
+
+"""
+
+```
+</blockquote>
+<!-- 第 2 个引用结束 -->
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析文档结构和核心内容, 文档摘要生成方法与工具, 提取文档关键信息的步骤, 文档内容理解与总结技巧, 常用文档分析框架概述
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [2] 轮检索
+### [输入问题]:
+总结文档主要内容
+### [增强检索]:
+问题:总结文档主要内容。 关键点：如何撰写文档摘要, 文档内容总结方法, 提取文档主要观点技巧, 文档分析与信息归纳, 高效阅读并总结长文档策略
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [3] 轮检索
+### [输入问题]:
+文档说了什么
+### [增强检索]:
+问题:文档说了什么。 关键点：如何分析文档内容并提取关键信息, 文档总结的基本步骤与技巧, 不同类型文档的主要内容特征, 如何根据文档目的进行有效总结, 常见文档分析工具与方法
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [4] 轮检索
+### [输入问题]:
+介绍文档内容
+### [增强检索]:
+问题:介绍文档内容。 关键点：如何获取待分析的文档内容, 文档内容分析的基本步骤和方法, 总结文档主要内容的常用方式, 用户未提供文档时的处理流程, 如何向用户请求提供具体文档内容
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [5] 轮检索
+### [输入问题]:
+test.toml做什么的
+### [增强检索]:
+问题:test.toml做什么的。 关键点：test.toml 文件用途解析, TOML 配置文件在测试中的作用, test.toml 配置项说明与示例, 如何使用 test.toml 进行项目测试配置, test.toml 在不同开发环境中的应用
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\test.toml</code>，第 <strong>1</strong> 至 <strong>3</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落描述了 test.toml 文件的基本信息和用途，属于 'test.toml 文件用途解析' 和 'TOML 配置文件在测试中的作用' 的关键点。
+
+<strong>匹配内容：</strong>
+```text
+
+# In: ~/.qwen/commands/test.toml
+# Invoked via: 测试命令
+description = "测试命令"  
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\test.toml</code>，第 <strong>5</strong> 至 <strong>16</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落详细说明了如何使用 test.toml 中的 prompt 配置项来处理命令参数并执行操作，属于 'test.toml 配置项说明与示例' 和 '如何使用 test.toml 进行项目测试配置' 的关键点。
+
+<strong>匹配内容：</strong>
+```text
+
+# The prompt uses !{...} to execute the command and inject its args.
+prompt = """
+# 参数检查命令：
+
+**用户的原始命令附加在下方。**
+ - 如果用户没有提供任何参数，请输出错误信息："错误：此命令需要输入参数"。  
+ - 如果用户提供了参数（命令后面有内容），获取参数值。
+ 
+# 执行命令
+- 打印：`{{args}}`
+
+"""
+
+```
+</blockquote>
+<!-- 第 2 个引用结束 -->
+
+---
+### 第 [6] 轮检索
+### [输入问题]:
+test.toml做什么的
+### [增强检索]:
+问题:test.toml做什么的。 关键点：test.toml 文件用途, TOML 文件格式示例, test.toml 文件配置选项, test.toml 文件示例, test.toml 文件在项目中的应用
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+

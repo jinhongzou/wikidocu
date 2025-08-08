@@ -52,3 +52,55 @@ def layout_6_6():
             )
         )
     )
+
+from shiny import ui
+import textwrap
+
+# 生成带自动滚动到底部功能的 div
+def create_auto_scroll_div(content, div_id="auto-scroll-div"):
+    return ui.TagList(
+        # 内容容器
+        ui.div(
+            content,
+            style="""
+                max-height: 800px;
+                overflow-y: auto;
+                border: 1px solid #ccc;
+                padding: 10px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+            """,
+            id=div_id,
+        ),
+        # 注入 JavaScript 实现自动滚动
+        ui.tags.script(
+            textwrap.dedent(f"""
+            (function() {{
+                // 获取目标元素
+                const container = document.getElementById("{div_id}");
+                if (!container) return;
+
+                // 滚动到底部
+                function scrollToBottom() {{
+                    container.scrollTop = container.scrollHeight;
+                }}
+
+                // 初始加载时滚动
+                scrollToBottom();
+
+                // 可选：监听 DOM 变化（如果内容是动态插入的）
+                const observer = new MutationObserver(scrollToBottom);
+                observer.observe(container, {{
+                    childList: true,
+                    subtree: true,
+                    attributes: false,
+                    characterData: true
+                }});
+
+                // 保存 observer 到元素上，便于后续清理（可选）
+                container._mutationObserver = observer;
+            }})();
+            """)
+        ),
+    )
+

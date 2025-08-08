@@ -1,4 +1,4 @@
-# server.py
+# app_wikidocu.py
 
 from shiny import App, ui, render, reactive
 import os
@@ -7,14 +7,14 @@ import datetime
 from langchain_core.messages import BaseMessage, HumanMessage
 import time  # 同步延迟使用
 
-
-from src.graph import create_async_tools_graph
 from frontend.navset_builder import NavsetUIBuilder
+from frontend.components import create_auto_scroll_div
 from frontend.config import navset_configs
-from frontend.utils import generate_full_report, custom_box, show_api_config_modal
+from frontend.utils import generate_full_report, show_api_config_modal, custom_research_body
+from src.func_utils import cpoy_directory
+from src.graph import create_async_tools_graph
 
 SCAN_DIR = "./docs"
-
 builder = NavsetUIBuilder(navset_configs)
 
 # ========== Server Logic ==========
@@ -23,10 +23,6 @@ api_key = os.getenv("OPENAI_API_KEY", "sk-xxx")
 model_name = os.getenv("OPENAI_MODEL", "Qwen/Qwen2.5-7B-Instruct")
 model_name_answer= os.getenv("OPENAI_MODEL", "Qwen/Qwen2.5-7B-Instruct")
 base_url = os.getenv("OPENAI_BASE_URL", "https://api.siliconflow.cn/v1")
-
-
-# graph 和 config 的初始化移到 handle_custom_send 内部，
-# 以便可以根据用户输入动态创建
 
 def setup_server(input, output,  session):
     g_value_main_output = reactive.Value("")
@@ -39,7 +35,7 @@ def setup_server(input, output,  session):
         ui.markdown(f"""
 ### 欢迎使用 **WikiDocu** —— 基于人工智能的多文档智能问答系统
 
-在这里，你可以：
+你可以：
 
 - 📚 **跨文档智能问答**：在多个文档之间建立关联，实现知识的跨文档检索与精准问答，支持复杂场景下的信息整合。
 - 🧩 **深度知识理解**：融合代码理解与技术文档生成能力，可深入解析结构化内容（如代码仓库），实现从代码到文档的自动推理与解释。
@@ -59,8 +55,9 @@ def setup_server(input, output,  session):
     time.sleep(3)
     ui.modal_remove()
 
+    
     # 初始化 markdown 内容和底部输入栏
-    custom_box(input, output, session)
+    custom_research_body(input, output, session)
 
     # 动态生成对话tab
     @output
@@ -89,12 +86,8 @@ def setup_server(input, output,  session):
         current_content.append(new_content)
         dynamic_ui_content.set(current_content)
 
-        #return dynamic_ui_content.get()
-        return ui.div(
-                dynamic_ui_content.get(),
-                style="max-height: 800px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"
-            )
-    
+        return create_auto_scroll_div(dynamic_ui_content.get())
+
     # 处理“检索”按钮点击前的加载提示和按钮禁用
     @reactive.effect
     @reactive.event(input.custom_send)
@@ -130,22 +123,13 @@ def setup_server(input, output,  session):
             return
 
         # 1. 获取用户配置或使用默认值
-        # 优先使用会话中存储的用户配置，否则回退到环境变量或初始默认值
-        # user_api_key = input.api_key_input() or api_key
-        # user_model_name = input.model_name_input() or model_name
-        # user_base_url = input.base_url_input() or base_url
-
         config=g_openai_config.get()
         user_api_key = config.get("api_key")
         user_model_name =  config.get("model_name")
         user_base_url = config.get("base_url")
-        #print("config:",    config)
 
         # 2. 根据用户配置动态创建 graph 实例
-        # 注意：这里假设 src.graph.create_async_tools_graph 接受这些参数
-        # 如果实际实现不同，需要相应调整
         try:
-            from src.graph import create_async_tools_graph
             # 将用户配置传递给 graph 创建函数
             graph = create_async_tools_graph(
                 api_key=user_api_key,
@@ -157,7 +141,7 @@ def setup_server(input, output,  session):
             g_value_main_output.set("⚠️ 创建分析器实例失败，请检查配置。")
             ui.update_action_button("custom_send", disabled=False)
             return
-            
+
         config = {"configurable": {"thread_id": "1"}}
 
         # 3. 准备文件路径
@@ -209,7 +193,6 @@ def setup_server(input, output,  session):
     @reactive.effect
     @reactive.event(input.save_config)
     def _():
-
         # 保存配置
         g_openai_config.set({"model_name": input.model_name_input(), 
                              "base_url": input.base_url_input(), 
@@ -227,8 +210,27 @@ def setup_server(input, output,  session):
     def _():
         ui.modal_remove()
 
+    # 目录数据初始化
+    @reactive.Effect
+    @reactive.event(input.dir_check_btn)
+    def _():
+        target_dir = SCAN_DIR
+        selected_dir = input.dir_chooser_path().strip()
 
-# ========== 启动应用 ==========
+        # 创建目标目录
+        if not os.path.exists(selected_dir):
+            ui.notification_show("⚠️ 目标目录不存在", type="error", duration=10)
+        else:
+            # 拷贝目录及文件
+            ui.notification_show("⏳ 初始化开始...", type="message", duration=10)
+            cpoy_directory(selected_dir, target_dir)
+            
+
+
+
+# ==============================================================
+#                        启动应用
+# ==============================================================
 # 定义应用的用户界面
 app_ui = ui.page_fluid(
     # 自定义 CSS 样式
@@ -264,7 +266,9 @@ app_ui = ui.page_fluid(
             padding: 15px;
         }
     """),
-    
+    ui.markdown(f"""
+    ### 欢迎使用 ***WikiDocu***
+    """),
     # 用 div 包裹 dynamic_content 并添加 id 用于 JS 操作
     ui.div(
         ui.output_ui("dynamic_content"),
