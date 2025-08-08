@@ -188,7 +188,7 @@ def custom_research_body(input, output, session):
             # 发送按钮
             ui.input_action_button(
                 "custom_send",
-                "🔍 检索",
+                "🔍 提问",
                 class_="btn",
                 style=send_button_style
             ),

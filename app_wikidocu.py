@@ -234,41 +234,83 @@ def setup_server(input, output,  session):
 # 定义应用的用户界面
 app_ui = ui.page_fluid(
     # 自定义 CSS 样式
+#     ui.tags.style("""
+#         /* 隐藏模态框的背景遮罩 */
+#         .shiny-modal-backdrop {
+#             display: none !important;
+#         }
+        
+#         /* 动态内容区域样式 */
+#         #dynamic_content {
+#             overflow: visible !important;
+#             min-height: auto;
+#             height: auto !important;
+#         }
+        
+#         /* 内容包装器样式：允许垂直滚动 */
+#         .content-wrapper {
+#             background-color: rgba(255, 255, 255, 0); /* 背景透明度 */
+#             overflow-y: auto;
+#             max-height: calc(100vh - 100px); /* 预留顶部和底部空间 */
+#         }
+        
+#         /* 卡片 header 样式 */
+#         .card-header {
+#             background-color: rgba(255, 255, 255, 0); /* 背景透明度 */
+#             border-bottom: 1px solid #e9ecef;
+#             font-weight: bold;
+#             padding: 10px 15px;
+#         }
+        
+#         /* 卡片 body 样式 */
+#         .card-body {
+#             padding: 15px;
+#             background-color: rgba(255, 255, 255, 0); /* 背景透明度 */
+#             border: 1px solid rgba(0, 0, 0, 0.15);       /* 边框颜色 */
+#             padding: 10px 16px;                         /* 内边距 */
+#             box-shadow: 0 2px 10px rgba(0, 0, 0, 0); /* 柔和阴影 */
+#             backdrop-filter: blur(8px);                /* 毛玻璃效果 */
+# }
+#     """),
     ui.tags.style("""
-        /* 隐藏模态框的背景遮罩 */
+        /* ========== 隐藏模态框遮罩 ========== */
         .shiny-modal-backdrop {
             display: none !important;
         }
         
-        /* 动态内容区域样式 */
+        /* ========== 动态内容区域 ========== */
         #dynamic_content {
             overflow: visible !important;
             min-height: auto;
             height: auto !important;
         }
         
-        /* 内容包装器样式：允许垂直滚动 */
+        /* ========== 内容包装器：允许垂直滚动 ========== */
         .content-wrapper {
+            background-color: rgba(255, 255, 255, 0); /* 完全透明 */
             overflow-y: auto;
-            max-height: calc(100vh - 100px); /* 预留顶部和底部空间 */
+            max-height: calc(100vh - 100px);
         }
         
-        /* 卡片 header 样式 */
+        /* ========== 卡片 header：仅保留文字样式，去边框 ========== */
         .card-header {
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
+            background-color: rgba(255, 255, 255, 0); /* 透明背景 */
+            border-bottom: none;           /* 🔴 移除边框 */
             font-weight: bold;
             padding: 10px 15px;
+            color: #000000;                /* 可选：设为白色文字 */
         }
         
-        /* 卡片 body 样式 */
+        /* ========== 卡片 body：完全透明，无边框、无阴影、无模糊 ========== */
         .card-body {
-            padding: 15px;
+            background-color: rgba(255, 255, 255, 0); /* 透明背景 */
+            border: none;                  /* 🔴 移除边框 */
+            box-shadow: none;              /* 🔴 移除阴影 */
+            padding: 15px;                 /* 保留内边距保证可读性 */
         }
     """),
-    ui.markdown(f"""
-    ### 欢迎使用 ***WikiDocu***
-    """),
+    ui.markdown(f"""### 欢迎使用 ***WikiDocu***"""),
+
     # 用 div 包裹 dynamic_content 并添加 id 用于 JS 操作
     ui.div(
         ui.output_ui("dynamic_content"),

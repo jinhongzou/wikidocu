@@ -36,7 +36,14 @@ class NavsetUIBuilder:
         components.append(ui.div(
             #ui.h4(f"{navset_type} - {navset_id}"),
             component,
-            style="margin-bottom: 2rem; padding: 1.5rem; background-color: rgba(135, 206, 250, 0.5); border-radius: 10px; border: 1px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); backdrop-filter: blur(2px);"
+            style="""margin-bottom: 2rem;
+                padding: 1.5rem;
+                background-color: rgba(255, 255, 255, 0); /* 背景透明度 */
+                border-radius: 10px; 
+                backdrop-filter: blur(2px);
+                border: none;                  /* 🔴 移除边框 */
+                box-shadow: none;              /* 🔴 移除阴影 */
+                """
         ))
         return components
 
@@ -62,9 +69,12 @@ class NavsetUIBuilder:
             
             # 将布局添加到导航面板中
             nav_panels.append(
-                ui.nav_panel(panel_id, body_content, value=panel_id)
+                ui.nav_panel(
+                    panel_id,
+                    body_content,
+                    value=panel_id
+                )
             )
-
             # 使用 Shiny 的 navset 函数创建最终的导航组件
             component = navset_function(
                 *nav_panels,
@@ -78,7 +88,17 @@ class NavsetUIBuilder:
                 #ui.h4(f"{navset_type} - {navset_id}"),
                 #ui.h4(f"{navset_id}"),
                 component,
-                style="margin-bottom: 2rem; padding: 1.5rem; background-color: #ffffff; border-radius: 10px; border: 1px solid #e0e0e0; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
+                style="""
+                    width: 100%;
+                    height: 100%;
+                    margin-bottom: 2rem;
+                    padding: 1.5rem; 
+                    background-color: rgba(255, 255, 255, 0.0);
+                    backdrop-filter: blur(8px);                /* 毛玻璃效果 */
+                    border-radius: 10px; 
+                    border: none;                  /* 🔴 移除边框 */
+                    box-shadow: none;              /* 🔴 移除阴影 */
+                    """
             ))
 
         return components

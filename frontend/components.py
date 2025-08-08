@@ -13,7 +13,14 @@ def layout_box(main_content, detail_content):
                 ui.card_header("WikiDocu"),
                 main_content,
                 # 设置主内容区域样式：添加内边距、最大高度和垂直滚动条
-                style="padding: 20px; max-height: 800px; overflow-y: auto; border: 1px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);"
+                style="""padding: 20px;
+                        max-height: 800px; 
+                        overflow-y: auto; 
+                        border: 1px solid #e0e0e0; 
+                        background-color: rgba(255, 255, 255, 0); /* 背景透明度 */
+                        border: 1px solid rgba(0, 0, 0, 0);       /* 边框颜色 */
+                        box-shadow: 0 2px 10px rgba(0, 0, 0, 0); /* 柔和阴影 */
+                """
             )
         ),
         ui.column(
@@ -22,7 +29,14 @@ def layout_box(main_content, detail_content):
                 ui.card_header("检索结果"),
                 detail_content,
                 # 设置详细内容区域样式：添加内边距、最大高度和垂直滚动条
-                style="padding: 20px; max-height: 800px; overflow-y: auto; border: 1px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);"
+                style="""padding: 20px;
+                        max-height: 800px; 
+                        overflow-y: auto; 
+                        border: 1px solid #e0e0e0; 
+                        background-color: rgba(255, 255, 255, 0); /* 背景透明度 */
+                        border: 1px solid rgba(0, 0, 0, 0);       /* 边框颜色 */
+                        box-shadow: 0 2px 10px rgba(0, 0, 0, 0); /* 柔和阴影 */
+                """
             )
         )
     )
@@ -65,10 +79,11 @@ def create_auto_scroll_div(content, div_id="auto-scroll-div"):
             style="""
                 max-height: 800px;
                 overflow-y: auto;
-                border: 1px solid #ccc;
                 padding: 10px;
-                background-color: #f9f9f9;
                 border-radius: 8px;
+                background-color: rgba(255, 255, 255, 0); /* 透明背景 */
+                border: none;                  /* 🔴 移除边框 */
+                box-shadow: none;              /* 🔴 移除阴影 */
             """,
             id=div_id,
         ),

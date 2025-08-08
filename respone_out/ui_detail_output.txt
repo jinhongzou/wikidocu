@@ -3192,3 +3192,206 @@ test.toml做什么的
 ### [检索结果]:
 
 
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析文档结构与核心内容, 文档摘要生成方法与工具, 提取文档关键信息的步骤, 文档内容总结技巧与模板, 自动化文档分析与总结技术
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析文档结构与核心内容, 文档主要内容提取与总结方法, 文本摘要生成技术与工具, 非结构化文档信息归纳策略, 基于关键词的文档内容分析
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析文档结构与内容, 文档核心要点提取方法, 长文档自动摘要技术, 文本内容归纳与总结工具, 学术或技术文档分析案例
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析文档结构与核心内容, 文档摘要生成的方法与工具, 文本内容总结的关键步骤, 非结构化文档信息提取技术, 自动化文档分析与总结实践
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+请分析文档，并总结其主要内容。
+### [增强检索]:
+问题:请分析文档，并总结其主要内容。。 关键点：如何分析文档结构与核心内容, 文档摘要生成方法与工具, 提取文档关键信息的步骤, 文档内容归纳与总结技巧, 自动化文档分析技术
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+文件介绍什么
+### [增强检索]:
+问题:文件介绍什么。 关键点：文件内容概述, 文件主要介绍的信息, 文档核心要点总结, 文件主题与目的说明, 如何理解该文件的关键信息
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\test.toml</code>，第 <strong>3</strong> 至 <strong>3</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该行描述了文件的主要用途，即测试命令，属于文件主题与目的说明。
+
+<strong>匹配内容：</strong>
+```text
+
+description = "测试命令"  
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+文件内容说了什么
+### [增强检索]:
+问题:文件内容说了什么。 关键点：文件内容概述, 文件主要信息提取, 文件中的关键点总结, 文件涉及的主题和细节, 如何理解该文件的内容
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\test.toml</code>，第 <strong>1</strong> 至 <strong>3</strong> 行<br>
+
+<strong>匹配原因：</strong>
+这些行提供了文件的基本描述和用途，属于文件内容概述的一部分。
+
+<strong>匹配内容：</strong>
+```text
+
+# In: ~/.qwen/commands/test.toml
+# Invoked via: 测试命令
+description = "测试命令"  
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\test.toml</code>，第 <strong>5</strong> 至 <strong>16</strong> 行<br>
+
+<strong>匹配原因：</strong>
+这些行详细说明了命令的参数处理逻辑和执行方式，是文件中的关键信息和细节。
+
+<strong>匹配内容：</strong>
+```text
+
+# The prompt uses !{...} to execute the command and inject its args.
+prompt = """
+# 参数检查命令：
+
+**用户的原始命令附加在下方。**
+ - 如果用户没有提供任何参数，请输出错误信息："错误：此命令需要输入参数"。  
+ - 如果用户提供了参数（命令后面有内容），获取参数值。
+ 
+# 执行命令
+- 打印：`{{args}}`
+
+"""
+
+```
+</blockquote>
+<!-- 第 2 个引用结束 -->
+
+---
+### 第 [1] 轮检索
+### [输入问题]:
+检索文档内容，介绍什么
+### [增强检索]:
+问题:检索文档内容，介绍什么。 关键点：检索文档内容概述, 文档介绍的主要内容与目的, 如何理解文档中的关键信息, 文档内容结构与核心要点, 文档介绍的背景与应用场景
+
+### Scanning the files: 
+.\docs....
+### [检索结果]:
+<!-- 第 1 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[1]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\test.toml</code>，第 <strong>3</strong> 至 <strong>3</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该行描述了文档的主要内容与目的，即测试命令的定义和用途。
+
+<strong>匹配内容：</strong>
+```text
+
+description = "测试命令"  
+
+```
+</blockquote>
+<!-- 第 1 个引用结束 -->
+
+<!-- 第 2 个引用开始 -->
+<blockquote>
+<hr>
+<strong>来源[2]：</strong> 
+<code>D:\github_rep\WikiDocu\wikidocu\docs\test.toml</code>，第 <strong>5</strong> 至 <strong>15</strong> 行<br>
+
+<strong>匹配原因：</strong>
+该段落详细说明了文档的核心要点，包括参数检查和命令执行的具体逻辑，属于文档内容结构与关键信息的理解部分。
+
+<strong>匹配内容：</strong>
+```text
+
+# The prompt uses !{...} to execute the command and inject its args.
+prompt = """
+# 参数检查命令：
+
+**用户的原始命令附加在下方。**
+ - 如果用户没有提供任何参数，请输出错误信息："错误：此命令需要输入参数"。  
+ - 如果用户提供了参数（命令后面有内容），获取参数值。
+ 
+# 执行命令
+- 打印：`{{args}}`
+
+
+```
+</blockquote>
+<!-- 第 2 个引用结束 -->
+
