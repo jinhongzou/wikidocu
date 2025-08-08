@@ -15,7 +15,7 @@ def generate_full_report(research_topic, answer, file_paths, timestamp):
 > 🕒 ***{timestamp}***  \n> ⚠️ *注：以上分析基于当前输入的数据文件和模型理解能力，仅供参考。*
 """
 
-def show_api_config_modal(input, output, session, openai_config):
+def show_api_config_modal(input, output, session, openai_config, sdata):
     """
     显示一个模态框，用于配置 API 密钥、模型名称和基础 URL。
     这些值将被存储在 Shiny 的会话变量中。
@@ -24,18 +24,21 @@ def show_api_config_modal(input, output, session, openai_config):
     current_api_key = openai_config.get("api_key")
     current_model =  openai_config.get("model_name")
     current_base_url = openai_config.get("base_url")
+    current_paths = sdata.get("paths")
+    current_urls  = sdata.get("urls")
 
     # 创建模态框内容
     m = ui.modal(
 
-        #ui.input_file("dir_chooser_btn",  ui.markdown("#### 选择要探索的文件"), multiple=True, width="100%"),
         ui.markdown("#### I.配置源文件"),
-        ui.input_text("dir_chooser_path", "源文件(目录)", value="./docs", placeholder="输入目录地址...", width="100%"),
+        ui.input_text("dir_chooser_path", "源文件(目录)",    value=current_paths, placeholder="输入目录地址...", width="100%"),
+        ui.input_text_area("url_chooser_path", "源URL地址", value=current_urls, placeholder="输入URL地址，多个URL用逗号分隔...", width="100%"),
         ui.input_action_button(
-            "dir_check_btn", "▶️ 开始初始化...",
-            #class_="btn btn-success btn-sm",  # 使用 Bootstrap 按钮样式
-            style="padding: 0.375rem 1rem; font-size: 0.875rem;"
-        ),
+                "sdata_init_btn", "▶️ 开始初始化...",
+                #class_="btn btn-success btn-sm",  # 使用 Bootstrap 按钮样式
+                style="padding: 0.375rem 1rem; font-size: 0.875rem;"
+            ),
+
         # 分割线
         ui.tags.hr(style="margin: 1rem 0; border-top: 1px solid #ddd;"),
 

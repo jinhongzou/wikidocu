@@ -121,6 +121,7 @@ async def file_research(state: OverallState, com_llm, api_key, base_url, model_n
 
     all_results = await researcher.async_run(
         file_paths=[os.path.abspath(file_path.replace('\\', os.sep).replace('/', os.sep))],
+        urls=None,
         research_topic=research_topic
     )
 

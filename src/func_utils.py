@@ -1,9 +1,15 @@
-from typing import Any, Dict, List
+
 from langchain_core.messages import AnyMessage, AIMessage, HumanMessage
 from datetime import datetime
 import os
 import shutil
 from shiny import ui
+from typing import Dict, List, Optional, Any,Union
+
+
+import requests
+from markitdown import MarkItDown
+from urllib.parse import urlparse
 
 def get_current_date():
   return datetime.now().strftime("%Y-%m-%d")
@@ -166,7 +172,7 @@ def get_citations(response, resolved_urls_map):
 
 
 def clear_docs_folder(docs_path:str):
-    
+
     if os.path.exists(docs_path):
         # 如果存在，删除整个目录及其内容
         try:
@@ -185,6 +191,91 @@ def clear_docs_folder(docs_path:str):
         print(f"❌ 创建 docs 目录失败：{str(e)}")
         return False
 
+def webfetch(
+    url: str,
+    headers: Optional[Dict[str, str]] = None,
+    timeout: int = 10,
+    allow_redirects: bool = True,
+    proxy: Optional[str] = None,
+    cookies: Optional[Union[Dict[str, str], requests.cookies.RequestsCookieJar]] = None,
+    verify_ssl: bool = True,
+) -> Optional[str]:
+    """
+    通用网页抓取并转换为 Markdown 的函数。
+
+    Args:
+        url (str): 目标网页 URL。
+        headers (dict, optional): 自定义请求头。默认使用常见浏览器头。
+        timeout (int): 请求超时时间（秒）。
+        allow_redirects (bool): 是否允许重定向。
+        proxy (str, optional): 代理地址，如 "http://127.0.0.1:8080"。
+        cookies (dict or RequestsCookieJar, optional): 附加 cookies。
+        verify_ssl (bool): 是否验证 SSL 证书。
+
+    Returns:
+        str or None: 返回转换后的 Markdown 文本，失败返回 None。
+    """
+    # 默认请求头（模拟现代浏览器）
+    default_headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
+    }
+
+    # 合并用户自定义 headers 到默认 headers（用户优先）
+    final_headers = default_headers.copy()
+    if headers:
+        final_headers.update(headers)
+
+    # 构建 requests kwargs
+    requests_kwargs = {
+        "headers": final_headers,
+        "timeout": timeout,
+        "allow_redirects": allow_redirects,
+        "verify": verify_ssl,
+    }
+
+    if proxy:
+        requests_kwargs["proxies"] = {
+            "http": proxy,
+            "https": proxy,
+        }
+
+    if cookies:
+        requests_kwargs["cookies"] = cookies
+
+    try:
+        # 验证 URL 格式
+        parsed = urlparse(url)
+        if not parsed.scheme or not parsed.netloc:
+            raise ValueError(f"Invalid URL: {url}")
+
+        # 创建 MarkItDown 实例
+        md_converter = MarkItDown(requests_kwargs=requests_kwargs)
+
+        # 执行转换
+        result = md_converter.convert_uri(url)
+
+        return result.markdown
+
+    except requests.exceptions.SSLError as e:
+        print(f"SSL 错误: {e}")
+    except requests.exceptions.Timeout:
+        print(f"请求超时: {url} (>{timeout}s)")
+    except requests.exceptions.TooManyRedirects:
+        print(f"重定向过多: {url}")
+    except requests.exceptions.RequestException as e:
+        print(f"网络请求错误: {e}")
+    except Exception as e:
+        print(f"未知错误: {e}")
+
+    return None
 
 def cpoy_directory(src_dir: str, target_dir: str):
 
@@ -195,13 +286,6 @@ def cpoy_directory(src_dir: str, target_dir: str):
     if not os.path.exists(selected_dir):
         print("⚠️ 目标目录不存在")
         return []
-
-    # 创建目标目录
-    if not os.path.exists(target_dir):
-        os.makedirs(target_dir)
-    else:
-        # 清空目录
-        clear_docs_folder(target_dir)
 
     all_files = []
     # 当输入是单个文件路径
@@ -241,6 +325,6 @@ def cpoy_directory(src_dir: str, target_dir: str):
                     print(f"❌ 复制失败：{src_file}，错误：{str(e)}")
                     ui.notification_show(f"❌ 复制失败：{src_file}，错误：{str(e)}", type="message", duration=10)
    
-    ui.notification_show("✅ 数据初始化完成", type="message", duration=10)
+    ui.notification_show("✅ 目录文件拷贝完成", type="message", duration=10)
 
     return all_files

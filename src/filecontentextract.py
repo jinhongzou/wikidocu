@@ -1,11 +1,14 @@
 import os
 import asyncio
 import mimetypes
-import operator
 import hashlib
-from typing import Dict, List, Optional, TypedDict, Any
+from typing import Dict, List, Optional, TypedDict, Any,Union
 from pathlib import Path
 from functools import partial
+
+import requests
+from markitdown import MarkItDown
+from urllib.parse import urlparse
 
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
@@ -208,7 +211,6 @@ class FileContentExtract:
             "file_size": file_size,
         }
 
-
     def scanning(self, file_path: str, tree_str: str = None, research_topic: str = None) -> OverallState:
         """
         分析单个文件并返回结构化结果。
@@ -271,6 +273,144 @@ class FileContentExtract:
             "reasoning_model": self.name,
         }
 
+    def webfetch(
+        self,
+        url: str,
+        headers: Optional[Dict[str, str]] = None,
+        timeout: int = 10,
+        allow_redirects: bool = True,
+        proxy: Optional[str] = None,
+        cookies: Optional[Union[Dict[str, str], requests.cookies.RequestsCookieJar]] = None,
+        verify_ssl: bool = True,
+    ) -> Optional[str]:
+        """
+        通用网页抓取并转换为 Markdown 的函数。
+
+        Args:
+            url (str): 目标网页 URL。
+            headers (dict, optional): 自定义请求头。默认使用常见浏览器头。
+            timeout (int): 请求超时时间（秒）。
+            allow_redirects (bool): 是否允许重定向。
+            proxy (str, optional): 代理地址，如 "http://127.0.0.1:8080"。
+            cookies (dict or RequestsCookieJar, optional): 附加 cookies。
+            verify_ssl (bool): 是否验证 SSL 证书。
+
+        Returns:
+            str or None: 返回转换后的 Markdown 文本，失败返回 None。
+        """
+        # 默认请求头（模拟现代浏览器）
+        default_headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+            "Upgrade-Insecure-Requests": "1",
+            "Sec-Fetch-Dest": "document",
+            "Sec-Fetch-Mode": "navigate",
+            "Sec-Fetch-Site": "none",
+        }
+
+        # 合并用户自定义 headers 到默认 headers（用户优先）
+        final_headers = default_headers.copy()
+        if headers:
+            final_headers.update(headers)
+
+        # 构建 requests kwargs
+        requests_kwargs = {
+            "headers": final_headers,
+            "timeout": timeout,
+            "allow_redirects": allow_redirects,
+            "verify": verify_ssl,
+        }
+
+        if proxy:
+            requests_kwargs["proxies"] = {
+                "http": proxy,
+                "https": proxy,
+            }
+
+        if cookies:
+            requests_kwargs["cookies"] = cookies
+
+        try:
+            # 验证 URL 格式
+            parsed = urlparse(url)
+            if not parsed.scheme or not parsed.netloc:
+                raise ValueError(f"Invalid URL: {url}")
+
+            # 创建 MarkItDown 实例
+            md_converter = MarkItDown(requests_kwargs=requests_kwargs)
+
+            # 执行转换
+            result = md_converter.convert_uri(url)
+
+            return result.markdown
+
+        except requests.exceptions.SSLError as e:
+            print(f"SSL 错误: {e}")
+        except requests.exceptions.Timeout:
+            print(f"请求超时: {url} (>{timeout}s)")
+        except requests.exceptions.TooManyRedirects:
+            print(f"重定向过多: {url}")
+        except requests.exceptions.RequestException as e:
+            print(f"网络请求错误: {e}")
+        except Exception as e:
+            print(f"未知错误: {e}")
+
+        return None
+
+    def url_scanning(self, url: str, research_topic: str) -> Optional[OverallState]:
+        """
+        分析单个URL并返回结构化结果。
+        """
+        # 获取网页内容
+        content = self.webfetch(url=url)
+        if not content:
+            print(f"无法获取URL内容: {url}")
+            return None
+
+        try:
+            # 构造查询上下文
+            context = (
+                f"[ ## 当前访问URL ## ]\n{url}\n\n"
+                f"[ ## context ## ]\n行号:内容---\n{self._add_line_numbers(content)}"
+            )
+
+            # 执行 AI 查询
+            matches = self.content_extract(file_content=context, research_topic=research_topic)
+
+            # 组装 sources_gathered
+            sources_gathered = []
+            for match in matches:
+                sources_gathered.append({
+                    "file_path": url,
+                    "start_line": match["start_line"],
+                    "end_line": match["end_line"],
+                    "reasoning": match["reasoning"],
+                    "relevant_content": self._get_lines_by_range(
+                        content, match["start_line"], match["end_line"]
+                    )
+                })
+
+            # 收集相关文本内容
+            web_research_result = [match["reasoning"] for match in matches]
+            print(f"URL processing completed: {url}")
+
+            return {
+                "sources_gathered": sources_gathered,
+                "search_query": [context],
+                "web_research_result": web_research_result,
+                "messages": [],
+                "initial_search_query_count": 0,
+                "max_research_loops": 0,
+                "research_loop_count": 0,
+                "reasoning_model": self.name,
+            }
+        except Exception as e:
+            print(f"处理URL内容时出错: {url}, 错误: {e}")
+            return None
+
     def run(self, file_paths: List[str], research_topic:str)->List[OverallState]:
         """
         批量运行文件分析，支持多个文件。
@@ -305,13 +445,14 @@ class FileContentExtract:
         self.last_results = results
         return results
 
-    async def async_run(self, file_paths: List[str], research_topic:str)->List[OverallState]:
+    async def async_run(self, file_paths: List[str], urls: List[str], research_topic:str  )->List[OverallState]:
         """
         异步批量运行文件分析，支持多个文件。
         """
         results = []
         loop = asyncio.get_event_loop()
 
+        # 文件类型
         for file_path in file_paths:
             if os.path.isfile(file_path):
                 print(f"Scanning the file: {file_path}")
@@ -344,6 +485,14 @@ class FileContentExtract:
 
             else:
                 print(f"\n找不到文件或目录：{file_path}")
+
+        # 处理 URLs（仅当urls不为空时）
+        if urls is not None and len(urls) > 0:  # 更准确地判断urls是否为None或空
+            for url in urls:
+                print(f"Processing URL: {url}")
+                result = await loop.run_in_executor(None, self.url_scanning, url, research_topic)
+                if result:
+                    results.append(result)
 
         self.last_results = results
         return results

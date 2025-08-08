@@ -11,7 +11,7 @@ from frontend.navset_builder import NavsetUIBuilder
 from frontend.components import create_auto_scroll_div
 from frontend.config import navset_configs
 from frontend.utils import generate_full_report, show_api_config_modal, custom_research_body
-from src.func_utils import cpoy_directory
+from src.func_utils import cpoy_directory,webfetch,clear_docs_folder
 from src.graph import create_async_tools_graph
 
 SCAN_DIR = "./docs"
@@ -29,6 +29,7 @@ def setup_server(input, output,  session):
     g_value_detail_output = reactive.Value("")
     dynamic_ui_content = reactive.Value(ui.TagList())
     g_openai_config=reactive.Value({"model_name": model_name, "base_url": base_url, "api_key": api_key})
+    g_sdata = reactive.Value({"paths": SCAN_DIR, "urls": ""})
 
     # 显示欢迎模态框
     m = ui.modal(
@@ -187,7 +188,8 @@ def setup_server(input, output,  session):
     @reactive.event(input.open_config)
     def _():
         openai_config=g_openai_config.get()
-        show_api_config_modal(input, output, session, openai_config)
+        sdata=g_sdata.get()
+        show_api_config_modal(input, output, session, openai_config, sdata)
 
     # 当用户点击“保存”按钮时，保存配置并关闭模态框
     @reactive.effect
@@ -196,8 +198,12 @@ def setup_server(input, output,  session):
         # 保存配置
         g_openai_config.set({"model_name": input.model_name_input(), 
                              "base_url": input.base_url_input(), 
-                             "api_key": input.api_key_input()}
-                             )
+                             "api_key": input.api_key_input()
+                             })
+        
+        g_sdata.set({"paths": input.dir_chooser_path(),
+                     "urls": input.url_chooser_path()
+                     })
 
         # 显示成功通知
         ui.notification_show("✅ 配置已保存!", type="message", duration=5)
@@ -210,21 +216,95 @@ def setup_server(input, output,  session):
     def _():
         ui.modal_remove()
 
+
     # 目录数据初始化
     @reactive.Effect
-    @reactive.event(input.dir_check_btn)
+    @reactive.event(input.sdata_init_btn)
     def _():
+        # 获取目录选择器输入的值
         target_dir = SCAN_DIR
         selected_dir = input.dir_chooser_path().strip()
 
         # 创建目标目录
-        if not os.path.exists(selected_dir):
-            ui.notification_show("⚠️ 目标目录不存在", type="error", duration=10)
-        else:
+        if not os.path.exists(target_dir):
+            os.makedirs(target_dir)
+            ui.notification_show(f"⚠️ 目标目录不存在，创建目录 {target_dir}", type="warning", duration=10)
+        
+        # 判断选择的目录或者文件是否存在
+        if selected_dir and (os.path.isfile(selected_dir) or os.path.exists(selected_dir)):
             # 拷贝目录及文件
-            ui.notification_show("⏳ 初始化开始...", type="message", duration=10)
+            ui.notification_show("⏳ 开始拷贝文件...", type="message", duration=10)
+            # 情况目标目录
+            clear_docs_folder(target_dir)
             cpoy_directory(selected_dir, target_dir)
+
+        elif selected_dir:
+            ui.notification_show(f"⚠️ 选择的路径不存在: {selected_dir}", type="warning", duration=10)
+            return 
+
+        # 获取 url_chooser_path 输入的值
+        url_input = input.url_chooser_path()
+
+        # 将输入的 URL 字符串转换为列表（支持换行符和逗号分隔）
+        if url_input:
+            # 使用换行符和逗号作为分隔符
+            import re
+            # 按换行符或逗号分割
+            url_parts = re.split(r'[\n,]+', url_input)
+            # 去除每个URL的首尾空格并过滤空字符串
+            urls = [url.strip() for url in url_parts if url.strip()]
+            # 去重但保持顺序
+            seen = set()
+            unique_urls = []
+            for url in urls:
+                if url not in seen:
+                    seen.add(url)
+                    unique_urls.append(url)
+            urls = unique_urls
+        else:
+            urls = []
+
+        # 处理URL并保存到target_dir
+        if urls:
+            # 确保target_dir存在
+            os.makedirs(target_dir, exist_ok=True)
+
+            success_count = 0
+            for i, url in enumerate(urls):
+                try:
+                    # 获取网页内容
+                    content = webfetch(url=url)
+                    if content:
+                        # 生成文件名（使用URL的一部分或索引）
+                        filename = f"web_content_{i+1}.md"
+                        # 也可以尝试从URL中提取文件名
+                        from urllib.parse import urlparse
+                        parsed_url = urlparse(url)
+                        if parsed_url.path:
+                            url_filename = os.path.basename(parsed_url.path)
+                            if url_filename and '.' in url_filename:
+                                filename = url_filename
+                        
+                        # 确保文件名以.md结尾
+                        if not filename.endswith('.md'):
+                            filename += '.md'
+                        
+                        # 保存文件到target_dir
+                        file_path = os.path.join(target_dir, filename)
+                        with open(file_path, 'w', encoding='utf-8') as f:
+                            # 在文件开头添加URL来源信息
+                            f.write(f"# 来源: {url}\n\n")
+                            f.write(content)
+
+                        success_count += 1
+                        ui.notification_show(f"✅ 成功保存URL内容到 {file_path}", type="message", duration=5)
+
+                    else:
+                        ui.notification_show(f"⚠️ 无法获取URL内容: {url}", type="warning", duration=5)
+                except Exception as e:
+                    ui.notification_show(f"❌ 处理URL时出错 {url}: {str(e)}", type="error", duration=5)
             
+
 
 
 
