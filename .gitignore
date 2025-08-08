@@ -41,4 +41,5 @@ Thumbs.db
 # Build artifacts
 dist/
 build/
+respone_out/*
 *.egg-info/
