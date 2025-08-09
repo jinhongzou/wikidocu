@@ -5,3 +5,4 @@ markdown==3.7
 pydantic==2.10.6
 shiny==1.4.0 
 treelib==1.8.0
+markitdown==0.1.2

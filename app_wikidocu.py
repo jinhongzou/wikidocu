@@ -421,4 +421,4 @@ app = App(app_ui, setup_server)
 
 # 如果作为主模块运行，则启动应用
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=8888)  # 使用关键字参数
