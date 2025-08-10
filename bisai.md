@@ -130,6 +130,11 @@ WikiDocu 的核心引擎基于 **LangGraph** 构建，形成一个具备状态�
 
 - **演示视频**: [生成项目readme文档](./imgs/generate_readme.mp4)
 
+- **示例4：** *SQL溯源*  
+根据项目SQL脚本，追踪数据的来源、流转路径及处理过程，确保数据完整性与合规性，支持问题排查与审计分析。
+![](./imgs/exp_4.png)
+
+
 ### 技术实现
 
 *   **核心引擎：** Python, LangChain, LangGraph
