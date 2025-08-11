@@ -1,137 +1,74 @@
-## 📌 WikiDocu
+# 📌 WikiDocu - Local Intelligent Document Q&A System Based on Large Language Models
 
-### English| [简体中文](README_zh-CN.md) 
+### 简体中文 | [English](README.md)
 
-WikiDocu is a document analysis tool built on **langchain**, designed to help users extract key information from local files and leverage large language models (LLMs) to intelligently understand and answer research topics or questions. It is suitable for quickly reviewing technical documents, research reports, project specifications, and other textual content.
+*   **Summarize vast documentation, get precise answers with a single question**
+*   **No search required—go straight to the core of documents—understand files as easily as having a conversation.**
 
-Unlike traditional **RAG (Retrieval-Augmented Generation)** systems, WikiDocu does not rely on vector databases or semantic search. Instead, it uses the contextual understanding capability of LLMs to directly analyze and extract relevant information from user-provided documents, generating structured answers around the input query.
+## Detailed Introduction
 
-#### 😊 Example:  
-Suppose you have a project containing `.md` documentation files and multiple `.py` code files. The `.md` files provide comprehensive explanations including function descriptions, parameter interpretations, and invocation examples, while the `.py` files contain the actual source code implementing these APIs, complete with comments for better understanding.
+### Pain Points and Challenges
 
-💬 Now, you want to find out how to create a Pydantic model instance. Here are two different workflows:
+In daily learning, work, and research & development, we face numerous challenges related to document processing:
 
-✅ **Traditional RAG System Workflow:**  
-1. **Preprocessing Phase:** Convert all documents into vector representations and store them in a vector database.  
-2. **Query Phase:** The user inputs a query like "How to create a Pydantic model instance." The system generates a vector representation of the query and searches the vector database for the most similar document segments ⚠️.  
-3. **Result Presentation:** The system returns the most relevant document fragments and may use an LLM to further summarize these results.
+*   **Inefficient Information Retrieval:** When dealing with large local document repositories (technical documents, code, reports, etc.), the traditional "folder-keyword search" approach is like finding a needle in a haystack—time-consuming and difficult for pinpointing core information.
+*   **High Comprehension Costs:** Even after locating relevant document snippets, significant time is often required to read and understand the context before extracting the needed knowledge.
+*   **Cumbersome RAG System Deployment:** Although powerful, Retrieval-Augmented Generation (RAG) systems require building and maintaining vector databases and handling complex embedding and retrieval processes, demanding high technical expertise and computational resources.
+*   **Difficulty in Effective Knowledge Reuse:** Vast amounts of documents and knowledge accumulated by individuals or teams often remain dormant on hard drives due to the lack of effective management and retrieval tools, failing to translate into immediate productivity.
+*   **Imprecise Answers and Lack of Evidence:** Some Q&A systems provide vague or broad answers, or even "hallucinate" (fabricate facts), lacking clear sources and contextual support, which reduces credibility.
 
-✅ **WikiDocu Workflow:**  
-1. **Document Loading:** Select and load all `.md` and `.py` files from the technical documentation directory.  
-2. **Input Query:** The user enters the question "How to create a Pydantic model instance" via the web interface.  
-3. **Direct Analysis:** The LLM reads and understands the entire document content, identifying relevant information sections 📝.  
-4. **Answer Generation:** Based on the context, the LLM generates a structured response. For example:  
-   ```python
-   class PydanticAgetn():
-       ...
-   ```
+### Core Features and Innovations of WikiDocu
 
-🌐 Web Interface
+WikiDocu is a local intelligent document Q&A system that **does not require building a vector database or performing complex semantic retrieval**. Instead, it directly leverages the powerful context understanding and generalization capabilities of large language models (LLMs) to perform full-text analysis on locally stored documents specified by the user.
 
-**Advantages of this approach:**  
+1.  **Direct Understanding, No Indexing Required:** Unlike traditional RAG systems, WikiDocu directly inputs document content into the LLM, eliminating the need for index construction, vector storage, and similarity retrieval steps. This greatly simplifies deployment and reduces resource consumption.
+2.  **Precise Q&A with Traceable Sources:** When a user asks a question, WikiDocu guides the LLM to locate relevant information directly within the document and can precisely return the filename and line number range of the relevant passage, ensuring answer accuracy and traceability.
+3.  **Dual-Mode Interaction, Flexible and Convenient:**
+    *   **Web UI Interface:** Provides an intuitive and user-friendly graphical interface where users can easily upload documents, input questions, view structured answers, and detailed retrieval evidence. Supports configuration of model parameters through the interface.
+    *   **CLI (Command Line Interface):** Meets the rapid query needs of developers and technical personnel, offering simpler and more efficient operations. Model parameters are configured via environment variables.
+4.  **Structured Output, Easy to Reuse:** Answers and retrieval evidence generated by the system support Markdown format, making them not only visually appealing and easy to read but also convenient for users to organize, share, or integrate into other documents later.
+5.  **Lightweight Deployment, Fast Response:** The simplified architecture makes WikiDocu easy to install and deploy, enabling rapid responses to user queries.
 
-- ✅ **No additional indexing required:** No need to build a vector database, saving time and resources.
-- ✅ **Simplified deployment:** Reduced system complexity makes deployment faster and easier.
-- ✅ **More natural responses:** Answers are generated based on full-text understanding, making them more aligned with user needs.
+### Application Scenarios
 
-**Key Features:**  
+*   **Quick Technical Document Lookup:** Quickly understand key features and usage of open-source projects, SDKs, or API documentation.
+*   **Codebase Understanding:** Rapidly grasp the structure, module functions, and core logic of large codebases through questioning.
+*   **Research Report Analysis:** Quickly extract core ideas and data from lengthy technical reports or academic papers.
+*   **Personal Knowledge Management:** Efficiently manage and retrieve accumulated personal notes and unstructured text materials.
+*   **Financial Compliance Review:** Banks or financial institutions can input internal compliance policies, regulatory documents, audit reports, etc., into the system to quickly verify whether specific transactions or business processes comply with regulations through questioning, improving compliance review efficiency.
+*   **Legal Contract Retrieval:** Law firms or legal departments can use WikiDocu to quickly locate specific clauses (e.g., liability for breach, confidentiality agreement validity period) in numerous contracts, assisting in contract drafting and risk assessment.
+*   **Medical Record Analysis:** Hospitals can input structured electronic medical records or treatment guidelines into the system, allowing doctors to quickly obtain relevant diagnostic suggestions, medication contraindications, or treatment plans through natural language questions, supporting clinical decision-making.
+*   **Educational Material Tutoring:** Teachers or students can import course lectures and textbook content to quickly locate knowledge points, obtain summaries or explanations through questioning, enabling personalized learning.
 
-- 📁 Supports loading various document formats from a local directory: currently supports only `[".py", ".md", ".txt"]`.
-- 💬 After the user inputs a research topic, the LLM directly analyzes the relevant documents and provides a summarized response.
-- 🧠 No need to build a knowledge base index or use vector embeddings—easy deployment and fast response times.
-- 📝 Supports Markdown formatting for result presentation, enhancing readability and reusability.
+- **Example 1:** *Web (News) Knowledge Q&A*  
+Based on a news article from Sina Finance titled "[National Financial Regulatory Administration Releases 'Personal Loan Management Measures,' Effective July 1](https://finance.sina.com.cn/wm/2024-02-03/doc-inaftiir0348604.shtml)", this system conducts policy interpretation, clause queries, scope-of-application consultations, and practical operation guidance Q&A. It helps financial institutions and the public accurately understand the new regulations, standardize loan business processes, and improve compliance management. Applicable to financial industry policy queries and product consultations.
+[](./imgs/exp_1.png)
 
-This tool is ideal for lightweight document Q&A, technical reference assistance, and personal knowledge organization scenarios.
+- **Demo Video**: [News Q&A](./imgs/finance.mp4)
 
-🧰 Tech Stack  
-WikiDocu is built using the following core technologies, ensuring ease of use and extensibility:
+- **Example 2:** *Codebase Interpretation*  
+Query, consult, and ask questions about local project code to deeply understand code logic, solve development challenges, and enhance code maintenance and collaboration efficiency. Suitable for code queries, onboarding training, troubleshooting, documentation generation, and architecture interpretation.
+[](./imgs/exp_2.png)
 
-| Technology/Framework | Purpose |
-|----------------------|---------|
-| Python 3.10+         | Primary development language with full type support and modern syntax |
-| Shiny for Python     | Build interactive web interfaces for visualizing user input and output results |
-| Pydantic             | Data model definition and validation, improving code robustness and readability |
-| Markdown             | Optional: Parse Markdown format for front-end display, enhancing visual appeal |
-| langchain            | Integrate LLM chain calls, simplifying LLM task workflows |
-| LLM API (OpenAI / SiliconFlow / Self-hosted) | Provide high-performance LLM inference services responsible for core content understanding and response generation |
-| asyncio              | Asynchronous programming support, improving multi-file processing and network request efficiency |
+- **Demo Video**: [Local Project Code Q&A](./imgs/coder.mp4)
 
-🔎 Why Use LLM-Driven Processing?  
-The design philosophy of WikiDocu is to fully utilize the powerful contextual understanding and generalization capabilities of large language models, avoiding complex retrieval and vectorization processes. Compared to traditional RAG architectures, this approach offers the following benefits:
+- **Example 3:** *Automatically Generate Project README*  
+Generate a well-structured and clearly informative README file based on project documentation, covering project overview, installation steps, usage instructions, configuration parameters, API documentation, and FAQs. This enhances project readability and collaboration efficiency. Applicable to project documentation generation, project introduction, and team collaboration.
+[](./imgs/exp_3.png)
 
-- ✅ No need to build indexes or vector databases, reducing deployment costs.
-- ✅ Fewer intermediate steps, lowering system complexity.
-- ✅ More naturally incorporates user intent, producing context-aware responses.
+- **Demo Video**: [Generate Project README](./imgs/generate_readme.mp4)
 
-⚠️ **Limitation:**受限于 LLM 上下文长度，一次分析的文档总量有限.  
-非常适合轻量级本地文档问答、快速原型验证等场景。
+## Get Started Now
 
-📁 Project Structure
-```
-wiki-docu/
-├── src/
-│   └── filecontentextract.py       # Core logic: call LLM to extract document content
-│   └── directorytreegenerator.py   # Directory tree generation
-│   └── models.py                   # Data models
-│   └── prompts_zh.py               # Prompt templates
-├── frontend/
-│   └── utils.py                    # Frontend utility functions: report generation, UI components, etc.
-├── docs/                           # Default scan directory, stores copied documents
-├── app_wikidocu.py                 # Main application entry point
-├── cli_wikidocu.py                 # Command-line interface entry point
-├── README.md                       # This file
-└── requirements.txt                # List of dependencies
-```
+The project is open-source. With simple environment configuration and dependency installation, you can quickly launch WikiDocu and begin your intelligent document exploration journey!
 
-🚀 Quick Start  
-1. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+### Usage Instructions
 
-2. **Set Environment Variables**  
-   Before running, ensure the following environment variables are set (or modify default values in `app.py`):
-
-   ```bash
-   export MODEL_NAME="Qwen/Qwen2.5-7B-Instruct"
-   export OPENAI_BASE_URL="https://api.siliconflow.cn/v1"
-   export OPENAI_API_KEY="your_api_key_here"
-   ```
-
-3. **Launch the Application**
-
-   **Option 1: Web App Mode**
-   ```bash
-   python app_wikidocu.py
-   ```
-   Visit the provided URL (usually http://127.0.0.1:8000) to access the web interface.
-
-   **Option 2: CLI Mode**
-   ```bash
-   python cli_wikidocu.py
-   ```
-
-🧪 Functionality Overview  
-- **wikidocu:** Main output area displaying the final analysis report.  
-- **Search Results:** Detailed output showing raw extracted document snippets.  
-- **Input Box:** Enter your question, then click "Search" to execute.
-
-📦 Key Dependencies  
-```plaintext
-langchain_core==0.3.67
-langgraph==0.5.0
-pydantic==2.10.6
-shiny==1.4.0 
-```
-
-🤝 Contribution Guidelines  
-We welcome Issues and Pull Requests! Please follow this workflow:  
-
-1. Fork the repository.  
-2. Create a new branch (`git checkout -b feature/new-feature`).  
-3. Commit changes (`git commit -m 'Add some feature'`).  
-4. Push to the branch (`git push origin feature/new-feature`).  
-5. Open a Pull Request.
-
-📜 License  
-MIT License – see the LICENSE file.
+1.  **Environment Setup:** Install Python 3.10+, and run `pip install -r requirements.txt` to install dependencies.
+2.  **Launch the Application:**
+    *   Web UI Mode: Run `python app_wikidocu.py` and access `http://127.0.0.1:8000`.
+    *   CLI Mode: Run `python cli_wikidocu.py`.
+3.  **Configure Model and Source Directory:**
+    *   **Web UI Mode:** After launching the application, click the "⚙️ Configuration" button to set up. In the pop-up modal, users can configure model parameters (API Key, Model Name, Base URL) and the source directory path.
+    *   **CLI Mode or Web UI Default:** Set environment variables `OPENAI_API_KEY`, `OPENAI_BASE_URL`, `OPENAI_MODEL`. The default source directory is `./docs`.
+4.  **Start Q&A:** Input your question in the interface or command line. Click the "🚀 Ask" button, and the system will process your question and return the result.
