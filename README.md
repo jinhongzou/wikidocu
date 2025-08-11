@@ -1,6 +1,6 @@
 # 📌 WikiDocu - Local Intelligent Document Q&A System Based on Large Language Models
 
-### 简体中文 | [English](README.md)
+### English | [简体中文](README_zh-CN.md)
 
 *   **Summarize vast documentation, get precise answers with a single question**
 *   **No search required—go straight to the core of documents—understand files as easily as having a conversation.**
