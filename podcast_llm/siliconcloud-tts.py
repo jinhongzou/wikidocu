@@ -8,7 +8,7 @@ from pydub.playback import play
 speech_file_path = Path(__file__).parent / "siliconcloud-generated-speech.mp3"
 
 client = OpenAI(
-    api_key="sk-ruascruyqmbeyiojufkeqkerqdczwprkbkdaalbdakihywfo", # 从 https://cloud.siliconflow.cn/account/ak 获取
+    api_key="sk-xxx", # 从 https://cloud.siliconflow.cn/account/ak 获取
     base_url="https://api.siliconflow.cn/v1"
 )
 

@@ -89,7 +89,7 @@ python -m podcast_llm.generate "量子计算" --mode research --audio-output epi
 #### 使用兼容 OpenAI 协议的模型（如魔塔）
 
 使用以下参数进行测试：
-- `api_key`: `sk-806cd4ef076849e9a76e4c776a28d515`
+- `api_key`: `sk-xxx`
 - `tts model_name`: `qwen-tts`
 - `llm model_name`: `qwen3-coder-plus`
 - `sources`: `news.txt`
