@@ -1,0 +1,15 @@
+{
+  "id": "evandempsey/podcast_research_queries:561acf5f",
+  "messages": [
+    {
+      "index": 0,
+      "template": "You are an expert interviewee on a podcast about a given topic.\n\nYou have been given an outline of the podcast.\n\nSuggest search queries to refresh and enhance your knowledge of subjects you have to speak about.\n",
+      "type": "SystemMessagePromptTemplate"
+    },
+    {
+      "index": 1,
+      "template": "Topic: {topic}\nPodcast Outline:\n{podcast_outline}",
+      "type": "HumanMessagePromptTemplate"
+    }
+  ]
+}

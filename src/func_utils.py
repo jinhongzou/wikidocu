@@ -5,11 +5,12 @@ import os
 import shutil
 from shiny import ui
 from typing import Dict, List, Optional, Any,Union
-
-
 import requests
 from markitdown import MarkItDown
 from urllib.parse import urlparse
+
+import logging
+logger = logging.getLogger(__name__)
 
 def get_current_date():
   return datetime.now().strftime("%Y-%m-%d")
@@ -177,18 +178,18 @@ def clear_docs_folder(docs_path:str):
         # 如果存在，删除整个目录及其内容
         try:
             shutil.rmtree(docs_path)
-            print("✅ docs 目录已删除")
+            logger.info("docs 目录已删除")
         except Exception as e:
-            print(f"❌ 删除 docs 目录失败：{str(e)}")
+            logger.error("删除 docs 目录失败：%s", str(e))
             return False
 
     # 重新创建空的 docs 目录
     try:
         os.makedirs(docs_path)
-        print("✅ docs 目录已重新创建")
+        logger.info("docs 目录已重新创建")
         return True
     except Exception as e:
-        print(f"❌ 创建 docs 目录失败：{str(e)}")
+        logger.error("创建 docs 目录失败：%s", str(e))
         return False
 
 def webfetch(
@@ -265,15 +266,15 @@ def webfetch(
         return result.markdown
 
     except requests.exceptions.SSLError as e:
-        print(f"SSL 错误: {e}")
+        logger.error("SSL 错误: %s", e)
     except requests.exceptions.Timeout:
-        print(f"请求超时: {url} (>{timeout}s)")
+        logger.error("请求超时: %s (>%ds)", url, timeout)
     except requests.exceptions.TooManyRedirects:
-        print(f"重定向过多: {url}")
+        logger.error("重定向过多: %s", url)
     except requests.exceptions.RequestException as e:
-        print(f"网络请求错误: {e}")
+        logger.error("网络请求错误: %s", e)
     except Exception as e:
-        print(f"未知错误: {e}")
+        logger.error("未知错误: %s", e)
 
     return None
 
@@ -284,7 +285,7 @@ def cpoy_directory(src_dir: str, target_dir: str):
 
     # 创建目标目录
     if not os.path.exists(selected_dir):
-        print("⚠️ 目标目录不存在")
+        logger.warning("目标目录不存在")
         return []
 
     all_files = []
@@ -297,11 +298,11 @@ def cpoy_directory(src_dir: str, target_dir: str):
         try:
             shutil.copy2(src_file, dest_file)  # 拷贝并保留元数据
             all_files.append(dest_file)
-            print(f"✅ 已复制：{src_file} → {dest_file}")
+            logger.info("已复制：%s → %s", src_file, dest_file)
             ui.notification_show(f"✅ 已复制：{src_file} → {dest_file}", type="message", duration=10)
 
         except Exception as e:
-            print(f"❌ 复制失败：{src_file}，错误：{str(e)}")
+            logger.error("复制失败：%s，错误：%s", src_file, str(e))
             ui.notification_show(f"❌ 复制失败：{src_file}，错误：{str(e)}", type="message", duration=10)
 
     # 当输入是目录路径
@@ -318,11 +319,11 @@ def cpoy_directory(src_dir: str, target_dir: str):
                 try:
                     shutil.copy2(src_file, dest_file)  # 拷贝并保留元数据
                     all_files.append(dest_file)
-                    print(f"✅ 已复制：{src_file} → {dest_file}")
+                    logger.info("已复制：%s → %s", src_file, dest_file)
                     ui.notification_show(f"✅ 已复制：{src_file} → {dest_file}", type="message", duration=10)
 
                 except Exception as e:
-                    print(f"❌ 复制失败：{src_file}，错误：{str(e)}")
+                    logger.error("复制失败：%s，错误：%s", src_file, str(e))
                     ui.notification_show(f"❌ 复制失败：{src_file}，错误：{str(e)}", type="message", duration=10)
    
     ui.notification_show("✅ 目录文件拷贝完成", type="message", duration=10)

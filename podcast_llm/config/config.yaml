@@ -1,0 +1,87 @@
+# LLM Configuration
+fast_llm_provider: openai   # Options: 'openai', 'google', 'anthropic'
+long_context_llm_provider: openai   # Options: 'openai', 'google', 'anthropic'
+embeddings_model: siliconcloud
+
+# For OpenAI-compatible models (like ModelScope), you can specify a custom base_url in your code
+# when calling get_fast_llm() or get_long_context_llm() functions.
+
+# Text-to-Speech Configuration
+tts_provider: siliconcloud  # Options: 'google', 'elevenlabs', 'google_multispeaker', 'dashscope', 'siliconcloud'
+
+tts_settings:
+  elevenlabs:
+    voice_mapping:
+      Interviewer: Chris
+      Interviewee: Charlie
+    model: eleven_multilingual_v2
+  google:
+    voice_mapping:
+      Interviewer: en-US-Journey-F
+      Interviewee: en-US-Journey-D
+    language_code: en-US
+    effects_profile_id: small-bluetooth-speaker-class-device
+  google_multispeaker:
+    voice_mapping:
+      Interviewer: R
+      Interviewee: S
+    language_code: en-US
+    effects_profile_id: small-bluetooth-speaker-class-device
+  dashscope:
+    voice_mapping:
+      Interviewer: Cherry
+      Interviewee: Serena
+  siliconcloud:
+    voice_mapping:
+      Interviewer: claire
+      Interviewee: alex
+                      # alex       #Calm Male Voice
+                      # benjamin   #Deep Male Voice
+                      # charles    #Magnetic Male Voice
+                      # david      #Cheerful Male Voice
+                      
+                      # anna       #Calm Female Voice
+                      # bella      #Passionate Female Voice
+                      # claire     #Gentle Female Voice
+                      # diana      #Cheerful Female Voice
+    model_mapping:
+      Interviewer: FunAudioLLM/CosyVoice2-0.5B
+      Interviewee: FunAudioLLM/CosyVoice2-0.5B
+
+# Audio output settings
+output_format: mp3  # Options: 'mp3', 'wav'
+
+# Directory paths
+temp_audio_dir: ./.temp_audio
+output_dir: ./output
+checkpoint_dir : ./.checkpoints
+
+# Rate limiting settings
+rate_limits:
+  elevenlabs:
+    requests_per_minute: 20
+    max_retries: 10
+    base_delay: 2.0
+  google:
+    requests_per_minute: 20
+    max_retries: 10
+    base_delay: 2.0
+
+
+# Content settings
+podcast_name: WikiDocu助手
+
+# Available variables: podcast_name, topic 
+#intro: "Welcome to {podcast_name}. Today we've invited an expert to talk about {topic}." 
+#outro: "That's all for today. Thank you for listening to {podcast_name}. See you next time when we'll talk about whatever you want."
+intro: "欢迎收听 {podcast_name}。今天，我们邀请了一位专家来讨论 {topic}。"
+outro: "今天就到这里。感谢收听 {podcast_name}。下次再见，我们将谈论您想聊的任何话题。"
+
+# Episode structure
+episode_structure:
+  #- Episode Introduction (with subsections)
+  #- Main Discussion Topics (with subsections)
+  #- Conclusion (with subsections)
+  - 节目引言（含子章节）
+  - 主要讨论话题（含子章节）
+  - 结语（含子章节）

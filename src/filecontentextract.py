@@ -5,6 +5,7 @@ import hashlib
 from typing import Dict, List, Optional, TypedDict, Any,Union
 from pathlib import Path
 from functools import partial
+import logging
 
 import requests
 from markitdown import MarkItDown
@@ -16,6 +17,8 @@ from langchain_core.prompts import ChatPromptTemplate
 from .models import FileMatchList, OverallState
 from .directorytreegenerator import DirectoryTreeGenerator
 from .prompts_zh import file_extract_instructions,final_answer_instructions
+
+logger = logging.getLogger(__name__)
 
 class FileContentExtract:
     def __init__(
@@ -62,7 +65,7 @@ class FileContentExtract:
         #print("result:", result)
         if result is None:
             # 可以记录日志、抛出异常，或返回空 matches
-            print("Warning: content_extract returned None")
+            logger.warning("content_extract returned None")
             matches = []
         else:
             matches = []
@@ -137,7 +140,7 @@ class FileContentExtract:
                     file_path = os.path.join(root, file)
                     file_paths.append(file_path)
         else:
-            print("无效路径:", path)
+            logger.warning("无效路径: %s", path)
 
         return file_paths
 
@@ -181,12 +184,12 @@ class FileContentExtract:
         读取指定路径的文件内容，并添加行号前缀。
         """
         if not os.path.exists(path):
-            print(f"文件路径不存在: {path}")
+            logger.warning("文件路径不存在: %s", path)
             return None
 
         is_file = os.path.isfile(path)
         if not is_file:
-            print("路径不是一个文件")
+            logger.warning("路径不是一个文件")
             return None
 
         file_name = os.path.basename(path)
@@ -199,7 +202,7 @@ class FileContentExtract:
             with open(path, 'r', encoding='utf-8') as f:
                 context = f.read()
         except Exception as e:
-            print(f"无法读取文件内容: {e}")
+            logger.error("无法读取文件内容: %s", e)
             return None
 
         return {
@@ -260,7 +263,7 @@ class FileContentExtract:
 
         # 收集相关文本内容
         web_research_result = [match["reasoning"] for match in response_matches]
-        print(f"Scanning 执行完成: {file_path} ")
+        logger.info("Scanning 执行完成: %s", file_path)
 
         return {
             "sources_gathered": sources_gathered,
@@ -348,15 +351,15 @@ class FileContentExtract:
             return result.markdown
 
         except requests.exceptions.SSLError as e:
-            print(f"SSL 错误: {e}")
+            logger.error("SSL 错误: %s", e)
         except requests.exceptions.Timeout:
-            print(f"请求超时: {url} (>{timeout}s)")
+            logger.error("请求超时: %s (>%ds)", url, timeout)
         except requests.exceptions.TooManyRedirects:
-            print(f"重定向过多: {url}")
+            logger.error("重定向过多: %s", url)
         except requests.exceptions.RequestException as e:
-            print(f"网络请求错误: {e}")
+            logger.error("网络请求错误: %s", e)
         except Exception as e:
-            print(f"未知错误: {e}")
+            logger.error("未知错误: %s", e)
 
         return None
 
@@ -367,7 +370,7 @@ class FileContentExtract:
         # 获取网页内容
         content = self.webfetch(url=url)
         if not content:
-            print(f"无法获取URL内容: {url}")
+            logger.warning("无法获取URL内容: %s", url)
             return None
 
         try:
@@ -395,7 +398,7 @@ class FileContentExtract:
 
             # 收集相关文本内容
             web_research_result = [match["reasoning"] for match in matches]
-            print(f"URL processing completed: {url}")
+            logger.info("URL processing completed: %s", url)
 
             return {
                 "sources_gathered": sources_gathered,
@@ -408,7 +411,7 @@ class FileContentExtract:
                 "reasoning_model": self.name,
             }
         except Exception as e:
-            print(f"处理URL内容时出错: {url}, 错误: {e}")
+            logger.error("处理URL内容时出错: %s, 错误: %s", url, e)
             return None
 
     def run(self, file_paths: List[str], research_topic:str)->List[OverallState]:
@@ -420,27 +423,27 @@ class FileContentExtract:
 
             #参数是文件
             if os.path.isfile(file_path):
-                print(f"Scanning the file: {file_path}")
+                logger.info("Scanning the file: %s", file_path)
                 result = self.scanning(file_path, None, research_topic)
                 results.append(result)
 
             #参数是目录
             elif os.path.isdir(file_path):
-                print(f"Scanning the directory: {file_path}")
+                logger.info("Scanning the directory: %s", file_path)
                 # 获取目录树
                 tree_str = DirectoryTreeGenerator(file_path).generate_tree(
                     include_hidden=False,
                     include_extensions=[".py", ".md", ".txt"]
                 )
-
+                
                 # 获取目录列表
                 file_list = self._filelist(file_path)
                 for _file_paths in file_list:
-                    print(f"Scanning the file: {_file_paths}")
+                    logger.info("Scanning the file: %s", _file_paths)
                     result = self.scanning( _file_paths, tree_str, research_topic)
                     results.append(result)
             else:
-                print(f"\n 找不到文件或目录：{file_path}")
+                logger.warning("找不到文件或目录：%s", file_path)
 
         self.last_results = results
         return results
@@ -455,13 +458,13 @@ class FileContentExtract:
         # 文件类型
         for file_path in file_paths:
             if os.path.isfile(file_path):
-                print(f"Scanning the file: {file_path}")
+                logger.info("Scanning the file: %s", file_path)
                 # 在线程池中运行阻塞函数
                 result = await loop.run_in_executor(None, self.scanning, file_path, None, research_topic)
                 results.append(result)
 
             elif os.path.isdir(file_path):
-                print(f"Scanning the directory: {file_path}")
+                logger.info("Scanning the directory: %s", file_path)
 
                 # 构造目录树（假设 DirectoryTreeGenerator.generate_tree() 是同步函数）
                 tree_str = await loop.run_in_executor(
@@ -475,7 +478,7 @@ class FileContentExtract:
                 # 创建所有文件扫描任务
                 tasks = []
                 for _file_path in file_list:
-                    print(f"Scanning the file: {_file_path}")
+                    logger.info("Scanning the file: %s", _file_path)
                     task = loop.run_in_executor(None, self.scanning, _file_path, tree_str, research_topic)
                     tasks.append(task)
 
@@ -484,12 +487,12 @@ class FileContentExtract:
                 results.extend(batch_results)
 
             else:
-                print(f"\n找不到文件或目录：{file_path}")
+                logger.warning("找不到文件或目录：%s", file_path)
 
         # 处理 URLs（仅当urls不为空时）
         if urls is not None and len(urls) > 0:  # 更准确地判断urls是否为None或空
             for url in urls:
-                print(f"Processing URL: {url}")
+                logger.info("Processing URL: %s", url)
                 result = await loop.run_in_executor(None, self.url_scanning, url, research_topic)
                 if result:
                     results.append(result)
@@ -531,9 +534,9 @@ class FileContentExtract:
                             references.append(ref_block)
 
                     except KeyError as e:
-                        print(f"缺少必要字段: {e}，source 数据：{source}")
+                        logger.error("缺少必要字段: %s，source 数据：%s", e, source)
                     except Exception as ex:
-                        print(f"处理 source 时发生错误: {ex}")
+                        logger.error("处理 source 时发生错误: %s", ex)
 
         full_markdown = "\n\n".join(references)
         #print(full_markdown)

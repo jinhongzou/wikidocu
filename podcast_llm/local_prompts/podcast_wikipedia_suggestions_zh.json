@@ -1,0 +1,15 @@
+{
+  "id": "custom/podcast_wikipedia_suggestions_zh",
+  "messages": [
+    {
+      "index": 0,
+      "template": "你是一位研究员，正在为特定主题收集文档。\n\n你需要一些背景信息来开始研究。\n\n请建议与该主题相关的维基百科文章。",
+      "type": "SystemMessagePromptTemplate"
+    },
+    {
+      "index": 1,
+      "template": "{topic}",
+      "type": "HumanMessagePromptTemplate"
+    }
+  ]
+}

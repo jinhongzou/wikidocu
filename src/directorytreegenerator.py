@@ -2,6 +2,8 @@
 from typing import Dict, List, Optional, TypedDict, Any
 from pathlib import Path
 from treelib import Tree
+import logging
+logger = logging.getLogger(__name__)
 
 class DirectoryTreeGenerator:
     def __init__(self, root_path: str):
@@ -13,7 +15,6 @@ class DirectoryTreeGenerator:
         self.root_path = Path(root_path)
         if not self.root_path.exists():
             raise FileNotFoundError(f"指定的路径不存在: {root_path}")
-
     def generate_tree(
         self,
         include_hidden: bool = False,
@@ -26,16 +27,39 @@ class DirectoryTreeGenerator:
         :param include_extensions: 允许显示的文件扩展名列表，如 [".py", ".md"]，None 表示显示所有文件
         :return: 目录树的字符串表示
         """
-        tree = Tree()
-        self._build_treelib(
-            path=self.root_path,
-            tree=tree,
-            include_hidden=include_hidden,
-            include_extensions=include_extensions
-        )
-        tree_str=str(tree)
-        tree_str=f"{self.root_path}\n"+'\n'.join(tree_str.splitlines()[1:])
-        return tree_str
+        try:
+            tree = Tree()
+            
+            # 创建根节点
+            root_path_obj = Path(self.root_path)
+            root_node_id = str(root_path_obj.resolve())
+            tree.create_node(
+                tag=root_path_obj.name or str(root_path_obj),
+                identifier=root_node_id,
+                parent=None
+            )
+            
+            # 递归构建子树（从根目录的子项开始）
+            try:
+                for child in sorted(root_path_obj.iterdir()):
+                    self._build_treelib(
+                        path=child,
+                        tree=tree,
+                        parent=root_node_id,  # 现在传递有效的父节点ID
+                        include_hidden=include_hidden,
+                        include_extensions=include_extensions
+                    )
+            except PermissionError:
+                pass
+            
+            tree_str = str(tree)
+            logger.info(f'生成目录树:\n{tree_str}')
+            return tree_str
+            
+        except Exception as e:
+
+            logger.error(f'分析过程中发生错误：{e}')
+            return f"错误: {e}"
 
     def _build_treelib(
         self,

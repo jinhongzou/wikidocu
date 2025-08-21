@@ -1,4 +1,7 @@
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 class FileHandler:
     def __init__(self, file_path):
@@ -21,7 +24,7 @@ class FileHandler:
         directory = os.path.dirname(self.file_path)
         if directory and not os.path.exists(directory):
             os.makedirs(directory)
-            print(f"📁 已创建目录: {directory}")
+            logger.info("已创建目录: %s", directory)
 
     def write_content(self, content):
         """
@@ -36,7 +39,7 @@ class FileHandler:
                 f.write(content + '\n')
             #print(f"✅ 内容已写入文件 '{self.file_path}'。")
         except Exception as e:
-            print(f"❌ 写入文件时出错: {e}")
+            logger.error("写入文件时出错: %s", e)
 
     def clear_file(self):
         """
@@ -45,9 +48,9 @@ class FileHandler:
         try:
             with open(self.file_path, 'w', encoding='utf-8') as f:
                 f.truncate()
-            print(f"✅ 文件 '{self.file_path}' 已清空。")
+            logger.info("文件 '%s' 已清空。", self.file_path)
         except Exception as e:
-            print(f"❌ 清空文件时出错: {e}")
+            logger.error("清空文件时出错: %s", e)
 
 
 if __name__ == '__main__':

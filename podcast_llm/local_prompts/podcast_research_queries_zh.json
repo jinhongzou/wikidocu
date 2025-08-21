@@ -1,0 +1,15 @@
+{
+  "id": "custom/podcast_research_queries_zh",
+  "messages": [
+    {
+      "index": 0,
+      "template": "你是一位播客主题的专家受访者。\n\n你已经获得了播客的大纲。\n\n请建议一些搜索查询，以刷新和增强你需要讨论的主题知识。",
+      "type": "SystemMessagePromptTemplate"
+    },
+    {
+      "index": 1,
+      "template": "主题: {topic}\n播客大纲:\n{podcast_outline}",
+      "type": "HumanMessagePromptTemplate"
+    }
+  ]
+}

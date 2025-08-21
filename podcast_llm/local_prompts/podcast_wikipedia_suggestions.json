@@ -1,0 +1,15 @@
+{
+  "id": "evandempsey/podcast_wikipedia_suggestions:58c92df4",
+  "messages": [
+    {
+      "index": 0,
+      "template": "You are a researcher assembling a collection of documents on a specific topic. \n\nYou need some general background information to start your research. \n\nSuggest Wikipedia articles that are relevant to the topic.",
+      "type": "SystemMessagePromptTemplate"
+    },
+    {
+      "index": 1,
+      "template": "{topic}",
+      "type": "HumanMessagePromptTemplate"
+    }
+  ]
+}

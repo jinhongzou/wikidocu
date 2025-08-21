@@ -1,9 +1,6 @@
 
 import os
 import asyncio
-from datetime import datetime
-import logging
-
 from typing import Annotated, Dict, Any, List
 from typing_extensions import TypedDict
 from langgraph.graph import StateGraph, START, END
@@ -22,7 +19,12 @@ from .tools_and_schemas import SearchQueryList
 from .filecontentextract import FileContentExtract
 from .prompts_zh import final_answer_instructions, general_doc_retrieval_prompt
 from .func_utils import get_current_date, get_research_topic
-from global_vars import ui_detail_output_handler
+# from config.global_vars import ui_detail_output_handler, WIKIDOCU_QA_DIR
+from config.global_vars import WIKIDOCU_QA_DIR
+
+import logging
+logger = logging.getLogger(__name__)
+
 
 interaction_turns=0
 
@@ -50,15 +52,26 @@ def generate_research_topic(state: OverallState, com_llm) -> QueryGenerationStat
         research_topic=chat_messages,
         number_queries=state["initial_search_query_count"],
     )
-    result = structured_llm.invoke(formatted_prompt)
-    
-    search_queries = result.query
+    try:
+        result = structured_llm.invoke(formatted_prompt)
+        
+        # 检查 result 是否为 None 或无效
+        if result is not None and hasattr(result, 'query'):
+            search_queries = result.query
+        else:
+            search_queries = []
+            # 记录警告信息
+            logging.warning(f"Structured LLM 返回无效结果: {result}")
+    except Exception as e:
+        search_queries = []
+        # 记录错误信息
+        logging.error(f"调用 structured LLM 时发生错误: {str(e)}")
 
     if isinstance(search_queries, list) and len(search_queries) > 0 and search_queries[-1].strip() != "":
         search_query= f"问题:{question}。 关键点：" + ', '.join(search_queries)
 
-        ui_detail_output_handler._turns=ui_detail_output_handler._turns+1
-        ui_detail_output_handler.write_content(f"---\n### 第 [{ui_detail_output_handler._turns}] 轮检索\n### [输入问题]:\n{question}\n### [增强检索]:\n{search_query}\n")
+        # ui_detail_output_handler._turns=ui_detail_output_handler._turns+1
+        # ui_detail_output_handler.write_content(f"---\n### 第 [{ui_detail_output_handler._turns}] 轮检索\n### [输入问题]:\n{question}\n### [增强检索]:\n{search_query}\n")
 
         return {"search_query": [search_query]}
 
@@ -108,7 +121,7 @@ async def file_research(state: OverallState, com_llm, api_key, base_url, model_n
     if state.get("search_query"):
         research_topic = state["search_query"][-1]
 
-    print(f"工具调用：searcher ({research_topic})")
+    logger.info("工具调用：searcher (%s)", research_topic)
 
     researcher = FileContentExtract(
         model=model_name,
@@ -116,8 +129,9 @@ async def file_research(state: OverallState, com_llm, api_key, base_url, model_n
         api_base=base_url,
         name='ResearcherAgent'
     )
-    file_path= '.\\docs'
-    ui_detail_output_handler.write_content(f"### Scanning the files: \n{file_path}....")
+    file_path= ".\\" + WIKIDOCU_QA_DIR
+
+    # ui_detail_output_handler.write_content(f"### Scanning the files: \n{file_path}....")
 
     all_results = await researcher.async_run(
         file_paths=[os.path.abspath(file_path.replace('\\', os.sep).replace('/', os.sep))],
@@ -127,7 +141,7 @@ async def file_research(state: OverallState, com_llm, api_key, base_url, model_n
 
     content_md = researcher.get_markdown_ref()
 
-    ui_detail_output_handler.write_content(f"### [检索结果]:\n{content_md}\n")
+    # ui_detail_output_handler.write_content(f"### [检索结果]:\n{content_md}\n")
 
 
     return {
@@ -218,12 +232,13 @@ async def main():
 
     graph = create_async_tools_graph(api_key, model_name, base_url)
 
-    print("欢迎使用检索聊天机器人！输入 'exit' 或 'q' 退出。")
+    logger.info("欢迎使用检索聊天机器人！输入 'exit' 或 'q' 退出。")
+
     while True:
         try:
             user_input = input("User: ")
             if user_input.lower() in ["quit", "exit", "q"]:
-                print("Goodbye!")
+                logger.info("Goodbye!")
                 break
             config = {"configurable": {"thread_id": "1"}}
             response = await graph.ainvoke({"messages": [HumanMessage(content=user_input)]
@@ -232,7 +247,7 @@ async def main():
             print(f"AI: {ai_message.content}")
 
         except KeyboardInterrupt:
-            print("\nExiting...")
+            logger.info("Exiting...")
             break
 
 # 运行主函数

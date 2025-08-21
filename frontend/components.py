@@ -1,5 +1,4 @@
 # components.py
-
 from shiny import ui
 
 def layout_box(main_content, detail_content):
@@ -41,31 +40,31 @@ def layout_box(main_content, detail_content):
         )
     )
 
-def layout_6_6():
-    """创建一个左右分栏的布局，用于动态输出内容。
-    这个布局使用 output_ui 占位符，由服务器端渲染内容。
-    """
-    return ui.row(
-        ui.column(
-            6,
-            ui.card(
-                ui.card_header("WikiDocu"),
-                ui.output_ui("main_output"),
-                # 设置主输出区域样式：固定高度和垂直滚动条
-                style="height: 500px; overflow-y: auto; border: 1px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);"
-            )
-        ),
+# def layout_6_6():
+#     """创建一个左右分栏的布局，用于动态输出内容。
+#     这个布局使用 output_ui 占位符，由服务器端渲染内容。
+#     """
+#     return ui.row(
+#         ui.column(
+#             6,
+#             ui.card(
+#                 ui.card_header("WikiDocu"),
+#                 ui.output_ui("main_output"),
+#                 # 设置主输出区域样式：固定高度和垂直滚动条
+#                 style="height: 500px; overflow-y: auto; border: 1px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);"
+#             )
+#         ),
 
-        ui.column(
-            6,
-            ui.card(
-                ui.card_header("检索结果"),
-                ui.output_ui("detail_output"),
-                # 设置详细输出区域样式：固定高度和垂直滚动条
-                style="height: 500px; overflow-y: auto; border: 1px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);"
-            )
-        )
-    )
+#         ui.column(
+#             6,
+#             ui.card(
+#                 ui.card_header("检索结果"),
+#                 ui.output_ui("detail_output"),
+#                 # 设置详细输出区域样式：固定高度和垂直滚动条
+#                 style="height: 500px; overflow-y: auto; border: 1px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);"
+#             )
+#         )
+#     )
 
 from shiny import ui
 import textwrap
