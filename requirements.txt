@@ -1,9 +1,28 @@
+# Core dependencies for WikiDocu
 langchain-core==0.3.67
 langchain_openai==0.3.27
 langgraph==0.5.0
 markdown==3.7
 pydantic==2.10.6
-shiny==1.4.0 
+shiny==1.4.0
 treelib==1.8.0
 markitdown==0.1.2
 python-dotenv==1.0.1
+
+# Additional dependencies for Podcast-LLM
+langchain==0.3.27
+langchain-community==0.3.14
+langchain-google-genai==2.0.9
+langchain-anthropic==0.2.11
+tavily-python==0.5.0
+PyYAML==6.0.2
+gradio==5.10.0
+newspaper3k==0.2.8
+PyPDF2==3.0.1
+python-docx==1.1.2
+youtube-transcript-api==0.6.2
+openai==1.59.1
+google-generativeai==0.8.3
+anthropic==0.39.0
+simpleaudio==1.0.4
+pydub==0.25.1
