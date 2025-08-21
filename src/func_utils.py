@@ -178,18 +178,18 @@ def clear_docs_folder(docs_path:str):
         # 如果存在，删除整个目录及其内容
         try:
             shutil.rmtree(docs_path)
-            logger.info("docs 目录已删除")
+            logger.info(".QADocs 目录已删除")
         except Exception as e:
-            logger.error("删除 docs 目录失败：%s", str(e))
+            logger.error("删除 .QADocs 目录失败：%s", str(e))
             return False
 
     # 重新创建空的 docs 目录
     try:
         os.makedirs(docs_path)
-        logger.info("docs 目录已重新创建")
+        logger.info(".QADocs 目录已重新创建")
         return True
     except Exception as e:
-        logger.error("创建 docs 目录失败：%s", str(e))
+        logger.error("创建 .QADocs 目录失败：%s", str(e))
         return False
 
 def webfetch(
