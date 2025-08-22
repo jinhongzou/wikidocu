@@ -256,13 +256,13 @@ pip install -r requirements.txt
 ### 第三方组件与依赖
 本项目使用了以下开源组件，我们向这些组件的开发者表示感谢：
 
-*   **[LangChain](https://github.com/langchain-ai/langchain)** - 用于开发由语言模型驱动的应用程序的框架。采用 [Apache 2.0 许可证](https://www.apache.org/licenses/LICENSE-2.0)。
-*   **[LangGraph](https://github.com/langchain-ai/langgraph)** - 用于构建具有状态和多参与者的 LLM 应用程序的库。采用 [Apache 2.0 许可证](https://www.apache.org/licenses/LICENSE-2.0)。
-*   **[Shiny for Python](https://github.com/posit-dev/py-shiny)** - 用于使用 Python 构建交互式 Web 应用程序的 Web 框架。采用 [MIT 许可证](https://opensource.org/licenses/MIT)。
-*   **[Pydantic](https://github.com/pydantic/pydantic)** - 使用 Python 类型提示进行数据验证和设置管理。采用 [MIT 许可证](https://opensource.org/licenses/MIT)。
-*   **[Tavily Python](https://github.com/tavily-ai/tavily-python)** - Tavily API 的 Python SDK。采用 [MIT 许可证](https://opensource.org/licenses/MIT)。
-*   **[Podcast-LLM](https://github.com/evandempsey/podcast-llm)** - 自动从研究论文、新闻文章和其他长篇内容生成引人入胜的 AI 驱动播客。采用 [知识共享署名-非商业性使用 4.0 国际许可 (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/)。
-*   以及 [requirements.txt](requirements.txt) 中列出的其他依赖项，它们均采用宽松的开源许可证。
+*   **[LangChain](https://github.com/langchain-ai/langchain)** - 用于开发由语言模型驱动的应用程序的框架。
+*   **[LangGraph](https://github.com/langchain-ai/langgraph)** - 用于构建具有状态和多参与者的 LLM 应用程序的库。
+*   **[Shiny for Python](https://github.com/posit-dev/py-shiny)** - 用于使用 Python 构建交互式 Web 应用程序的 Web 框架。
+*   **[Pydantic](https://github.com/pydantic/pydantic)** - 使用 Python 类型提示进行数据验证和设置管理。
+*   **[Tavily Python](https://github.com/tavily-ai/tavily-python)** - Tavily API 的 Python SDK。
+*   **[Podcast-LLM](https://github.com/evandempsey/podcast-llm)** - 自动从研究论文、新闻文章和其他长篇内容生成引人入胜的 AI 驱动播客。
+*   以及 [requirements.txt](requirements.txt) 中列出的其他依赖项。
 
 ### 致谢
 本项目在 Qwen3 Coder 的辅助下开发，并借鉴了 LLM 应用程序开发社区中常见的概念和代码模式。我们已努力尊重所有相关许可证和署名要求，如果您认为有任何内容需要额外署名或使用不当，请与我们联系。

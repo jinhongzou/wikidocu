@@ -70,7 +70,7 @@ def extract_content_from_sources(sources: List) -> List:
         ('markdown', (lambda s: s.lower().endswith(('.md', '.markdown')), MarkdownSourceDocument)),
         ('text', (lambda s: s.lower().endswith('.txt'), TextSourceDocument))
     ])
-    
+
     for source in sources:
         try:
             logger.info(f"Extracting from source: {source}")
@@ -84,5 +84,6 @@ def extract_content_from_sources(sources: List) -> List:
 
         except Exception as e:
             logger.error(f"Failed to extract from source: {source}. Error: {str(e)}")
-    #logger.info(f'Successfully extracted:\n{extracted_content} ')
+    
+    logger.info(f'Successfully extracted sources: {len(extracted_content)}')
     return extracted_content

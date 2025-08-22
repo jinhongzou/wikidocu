@@ -35,6 +35,7 @@ except ImportError:
 
 from .podcast_config import DEFAULT_CONFIG_PATH
 from .utils_podcast import save_uploaded_file, process_source_urls, validate_inputs
+from config.global_vars import LOG_FILE
 
 def podcast_llm_server(input, output, session):
     #def server(input, output, session):
@@ -63,8 +64,8 @@ def podcast_llm_server(input, output, session):
     })
 
     # Create a temporary file for logging
-    temp_log_file = tempfile.NamedTemporaryFile(mode='w', delete=False).name
-
+    #temp_log_file = tempfile.NamedTemporaryFile(mode='w', delete=False).name
+    temp_log_file = LOG_FILE
     # Function to update log display
     def update_log():
         try:
@@ -139,10 +140,11 @@ def podcast_llm_server(input, output, session):
         # Process source URLs
         source_urls_list = process_source_urls(source_urls)
 
-        # Combine sources
-        sources = source_files_paths + source_urls_list
-        sources = sources if sources else None
-        
+        # Combine sources properly as Optional[List[str]]
+        all_sources = source_files_paths + source_urls_list
+        # 如果列表为空，则设为 None 以符合 Optional[List[str]] 类型
+        all_sources = all_sources if all_sources else None
+
         # Process output paths，输出到指定目录
         text_output_file = Path("output") / text_output.strip() if text_output.strip() else None
         audio_output_file = Path("output") / audio_output.strip() if audio_output.strip() else None
@@ -153,6 +155,7 @@ def podcast_llm_server(input, output, session):
         logging.info(f'Mode of Operation: {mode} (type: {type(mode)})')
         logging.info(f'Source Files: {source_files_paths} (type: {type(source_files_paths)})')
         logging.info(f'Source URLs: {source_urls_list} (type: {type(source_urls_list)})')
+        logging.info(f'Source: {all_sources} (type: {type(all_sources)})')
         logging.info(f'QA Rounds: {qa_rounds} (type: {type(qa_rounds)})')
         logging.info(f'Use Checkpoints: {use_checkpoints} (type: {type(use_checkpoints)})')
         logging.info(f'Custom Config File: {DEFAULT_CONFIG_PATH} (type: {type(DEFAULT_CONFIG_PATH)})')
@@ -173,7 +176,7 @@ def podcast_llm_server(input, output, session):
                     lambda: generate(
                         topic=topic.strip() if topic else "",
                         mode=mode,
-                        sources=sources,
+                        sources=all_sources,
                         qa_rounds=qa_rounds,
                         use_checkpoints=use_checkpoints,
                         audio_output=audio_output_file,

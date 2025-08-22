@@ -254,13 +254,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### Third-Party Components and Dependencies
 This project uses the following open-source components, and we would like to express our gratitude to their developers:
 
-*   **[LangChain](https://github.com/langchain-ai/langchain)** - Framework for developing applications powered by language models. Licensed under [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0).
-*   **[LangGraph](https://github.com/langchain-ai/langgraph)** - Library for building stateful, multi-actor applications with LLMs. Licensed under [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0).
-*   **[Shiny for Python](https://github.com/posit-dev/py-shiny)** - Web framework for building interactive web applications with Python. Licensed under [MIT License](https://opensource.org/licenses/MIT).
-*   **[Pydantic](https://github.com/pydantic/pydantic)** - Data validation and settings management using Python type hints. Licensed under [MIT License](https://opensource.org/licenses/MIT).
-*   **[Tavily Python](https://github.com/tavily-ai/tavily-python)** - Python SDK for the Tavily API. Licensed under [MIT License](https://opensource.org/licenses/MIT).
-*   **[Podcast-LLM](https://github.com/evandempsey/podcast-llm)** - Automatically generate engaging AI-powered podcasts from research papers, news articles, and other long-form content. Licensed under [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/).
-*   And other dependencies listed in [requirements.txt](requirements.txt), all of which have permissive open-source licenses.
+*   **[LangChain](https://github.com/langchain-ai/langchain)** - Framework for developing applications powered by language models.
+*   **[LangGraph](https://github.com/langchain-ai/langgraph)** - Library for building stateful, multi-actor applications with LLMs. 
+*   **[Shiny for Python](https://github.com/posit-dev/py-shiny)** - Web framework for building interactive web applications with Python. 
+*   **[Pydantic](https://github.com/pydantic/pydantic)** - Data validation and settings management using Python type hints. 
+*   **[Tavily Python](https://github.com/tavily-ai/tavily-python)** - Python SDK for the Tavily API.
+*   **[Podcast-LLM](https://github.com/evandempsey/podcast-llm)** - Automatically generate engaging AI-powered podcasts from research papers, news articles, and other long-form content.
+*   And other dependencies listed in [requirements.txt](requirements.txt)
 
 ### Attributions
 This project was developed with the assistance of Qwen3 Coder and incorporates concepts and code patterns commonly found in the LLM application development community. While we have strived to respect all relevant licenses and attribution requirements, if you believe there is any content that requires additional attribution or is used inappropriately, please contact us.

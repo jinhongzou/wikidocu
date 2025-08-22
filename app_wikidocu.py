@@ -18,10 +18,9 @@ from config.logging_config import setup_logging
 # ==============================================================
 #                        设置日志
 # ==============================================================
-debug=False
-log_file = "logs/app_wikidocu.log"
-log_level = logging.DEBUG if debug else logging.INFO
-setup_logging(log_level, output_file=log_file)
+from config.global_vars import LOG_LVL, LOG_FILE
+log_level = logging.DEBUG if LOG_LVL else logging.INFO
+setup_logging(log_level, output_file=LOG_FILE)
 
 # ==============================================================
 #                        启动应用

@@ -287,15 +287,15 @@ def get_fast_llm(config: PodcastConfig, rate_limiter: BaseRateLimiter | None = N
     """
     # Default fast LLM models
     fast_llm_models = {
-        'openai': os.getenv('OPENAI_MODEL', 'qwen-turbo'),
+        'openai': 'gpt-4o-mini',
         'google': 'gemini-1.5-flash', 
         'anthropic': 'claude-3-5-sonnet-20241022'
     }
-    
-    # If using DashScope (Aliyun), use a different model
-    if base_url and "dashscope" in base_url:
+
+    # If using DashScope、siliconflow, use a different model
+    if config.fast_llm_provider == 'openai' and base_url:
         fast_llm_models['openai'] = os.getenv('OPENAI_MODEL', 'qwen-turbo')
-    
+
     if config.fast_llm_provider not in fast_llm_models:
         raise ValueError(f"The fast_llm_provider value '{config.fast_llm_provider}' is not supported.")
         
@@ -334,9 +334,9 @@ def get_long_context_llm(config: PodcastConfig, rate_limiter: BaseRateLimiter | 
         'anthropic': 'claude-3-5-sonnet-20241022'
     }
 
-    # If using DashScope (Aliyun), use a different model
-    if base_url and "dashscope" in base_url:
-        long_context_llm_models['openai'] = os.getenv('OPENAI_MODEL', 'qwen-turbo')  # or 'qwen-max' for even longer context
+    # If using DashScope、siliconflow, use a different model
+    if config.long_context_llm_provider == 'openai' and base_url:
+        long_context_llm_models['openai'] = os.getenv('OPENAI_MODEL', 'qwen-turbo')
 
     if config.long_context_llm_provider not in long_context_llm_models:
         raise ValueError(f"The long_context_llm_provider value '{config.long_context_llm_provider}' is not supported.")

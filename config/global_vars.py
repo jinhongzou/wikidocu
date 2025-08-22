@@ -13,3 +13,5 @@ WIKIDOCU_QA_DIR = os.getenv("WIKIDOCU_QA_DIR", ".QADocs")
 # ui_detail_output_handler= FileHandler(UI_DETAIL_OUTPUT_PATH)
 # ui_main_outputt_handler= FileHandler(UI_MAIN_OUTPUTT_PATH)
 
+LOG_LVL=False
+LOG_FILE="logs/app_wikidocu.log"

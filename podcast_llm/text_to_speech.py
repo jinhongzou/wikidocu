@@ -304,7 +304,7 @@ def process_line_siliconcloud(config: PodcastConfig, text: str, speaker: str):
         base_url="https://api.siliconflow.cn/v1"
     )
     tts_settings = config.tts_settings['siliconcloud']
-    
+
     # Map speakers to voices
     voice = tts_settings['voice_mapping'].get(speaker, 'alex')  # Default to alex if not found
     
@@ -315,9 +315,7 @@ def process_line_siliconcloud(config: PodcastConfig, text: str, speaker: str):
     response = client.audio.speech.create(
         model=model,
         voice=f"{model}:{voice}", #voice="FunAudioLLM/CosyVoice2-0.5B:alex", # 系统预置音色
-        # model="FunAudioLLM/CosyVoice2-0.5B", # 支持 fishaudio / GPT-SoVITS / CosyVoice2-0.5B 系列模型
-        # voice="FunAudioLLM/CosyVoice2-0.5B:alex", # 系统预置音色
-        input=text,
+        input=f"[S1]{text}" if speaker == 'Interviewer' else f"[S2]{text}",
         response_format="mp3" # 支持 mp3, wav, pcm, opus 格式
     )
     

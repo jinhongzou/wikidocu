@@ -26,7 +26,7 @@ articles fail to download or parse properly.
 from podcast_llm.extractors.base import BaseSourceDocument
 from typing import Optional
 from newspaper import Article, ArticleException
-
+from src.func_utils import webfetch
 
 class WebSourceDocument(BaseSourceDocument):
     """Extracts text content from web articles using the newspaper3k library.
@@ -54,12 +54,13 @@ class WebSourceDocument(BaseSourceDocument):
         self.content: Optional[str] = None
 
     def extract(self) -> str:
-        article = Article(self.src)
-        article.download()
-        article.parse()
-
-        if not article.text:
+        # article = Article(self.src)
+        # article.download()
+        # article.parse()
+        article = webfetch(self.src)
+        #print(f"----{article}")
+        if not article:
             raise ArticleException(f"No website text found for URL: {self.src}")
         
-        self.title = article.title
-        self.content = article.text
+        #self.title = self.src
+        self.content = article
