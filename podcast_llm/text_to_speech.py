@@ -315,7 +315,8 @@ def process_line_siliconcloud(config: PodcastConfig, text: str, speaker: str):
     response = client.audio.speech.create(
         model=model,
         voice=f"{model}:{voice}", #voice="FunAudioLLM/CosyVoice2-0.5B:alex", # 系统预置音色
-        input=f"[S1]{text}" if speaker == 'Interviewer' else f"[S2]{text}",
+        #input=f"[S1]{text}" if speaker == 'Interviewer' else f"[S2]{text}",
+        input=text,
         response_format="mp3" # 支持 mp3, wav, pcm, opus 格式
     )
     

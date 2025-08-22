@@ -45,8 +45,8 @@ tts_settings:
                       # claire     #Gentle Female Voice
                       # diana      #Cheerful Female Voice
     model_mapping:
-      Interviewer: fnlp/MOSS-TTSD-v0.5 # 提问者 （可选: FunAudioLLM/CosyVoice2-0.5B）
-      Interviewee: fnlp/MOSS-TTSD-v0.5 # 受访者
+      Interviewer: FunAudioLLM/CosyVoice2-0.5B # 提问者 （可选: fnlp/MOSS-TTSD-v0.5、FunAudioLLM/CosyVoice2-0.5B）
+      Interviewee: FunAudioLLM/CosyVoice2-0.5B # 受访者
 
 # Audio output settings
 output_format: mp3  # Options: 'mp3', 'wav'

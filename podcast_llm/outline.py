@@ -99,5 +99,5 @@ def outline_episode(config: PodcastConfig, topic: str, background_info: list, ba
         "context_documents": "\n\n".join([format_wikipedia_document(d) for d in background_info])
     })
 
-    logger.info(f"# 大纲生成:\n{outline.as_str}")
+    logger.info(f"## Outline Generation:\n{outline.as_str}")
     return outline
