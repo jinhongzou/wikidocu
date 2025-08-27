@@ -16,7 +16,7 @@ The logging format includes:
 - Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
 - Message content
 """
-
+import os
 import logging
 import sys
 from typing import Optional
@@ -41,7 +41,17 @@ def setup_logging(log_level: Optional[int] = None, output_file: Optional[str] = 
     
     # Configure logging handler based on output destination
     if output_file:
+        # 确保日志文件的目录存在
+        log_dir = os.path.dirname(output_file)
+        if log_dir and not os.path.exists(log_dir):
+            os.makedirs(log_dir)
+        
+        # 如果文件不存在，创建空文件
+        if not os.path.exists(output_file):
+            open(output_file, 'a').close()
+
         handler = logging.FileHandler(output_file)
+
     else:
         handler = logging.StreamHandler(sys.stdout)
 
