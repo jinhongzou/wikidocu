@@ -39,7 +39,7 @@ def show_api_config_modal(input, output, session, openai_config, sdata):
         ui.div(
             ui.tags.hr(style="margin: 1rem 0; border-top: 1px solid #ddd;"),
             ui.h5("📁 数据源配置"),
-            ui.input_text("dir_chooser_path", "文件加载目录", value="dataset", placeholder="输入目录地址...", width="100%"),
+            ui.input_text("dir_chooser_path", "文件加载目录", value="dataset/news", placeholder="输入目录地址...", width="100%"),
             ui.input_text_area("url_chooser_path", "URL列表 (每行一个)", value=sdata.get("urls", ""), rows=1),
             ui.input_action_button("sdata_init_btn", "▶️ 开始初始化...", class_="btn btn-primary me-3"),
             class_="mb-3"

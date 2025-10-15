@@ -216,11 +216,29 @@ Automatically convert the three measures revised and issued by the National Fina
 ### 1. Environment Preparation
 - Install Python 3.10+
 - Download source code: `git clone https://github.com/jinhongzou/wikidocu.git`
-- Install dependencies: 
+- Install dependencies using pip:
 ```bash
 cd wikidocu
 pip install -r requirements.txt
 ```
+
+Alternatively, you can use [uv](https://github.com/astral-sh/uv) for faster dependency management:
+```bash
+# Install uv (if not already installed)
+pip install uv
+
+# Install dependencies with uv
+uv sync
+
+# Or install in a virtual environment
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+uv pip install -r requirements.txt
+```
+
+**Note for Windows users:** The `simpleaudio` package has been removed from the dependencies due to build issues on Windows systems. If you need audio functionality, consider using an alternative like `pygame` or `sounddevice`.
+
+**Dependency Notes:** Some dependencies have been updated or made more flexible to resolve version conflicts. The system now uses compatible versions of langchain packages and openai>=1.86.0.
 
 ### 2. Configuration Variables
 Copy the `.env_example` file and rename it to `.env`, then fill in the API keys and other configuration items according to your actual situation. Here are the main configuration item descriptions:

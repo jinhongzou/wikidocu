@@ -247,7 +247,7 @@ ui_podcast = ui.page_fluid(
                         ),
                         ui.div(
                             ui.div(
-                                ui.input_numeric("qa_rounds", "问答回合", value=1, min=1, max=3),
+                                ui.input_numeric("qa_rounds", "问答回合", value=2, min=1, max=3),
                                 class_="form-group"
                             ),
                             class_="form-col"
@@ -279,7 +279,8 @@ ui_podcast = ui.page_fluid(
                         ),
                         ui.div(
                             ui.div(
-                                ui.input_file("source_files", "资料文件", multiple=True),
+                                ui.input_file("source_files", "资料文件", 
+                                              placeholder ='dataset/news', multiple=True),
                                 class_="form-group"
                             ),
                             class_="form-col"
@@ -287,7 +288,7 @@ ui_podcast = ui.page_fluid(
                         ui.div(
                             ui.div(
                                 ui.input_text("source_urls", "资料链接",
-                                            value=DEFAULT_SOURCE_URL,
+                                            value="",
                                             placeholder="https://finance.sina.com.cn/wm/2024-02-03/doc-inaftiir0348604.shtml"),
                                 class_="form-group"
                             ),

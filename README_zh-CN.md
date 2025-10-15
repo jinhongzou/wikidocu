@@ -224,6 +224,24 @@ cd wikidocu
 pip install -r requirements.txt
 ```
 
+或者，您可以使用 [uv](https://github.com/astral-sh/uv) 来获得更快的依赖管理：
+```bash
+# 安装 uv (如果尚未安装)
+pip install uv
+
+# 使用 uv 安装依赖
+uv sync
+
+# 或在虚拟环境中安装
+uv venv
+source .venv/bin/activate  # 在 Windows 上: .venv\\Scripts\\activate
+uv pip install -r requirements.txt
+```
+
+**Windows 用户注意事项：** 由于在 Windows 系统上构建问题，`simpleaudio` 包已从依赖项中移除。如果您需要音频功能，可以考虑使用 `pygame` 或 `sounddevice` 等替代方案。
+
+**依赖项说明：** 某些依赖项已更新或变得更加灵活，以解决版本冲突问题。系统现在使用兼容版本的 langchain 包和 openai>=1.86.0。
+
 ### 2. 配置变量
 将`.env_example`文件复制并重命名为`.env` ，然后根据您的实际情况填写 API 密钥和其他配置项。以下是主要配置项说明：
 
@@ -238,8 +256,8 @@ pip install -r requirements.txt
 详细配置说明请参考项目根目录下的 `.env_example` 文件。
 
 ### 3. 启动应用
-*   **Web UI 模式**：运行 `python app_wikidocu.py`，访问 `http://127.0.0.1:8000`。
-*   **CLI 模式**：运行 `python cli_wikidocu.py`。
+*   **Web UI 模式**：运行 `uv run python app_wikidocu.py`，访问 `http://127.0.0.1:8000`。
+*   **CLI 模式**：运行 `uv run python cli_wikidocu.py`。
 
 ### 4. 配置模型与源文件目录
 *   **Web UI 模式**：启动应用后，在界面中点击"⚙️ 配置"按钮进行设置。在弹出的模态框中，用户可以配置模型参数（API Key、模型名称、基础 URL）以及源文件目录路径。
